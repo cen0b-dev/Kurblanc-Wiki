@@ -178,7 +178,7 @@ Lists the items awarded when the block is mined.
 
 | Field | Type | Default | Range | Notes |
 |---|---|---|---|---|
-| `value` | array of { item, count } | No drops | items must be namespaced and defined in an active logic pack | Validated after every pack loads, because the item definitions may come from another pack. |
+| `value` | array of stack objects | No drops | items must be namespaced and defined in an active logic pack | Each stack is { "item": "mypack:stone", "count": 4 }; the item must be namespaced and defined in an active logic pack. |
 
 ```json
 {

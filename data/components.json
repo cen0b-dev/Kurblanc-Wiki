@@ -4,7 +4,10 @@
     {
       "id": "blocks",
       "title": "Block components",
-      "sources": ["src/world/block-parse.ts", "src/world/pack-types.ts"],
+      "sources": [
+        "src/world/block-parse.ts",
+        "src/world/pack-types.ts"
+      ],
       "components": [
         {
           "id": "kurblanc:layer",
@@ -20,7 +23,9 @@
               "notes": "Defaults to wall when kurblanc:wall is present, otherwise floor. Not validated by the block parser."
             }
           ],
-          "example": { "kurblanc:layer": "wall" },
+          "example": {
+            "kurblanc:layer": "wall"
+          },
           "behavior": "An unknown value is not a load error; the renderer decides what to do with it. Use one of the three documented names."
         },
         {
@@ -37,7 +42,9 @@
               "notes": "Six hexadecimal digits; three-digit shorthand is rejected."
             }
           ],
-          "example": { "kurblanc:color": "#a9824f" },
+          "example": {
+            "kurblanc:color": "#a9824f"
+          },
           "behavior": "kurblanc:color must be a #rrggbb string."
         },
         {
@@ -54,7 +61,9 @@
               "notes": "Falls back to the local part of the identifier when omitted."
             }
           ],
-          "example": { "kurblanc:label": "Wood wall" },
+          "example": {
+            "kurblanc:label": "Wood wall"
+          },
           "behavior": "kurblanc:label must be a string."
         },
         {
@@ -71,12 +80,16 @@
               "notes": "The closed state of a toggle pair must be placeable; the open state must set it to false."
             }
           ],
-          "example": { "kurblanc:placeable": false },
+          "example": {
+            "kurblanc:placeable": false
+          },
           "behavior": "kurblanc:placeable must be a boolean. A toggle's open state must set it to false, and its closed state must not."
         },
         {
           "id": "kurblanc:collision_box",
-          "aliases": ["minecraft:collision_box"],
+          "aliases": [
+            "minecraft:collision_box"
+          ],
           "appliesTo": "block",
           "summary": "Marks the block solid for the player, mobs and placement checks.",
           "fields": [
@@ -88,29 +101,35 @@
               "notes": "Independent of light opacity. Floors are walkable even when solid is false."
             }
           ],
-          "example": { "kurblanc:collision_box": true },
+          "example": {
+            "kurblanc:collision_box": true
+          },
           "behavior": "kurblanc:collision_box must be a boolean."
         },
         {
           "id": "kurblanc:opacity",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "How much sky and block light the tile absorbs, on the same 0–15 scale as light emission.",
+          "summary": "How much sky and block light the tile absorbs, on the same 0\u201315 scale as light emission.",
           "fields": [
             {
               "name": "value",
               "type": "integer",
               "default": "0",
-              "range": "0–15",
+              "range": "0\u201315",
               "notes": "0 is fully transparent, 15 blocks all light. This is not collision."
             }
           ],
-          "example": { "kurblanc:opacity": 15 },
+          "example": {
+            "kurblanc:opacity": 15
+          },
           "behavior": "kurblanc:opacity must be an integer 0-15."
         },
         {
           "id": "kurblanc:destructible_by_mining",
-          "aliases": ["minecraft:destructible_by_mining"],
+          "aliases": [
+            "minecraft:destructible_by_mining"
+          ],
           "appliesTo": "block",
           "summary": "Sets how long the block takes to mine.",
           "fields": [
@@ -122,12 +141,18 @@
               "notes": "Stored as tenths of a second; 1.2 becomes 12 ticks of hardness."
             }
           ],
-          "example": { "kurblanc:destructible_by_mining": { "seconds_to_destroy": 1.2 } },
+          "example": {
+            "kurblanc:destructible_by_mining": {
+              "seconds_to_destroy": 1.2
+            }
+          },
           "behavior": "seconds_to_destroy must be positive. The component may also be set to false, which leaves the block unbreakable."
         },
         {
           "id": "kurblanc:light_emission",
-          "aliases": ["minecraft:light_emission"],
+          "aliases": [
+            "minecraft:light_emission"
+          ],
           "appliesTo": "block",
           "summary": "Makes the block a light source.",
           "fields": [
@@ -135,11 +160,13 @@
               "name": "value",
               "type": "integer",
               "default": "No light when omitted",
-              "range": "1–15",
+              "range": "1\u201315",
               "notes": "The light colour comes from kurblanc:light_color, then kurblanc:color."
             }
           ],
-          "example": { "kurblanc:light_emission": 8 },
+          "example": {
+            "kurblanc:light_emission": 8
+          },
           "behavior": "kurblanc:light_emission must be an integer 1-15."
         },
         {
@@ -156,7 +183,9 @@
               "notes": "Only read when kurblanc:light_emission is present. Not validated by the block parser; use six hexadecimal digits."
             }
           ],
-          "example": { "kurblanc:light_color": "#ffb45a" },
+          "example": {
+            "kurblanc:light_color": "#ffb45a"
+          },
           "behavior": "No parser-level check here. A malformed colour can reach the renderer; keep it to #rrggbb."
         },
         {
@@ -167,18 +196,27 @@
           "fields": [
             {
               "name": "value",
-              "type": "array of { item, count }",
+              "type": "array of stack objects",
               "default": "No drops",
               "range": "items must be namespaced and defined in an active logic pack",
-              "notes": "Validated after every pack loads, because the item definitions may come from another pack."
+              "notes": "Each stack is { \"item\": \"mypack:stone\", \"count\": 4 }; the item must be namespaced and defined in an active logic pack."
             }
           ],
-          "example": { "kurblanc:drops": [{ "item": "kurblanc:wood", "count": 8 }] },
+          "example": {
+            "kurblanc:drops": [
+              {
+                "item": "kurblanc:wood",
+                "count": 8
+              }
+            ]
+          },
           "behavior": "kurblanc:drops must be an array. A missing item or a bare ID fails validation and names the block file."
         },
         {
           "id": "kurblanc:material_instances",
-          "aliases": ["minecraft:material_instances"],
+          "aliases": [
+            "minecraft:material_instances"
+          ],
           "appliesTo": "block",
           "summary": "Binds the block to its texture and optional crop.",
           "fields": [
@@ -213,7 +251,9 @@
           ],
           "example": {
             "kurblanc:material_instances": {
-              "*": { "texture": "textures/blocks/wood_wall.png" }
+              "*": {
+                "texture": "textures/blocks/wood_wall.png"
+              }
             }
           },
           "behavior": "A bad path fails with: must be an AP path such as \"textures/blocks/stone.png\". A bad crop fails the rect rule."
@@ -261,7 +301,11 @@
             }
           ],
           "example": {
-            "kurblanc:ground": { "random_rotate": true, "group": "grass", "biome_tint": true }
+            "kurblanc:ground": {
+              "random_rotate": true,
+              "group": "grass",
+              "biome_tint": true
+            }
           },
           "behavior": "The component must be an object. Values are coerced rather than rejected; keep to the documented types."
         },
@@ -279,7 +323,11 @@
               "notes": "Connects variants of the same surface material."
             }
           ],
-          "example": { "kurblanc:surface": { "group": "woodfloor" } },
+          "example": {
+            "kurblanc:surface": {
+              "group": "woodfloor"
+            }
+          },
           "behavior": "The component must be an object. A surface and a ground component on the same block: surface wins because it is read later."
         },
         {
@@ -292,7 +340,7 @@
               "name": "lift",
               "type": "integer",
               "default": "18",
-              "range": "0–32",
+              "range": "0\u201332",
               "notes": "Wall top elevation in source pixels."
             },
             {
@@ -318,7 +366,22 @@
             }
           ],
           "example": {
-            "kurblanc:wall": { "lift": 18, "group": "wall", "top_rect": [0, 0, 192, 64], "front_rect": [0, 64, 64, 19] }
+            "kurblanc:wall": {
+              "lift": 18,
+              "group": "wall",
+              "top_rect": [
+                0,
+                0,
+                192,
+                64
+              ],
+              "front_rect": [
+                0,
+                64,
+                64,
+                19
+              ]
+            }
           },
           "behavior": "Lift must be an integer 0-32. Rect overrides must be valid crops. Without a front region the wall draws top-only."
         },
@@ -339,11 +402,16 @@
               "name": "opacity",
               "type": "number",
               "default": "None",
-              "range": "0–1",
+              "range": "0\u20131",
               "notes": "Water tint strength, not the light opacity component."
             }
           ],
-          "example": { "kurblanc:water": { "bed": "kurblanc:sand", "opacity": 0.6 } },
+          "example": {
+            "kurblanc:water": {
+              "bed": "kurblanc:sand",
+              "opacity": 0.6
+            }
+          },
           "behavior": "kurblanc:water.bed must be a namespaced block ID. kurblanc:water.opacity must be from 0 to 1."
         },
         {
@@ -370,7 +438,7 @@
               "name": "contact_shadow",
               "type": "[x, y, width, height]",
               "default": "None",
-              "range": "radii 0–16",
+              "range": "radii 0\u201316",
               "notes": "A root-contact ellipse for objects that should not use the full sprite silhouette."
             },
             {
@@ -405,7 +473,7 @@
               "name": "vertical_masks",
               "type": "array of integers",
               "default": "None",
-              "range": "each 0–15",
+              "range": "each 0\u201315",
               "notes": "Cardinal masks selecting which vertical faces use the alternate crop."
             },
             {
@@ -454,15 +522,23 @@
               "name": "foliage.leafTextures",
               "type": "array of strings",
               "default": "None",
-              "range": "1–32 AP texture paths",
+              "range": "1\u201332 AP texture paths",
               "notes": "Leaf art used for ambient flutter. Field name is camelCase."
             }
           ],
           "example": {
             "kurblanc:object": {
               "height": 10,
-              "sprite_offset": [6, -7],
-              "rect": [6, 0, 5, 16],
+              "sprite_offset": [
+                6,
+                -7
+              ],
+              "rect": [
+                6,
+                0,
+                5,
+                16
+              ],
               "depth": 1
             }
           },
@@ -482,7 +558,9 @@
               "notes": "Both halves of a double door use the same pair value."
             }
           ],
-          "example": { "kurblanc:pair": "door" },
+          "example": {
+            "kurblanc:pair": "door"
+          },
           "behavior": "kurblanc:pair must be a string."
         },
         {
@@ -508,8 +586,14 @@
           ],
           "example": {
             "kurblanc:toggle_states": {
-              "closed": { "kurblanc:placeable": true, "kurblanc:collision_box": true },
-              "open": { "kurblanc:placeable": false, "kurblanc:collision_box": false }
+              "closed": {
+                "kurblanc:placeable": true,
+                "kurblanc:collision_box": true
+              },
+              "open": {
+                "kurblanc:placeable": false,
+                "kurblanc:collision_box": false
+              }
             }
           },
           "behavior": "Must contain exactly closed and open. The loader generates `${identifier}_open`, cross-links kurblanc:toggle, and refuses a placeable open state or an unplaceable closed state."
@@ -528,7 +612,9 @@
               "notes": "Written by the loader when it expands kurblanc:toggle_states. Do not author it by hand."
             }
           ],
-          "example": { "kurblanc:toggle": "kurblanc:door_wood_open" },
+          "example": {
+            "kurblanc:toggle": "kurblanc:door_wood_open"
+          },
           "behavior": "Generated and cross-linked by the loader. An authored value is overwritten for a toggle pair."
         }
       ]
