@@ -87,9 +87,10 @@ for an AP. Manifests do not use `format_version`; they use `kurblanc.schema`.
 }
 ```
 
-Use fresh UUIDs for every header and module. The `dependencies` entry in the LP
-points at the AP's `header.uuid`; without it the game does not know to load the
-art. A logic pack that only uses built-in art can omit `dependencies`.
+Use fresh UUIDs for every header and module. `dependencies` is optional: add an
+entry when one pack must load below another. The game discovers LP and AP folders
+independently, so a linked add-on does not need the dependency just to find its
+art. A logic pack that only uses built-in art can omit it.
 
 `kurblanc.namespace` is the default for IDs written without a namespace.
 `kurblanc.min_engine` is the oldest game version the pack accepts.
