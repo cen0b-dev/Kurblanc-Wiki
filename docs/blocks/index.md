@@ -39,19 +39,21 @@ concept pages explain the choices:
 
 ## Doors and gates
 
-A door is one block file with a `kurblanc:door` component. The component names a
-closed texture and an open texture. The loader creates the open block and links
-the two states, so you do not add a second file.
+A door is two block files: the closed state and the open state. Each names the
+other with `kurblanc:toggle`. The closed file is placeable and solid; the open
+file sets `kurblanc:placeable` to false and turns collision off.
 
 ```json
 {
   "kurblanc:layer": "object",
-  "kurblanc:door": {
-    "closed": "textures/blocks/door_wood_closed.png",
-    "open": "textures/blocks/door_wood_open.png"
-  }
+  "kurblanc:placeable": true,
+  "kurblanc:collision_box": true,
+  "kurblanc:toggle": "mypack:door_wood_open"
 }
 ```
+
+The open file points back at `mypack:door_wood`. A double door adds
+`kurblanc:pair` with the same value on both leaves.
 
 ## Block, item and texture are separate
 

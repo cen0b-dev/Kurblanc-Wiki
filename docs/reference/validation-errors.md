@@ -51,7 +51,8 @@ These fire after parsing, when the blocks are registered:
 | `has an unknown layer` | Use `floor`, `wall` or `object`. |
 | `floor … cannot be solid` | Floors are walkable. |
 | `shadow must be sprite on a raised block` | Sprite shadows are for walls and objects. |
-| `kurblanc:door needs closed and open textures` | Give both paths, under `textures/`. |
+| `toggle must reference a block on the same layer` | Point at the other door/gate state. |
+| `pair needs matching object toggle states` | Give both leaves the same `pair` and a `toggle`. |
 
 ## Items and recipes
 

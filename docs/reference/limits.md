@@ -24,7 +24,7 @@ A limit breach rejects the whole pack. Nothing is loaded partially.
 
 - Pattern: `namespace:lower_snake_case`.
 - The namespace is yours; `kurblanc` belongs to the built-in content.
-- A definition file's basename equals the local part:
+- By convention a definition file's basename matches the ID's local part:
   `LP/blocks/stone_tile.json` → `mypack:stone_tile`.
 - A bare identifier uses the pack namespace. A full ID is clearer.
 
@@ -33,7 +33,8 @@ A limit breach rejects the whole pack. Nothing is loaded partially.
 - A block names a PNG under `textures/`.
 - Paths are relative, use `/`, end in `.png`, and contain no `..` segments.
 - Later asset packs win when two supply the same path.
-- A door names one closed path and one open path.
+- A door is two block files that point at each other with `kurblanc:toggle`;
+  both can share one texture sheet with different crops.
 
 ## Crops and offsets
 
@@ -48,7 +49,8 @@ A limit breach rejects the whole pack. Nothing is loaded partially.
 ## Packs and worlds
 
 - A pack has exactly one module: `data` for an LP, `resources` for an AP.
-- An add-on is one LP and one AP that depend on each other.
+- An add-on can ship an LP and an AP. The dependency is optional: linked folders
+  and world stacks resolve the two halves independently.
 - A world remembers the packs it was saved with. Missing content is reported, not
   replaced.
 - Logic packs cannot define the same IDs unless the later pack in the stack wins.

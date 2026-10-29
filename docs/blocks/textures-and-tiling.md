@@ -45,7 +45,6 @@ The renderer needs to know how to stitch the art. Pick one:
 | `kurblanc:wall` | Wall | Separate top and front textures, raised |
 | `kurblanc:water` | Water | Floor tile with a visible bed |
 | `kurblanc:object` | Object | Cropped sprite with offset, depth and variants |
-| `kurblanc:door` | Door | Closed and open textures |
 
 ### Ground
 
@@ -133,19 +132,9 @@ between 0 and 1, separate from the 0–15 light opacity.
 
 ### Doors
 
-A door is one block with two textures:
-
-```json
-{
-  "kurblanc:door": {
-    "closed": "textures/blocks/door_wood_closed.png",
-    "open": "textures/blocks/door_wood_open.png"
-  }
-}
-```
-
-The closed texture is the placed state. The open texture is used after the door is
-used. The loader creates the open block, so there is no second file.
+A door is two block files that share one texture sheet and point at each other
+with `kurblanc:toggle`. The closed file uses its crop; the open file uses another
+crop. There is no door texture component.
 
 ## Variant strips
 
@@ -174,5 +163,6 @@ See [`kurblanc:material_instances`](/reference/components/blocks#kurblanc-materi
 [`kurblanc:surface`](/reference/components/blocks#kurblanc-surface),
 [`kurblanc:wall`](/reference/components/blocks#kurblanc-wall),
 [`kurblanc:water`](/reference/components/blocks#kurblanc-water),
-[`kurblanc:object`](/reference/components/blocks#kurblanc-object) and
-[`kurblanc:door`](/reference/components/blocks#kurblanc-door) for the field tables.
+[`kurblanc:object`](/reference/components/blocks#kurblanc-object),
+[`kurblanc:toggle`](/reference/components/blocks#kurblanc-toggle) and
+[`kurblanc:pair`](/reference/components/blocks#kurblanc-pair) for the field tables.

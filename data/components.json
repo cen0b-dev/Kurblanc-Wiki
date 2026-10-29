@@ -98,13 +98,13 @@
               "type": "boolean",
               "default": "true",
               "range": "true, false",
-              "notes": "The loader sets this false on the generated open state of a door or gate."
+              "notes": "The open state of a door or gate sets this to false; the closed state is placeable."
             }
           ],
           "example": {
             "kurblanc:placeable": false
           },
-          "behavior": "A non-boolean value fails when the world content is registered."
+          "behavior": "kurblanc:placeable must be a boolean. An open toggle state must set it to false."
         },
         {
           "id": "kurblanc:collision_box",
@@ -137,7 +137,7 @@
               "name": "box",
               "type": "[x, y, width, height]",
               "default": "the full tile",
-              "range": "origin -32 to 64, positive size, box inside 64×64",
+              "range": "origin -32 to 64, positive size, box inside 64\u00d764",
               "notes": "Tile-local pixels."
             },
             {
@@ -158,7 +158,7 @@
               "name": "verticalMasks",
               "type": "integer[]",
               "default": "none",
-              "range": "each 0–15",
+              "range": "each 0\u201315",
               "notes": "Cardinal masks that use verticalBox."
             }
           ],
@@ -204,14 +204,14 @@
               "name": "value",
               "type": "integer",
               "default": "0",
-              "range": "0–15",
+              "range": "0\u201315",
               "notes": "0 is fully transparent; 15 stops light."
             }
           ],
           "example": {
             "kurblanc:opacity": 15
           },
-          "behavior": "A value outside 0–15 or a non-integer fails when the world content is registered."
+          "behavior": "A value outside 0\u201315 or a non-integer fails when the world content is registered."
         },
         {
           "id": "kurblanc:destructible_by_mining",
@@ -282,7 +282,7 @@
               "name": "value",
               "type": "array of { item, count, chance? }",
               "default": "no drops",
-              "range": "item IDs, positive counts, chance 0–1",
+              "range": "item IDs, positive counts, chance 0\u20131",
               "notes": "Each entry rolls independently. Omit chance for a guaranteed drop."
             }
           ],
@@ -295,7 +295,7 @@
               }
             ]
           },
-          "behavior": "A non-array, an unknown item or a chance outside 0–1 fails."
+          "behavior": "A non-array, an unknown item or a chance outside 0\u20131 fails."
         },
         {
           "id": "kurblanc:light_emission",
@@ -309,7 +309,7 @@
               "name": "value",
               "type": "integer",
               "default": "none",
-              "range": "1–15",
+              "range": "1\u201315",
               "notes": "0 or less is ignored and leaves the block unlit."
             }
           ],
@@ -477,7 +477,7 @@
               "name": "lift",
               "type": "integer",
               "default": "0",
-              "range": "0–32",
+              "range": "0\u201332",
               "notes": "Top elevation in source pixels."
             },
             {
@@ -494,7 +494,7 @@
               "group": "stone"
             }
           },
-          "behavior": "A lift outside 0–32 fails when the world content is registered."
+          "behavior": "A lift outside 0\u201332 fails when the world content is registered."
         },
         {
           "id": "kurblanc:water",
@@ -514,7 +514,7 @@
               "type": "number",
               "default": "none",
               "range": "greater than 0, less than 1",
-              "notes": "Water tint strength, not the 0–15 light opacity."
+              "notes": "Water tint strength, not the 0\u201315 light opacity."
             }
           ],
           "example": {
@@ -584,7 +584,7 @@
               "name": "vertical_masks",
               "type": "integer[]",
               "default": "none",
-              "range": "each 0–15",
+              "range": "each 0\u201315",
               "notes": "Cardinal masks that use the vertical crop."
             },
             {
@@ -598,7 +598,7 @@
               "name": "contact_shadow",
               "type": "[x, y, rx, ry]",
               "default": "none",
-              "range": "center 0–32, radii 0–16",
+              "range": "center 0\u201332, radii 0\u201316",
               "notes": "Root-contact ellipse."
             },
             {
@@ -634,7 +634,7 @@
               "type": "object",
               "default": "none",
               "range": "{ canopyEnd, leafTextures }",
-              "notes": "canopyEnd is greater than 0 and less than 1; leafTextures holds 1–32 keys."
+              "notes": "canopyEnd is greater than 0 and less than 1; leafTextures holds 1\u201332 keys."
             },
             {
               "name": "tint",
@@ -654,7 +654,7 @@
               "name": "biome_tint_scale",
               "type": "number",
               "default": "1",
-              "range": "0–1",
+              "range": "0\u20131",
               "notes": "Darkens a biome-tinted sprite."
             }
           ],
@@ -676,36 +676,6 @@
             }
           },
           "behavior": "Bad rectangle sizes, masks, shadow values or tint colours fail while the block is parsed."
-        },
-        {
-          "id": "kurblanc:door",
-          "aliases": [],
-          "appliesTo": "block",
-          "summary": "Makes one block file into a working door with a closed and an open texture.",
-          "fields": [
-            {
-              "name": "closed",
-              "type": "string",
-              "default": "none",
-              "range": "a path under textures/",
-              "notes": "Art used while the door is closed and placeable."
-            },
-            {
-              "name": "open",
-              "type": "string",
-              "default": "none",
-              "range": "a path under textures/",
-              "notes": "Art used after the door opens. The loader creates the open state."
-            }
-          ],
-          "example": {
-            "kurblanc:door": {
-              "closed": "textures/blocks/door_wood_closed.png",
-              "open": "textures/blocks/door_wood_open.png"
-            }
-          },
-          "behavior": "Both textures are required. The loader generates the open block from the same file; do not add a second `_open` file.",
-          "documentedOnly": true
         },
         {
           "id": "kurblanc:terrain",
@@ -745,7 +715,7 @@
               "name": "down",
               "type": "integer",
               "default": "none",
-              "range": "1–16",
+              "range": "1\u201316",
               "notes": "How many levels down the support may be."
             }
           ],
@@ -754,12 +724,46 @@
               "down": 1
             }
           },
-          "behavior": "A non-object link, an extra field or a level outside 1–16 fails."
+          "behavior": "A non-object link, an extra field or a level outside 1\u201316 fails."
+        },
+        {
+          "id": "kurblanc:pair",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Groups matching door or gate leaves so they open and close together.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "none",
+              "range": "any non-empty string",
+              "notes": "Both halves use the same value. Requires a kurblanc:toggle on both."
+            }
+          ],
+          "example": {
+            "kurblanc:pair": "mypack:door_wood"
+          },
+          "behavior": "Fails registration with: blocks: (block id).pair needs matching object toggle states. Pair is only valid on object-layer toggles."
+        },
+        {
+          "id": "kurblanc:toggle",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Names the other state of a two-file door or gate.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "none",
+              "range": "namespaced block ID",
+              "notes": "Point at the open file from the closed file, and back at the closed file from the open file."
+            }
+          ],
+          "example": {
+            "kurblanc:toggle": "mypack:door_wood_open"
+          },
+          "behavior": "Fails registration with: blocks: (block id).toggle must reference a block on the same layer."
         }
-      ],
-      "ignoredSourceComponents": [
-        "kurblanc:pair",
-        "kurblanc:toggle"
       ]
     }
   ]

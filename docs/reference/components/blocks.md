@@ -83,7 +83,7 @@ Allows or forbids placing this block from an item.
 
 | Field | Type | Default | Range | Notes |
 |---|---|---|---|---|
-| `value` | boolean | true | true, false | The loader sets this false on the generated open state of a door or gate. |
+| `value` | boolean | true | true, false | The open state of a door or gate sets this to false; the closed state is placeable. |
 
 ```json
 {
@@ -91,7 +91,7 @@ Allows or forbids placing this block from an item.
 }
 ```
 
-**On bad input:** A non-boolean value fails when the world content is registered.
+**On bad input:** kurblanc:placeable must be a boolean. An open toggle state must set it to false.
 
 ## `kurblanc:collision_box`
 
@@ -464,28 +464,6 @@ Describes a raised sprite: crop, offset, depth, shadow and variants.
 
 **On bad input:** Bad rectangle sizes, masks, shadow values or tint colours fail while the block is parsed.
 
-## `kurblanc:door`
-
-**Applies to:** block
-
-Makes one block file into a working door with a closed and an open texture.
-
-| Field | Type | Default | Range | Notes |
-|---|---|---|---|---|
-| `closed` | string | none | a path under textures/ | Art used while the door is closed and placeable. |
-| `open` | string | none | a path under textures/ | Art used after the door opens. The loader creates the open state. |
-
-```json
-{
-  "kurblanc:door": {
-    "closed": "textures/blocks/door_wood_closed.png",
-    "open": "textures/blocks/door_wood_open.png"
-  }
-}
-```
-
-**On bad input:** Both textures are required. The loader generates the open block from the same file; do not add a second `_open` file.
-
 ## `kurblanc:terrain`
 
 **Applies to:** block
@@ -526,3 +504,39 @@ Lets one object sit on another, such as a ladder attached to a wall.
 ```
 
 **On bad input:** A non-object link, an extra field or a level outside 1–16 fails.
+
+## `kurblanc:pair`
+
+**Applies to:** block
+
+Groups matching door or gate leaves so they open and close together.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `value` | string | none | any non-empty string | Both halves use the same value. Requires a kurblanc:toggle on both. |
+
+```json
+{
+  "kurblanc:pair": "mypack:door_wood"
+}
+```
+
+**On bad input:** Fails registration with: blocks: (block id).pair needs matching object toggle states. Pair is only valid on object-layer toggles.
+
+## `kurblanc:toggle`
+
+**Applies to:** block
+
+Names the other state of a two-file door or gate.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `value` | string | none | namespaced block ID | Point at the open file from the closed file, and back at the closed file from the open file. |
+
+```json
+{
+  "kurblanc:toggle": "mypack:door_wood_open"
+}
+```
+
+**On bad input:** Fails registration with: blocks: (block id).toggle must reference a block on the same layer.

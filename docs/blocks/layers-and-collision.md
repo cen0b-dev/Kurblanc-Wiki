@@ -90,23 +90,21 @@ nested pools.
 
 ## Doors and gates
 
-A door is one block file with a `kurblanc:door` component:
+A door is two block files. The closed file is placeable and solid and points at
+the open file:
 
 ```json
 {
   "kurblanc:layer": "object",
   "kurblanc:placeable": true,
   "kurblanc:collision_box": true,
-  "kurblanc:door": {
-    "closed": "textures/blocks/door_wood_closed.png",
-    "open": "textures/blocks/door_wood_open.png"
-  }
+  "kurblanc:toggle": "mypack:door_wood_open"
 }
 ```
 
-`closed` and `open` are texture paths in the asset pack. The loader creates the
-open state from the same file, makes it non-placeable and removes its collision.
-Use one door file per door; do not add a second `_open` file.
+The open file points back at the closed block, sets `kurblanc:placeable` to
+false, and turns collision off. A double door adds `kurblanc:pair` with the same
+value on both leaves so they move together.
 
 ## Reference
 
@@ -114,6 +112,7 @@ See [`kurblanc:layer`](/reference/components/blocks#kurblanc-layer),
 [`kurblanc:collision_box`](/reference/components/blocks#kurblanc-collision-box),
 [`kurblanc:footprint`](/reference/components/blocks#kurblanc-footprint),
 [`kurblanc:destructible_by_mining`](/reference/components/blocks#kurblanc-destructible-by-mining),
-[`kurblanc:drops`](/reference/components/blocks#kurblanc-drops) and
-[`kurblanc:door`](/reference/components/blocks#kurblanc-door) for the field
+[`kurblanc:drops`](/reference/components/blocks#kurblanc-drops),
+[`kurblanc:toggle`](/reference/components/blocks#kurblanc-toggle) and
+[`kurblanc:pair`](/reference/components/blocks#kurblanc-pair) for the field
 tables.

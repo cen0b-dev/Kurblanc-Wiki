@@ -75,8 +75,8 @@ separate presentation folder.
 }
 ```
 
-`kurblanc:format` must be `1`. `description.identifier` is the entity ID; the
-filename should match its local part.
+`kurblanc:format` must be `1`. `description.identifier` is the entity ID; by
+convention the filename matches its local part.
 
 ## Required components
 
