@@ -1,0 +1,73 @@
+@font-face {
+  font-family: Ashen;
+  src: url('/fonts/ashen.woff') format('woff');
+  font-display: block;
+}
+
+:root {
+  --vp-c-bg: #f5f1e6;
+  --vp-c-bg-alt: #ebe5d5;
+  --vp-c-bg-elv: #fffdf6;
+  --vp-c-text-1: #24251f;
+  --vp-c-text-2: #4b4c42;
+  --vp-c-divider: #c9c2ae;
+  --vp-c-brand-1: #7a642f;
+  --vp-c-brand-2: #967c3d;
+  --vp-c-brand-3: #b8a16c;
+  --vp-c-brand-soft: rgba(184, 161, 108, 0.16);
+}
+
+.dark {
+  --vp-c-bg: #10120f;
+  --vp-c-bg-alt: #171914;
+  --vp-c-bg-elv: #1d1f1b;
+  --vp-c-text-1: #ded5bf;
+  --vp-c-text-2: #b8b09a;
+  --vp-c-divider: #3b3c34;
+  --vp-c-brand-1: #c6ac76;
+  --vp-c-brand-2: #b8a16c;
+  --vp-c-brand-3: #d6bf8a;
+  --vp-c-brand-soft: rgba(198, 172, 118, 0.16);
+}
+
+.version-banner {
+  padding: 6px 16px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg-alt);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.version-banner code {
+  color: var(--vp-c-text-1);
+}
+
+.gated-notice {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-left: 3px solid var(--vp-c-brand-2);
+  background: var(--vp-c-brand-soft);
+  font-size: 14px;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+h1 {
+  font-family: Ashen, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+}
+
+.VPHero .name,
+.VPHero .text {
+  font-family: Ashen, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+}
+
+h2,
+.VPSidebarItem .text {
+  letter-spacing: 0.01em;
+}
