@@ -51,8 +51,12 @@ These fire after parsing, when the blocks are registered:
 | `has an unknown layer` | Use `floor`, `wall` or `object`. |
 | `floor … cannot be solid` | Floors are walkable. |
 | `shadow must be sprite on a raised block` | Sprite shadows are for walls and objects. |
-| `toggle must reference a block on the same layer` | Point at the other door/gate state. |
-| `pair needs matching object toggle states` | Give both leaves the same `pair` and a `toggle`. |
+| `kurblanc:door must contain exactly closed and open` | Fix the door component. |
+| `kurblanc:door needs kurblanc:layer "object"` | Doors are object-layer blocks. |
+| `kurblanc:door.closed needs a texture path` | Give the closed state a texture. |
+| `kurblanc:door.<state>.<key> is not a door state field` | Remove the unknown state override. |
+| `the closed door must be placeable` | Do not set `kurblanc:placeable` to false on the base. |
+| `kurblanc:door cannot be combined with kurblanc:toggle` | Remove the old two-file toggle. |
 
 ## Items and recipes
 

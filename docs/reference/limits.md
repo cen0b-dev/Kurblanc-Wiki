@@ -33,8 +33,8 @@ A limit breach rejects the whole pack. Nothing is loaded partially.
 - A block names a PNG under `textures/`.
 - Paths are relative, use `/`, end in `.png`, and contain no `..` segments.
 - Later asset packs win when two supply the same path.
-- A door is two block files that point at each other with `kurblanc:toggle`;
-  both can share one texture sheet with different crops.
+- A door is one block file with `kurblanc:door`; the loader generates its open
+  state.
 
 ## Crops and offsets
 

@@ -540,3 +540,25 @@ Names the other state of a two-file door or gate.
 ```
 
 **On bad input:** Fails registration with: blocks: (block id).toggle must reference a block on the same layer.
+
+## `kurblanc:door`
+
+**Applies to:** block
+
+Turns one block file into a closed/open door pair.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `closed` | string or state object | required | texture path, or an object with texture and optional art overrides | The placed state. A string names its texture; an object can add rect, sprite_offset, vertical_rect, vertical_offset, vertical_masks, height, depth, vertical_depth, footprint and label. |
+| `open` | string or state object | required | texture path, or an object with texture and optional art overrides | The generated open state. Same fields as closed; placeable, collision and opacity are forced off. |
+
+```json
+{
+  "kurblanc:door": {
+    "closed": "textures/blocks/door_closed.png",
+    "open": "textures/blocks/door_open.png"
+  }
+}
+```
+
+**On bad input:** The loader generates (id)_open, cross-links kurblanc:toggle, and forces the open state non-placeable, non-solid and opacity 0. The closed state must be placeable and the layer must be object. Do not add a second _open file.

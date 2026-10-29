@@ -45,6 +45,7 @@ The renderer needs to know how to stitch the art. Pick one:
 | `kurblanc:wall` | Wall | Separate top and front textures, raised |
 | `kurblanc:water` | Water | Floor tile with a visible bed |
 | `kurblanc:object` | Object | Cropped sprite with offset, depth and variants |
+| `kurblanc:door` | Door | Closed and open states from one file |
 
 ### Ground
 
@@ -132,9 +133,26 @@ between 0 and 1, separate from the 0–15 light opacity.
 
 ### Doors
 
-A door is two block files that share one texture sheet and point at each other
-with `kurblanc:toggle`. The closed file uses its crop; the open file uses another
-crop. There is no door texture component.
+A door is one block file with a `kurblanc:door` component. `closed` and `open`
+each name a texture, or an object with a texture plus art overrides:
+
+```json
+{
+  "kurblanc:door": {
+    "closed": "textures/blocks/door_closed.png",
+    "open": {
+      "texture": "textures/blocks/door_sheet.png",
+      "rect": [0, 84, 21, 34],
+      "sprite_offset": [-10, -23],
+      "height": 36
+    }
+  }
+}
+```
+
+The loader generates the open state. Both states can use different crops,
+offsets and height; the open state is always non-placeable, non-solid and
+opacity 0.
 
 ## Variant strips
 
