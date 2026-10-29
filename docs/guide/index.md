@@ -5,7 +5,7 @@ textures; the game discovers it from the pack's folder. You do not edit engine
 code, and you do not update a catalogue.
 
 This wiki documents the **D25** format, verified against build `7050b38`
-(2026-10-28). The public game still runs the earlier format — see
+(2026-10-28). The public game still runs the earlier format. See
 [Legacy catalogues](/reference/legacy-catalogues) if that is what you are
 modding.
 
@@ -18,10 +18,10 @@ modding.
 
 ## The shortest path
 
-1. [Pack anatomy](/guide/pack-anatomy) — the two folders every pack has.
-2. [Your first block](/guide/first-block) — a floor tile from zero to loading.
-3. [Block components](/reference/components/blocks) — the field-by-field table.
-4. [Validation errors](/reference/validation-errors) — when it does not load.
+1. [Pack anatomy](/guide/pack-anatomy): the two folders every pack has.
+2. [Build your first block](/guide/first-block): a floor tile from zero to loading.
+3. [Block components](/reference/components/blocks): the field-by-field table.
+4. [Validation errors](/reference/validation-errors): when it does not load.
 
 ## The two kinds of documentation
 

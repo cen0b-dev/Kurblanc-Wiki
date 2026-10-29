@@ -37,17 +37,17 @@ not set and are advisory in CI.
 
 ## The rules
 
-- **The parser is the source of truth.** If the design prose and
+- The parser is the source of truth: if the design prose and
   `src/world/block-parse.ts` disagree, document what the parser does and note the
   difference.
-- **Do not hand-edit generated pages.** `docs/reference/components/*.md` comes from
+- Do not hand-edit generated pages. `docs/reference/components/*.md` comes from
   `data/components.json`. Edit the manifest, then `npm run gen`.
-- **Do not duplicate field tables in guides.** Link to the reference entry.
-- **Every JSON fence must parse.** `npm run check:snippets` enforces it.
-- **Pin the build.** Pages describe one build at a time. Do not write "latest".
-- **No copied prose or assets.** The structure follows other wikis; the words and
+- Do not duplicate field tables in guides. Link to the reference entry.
+- Every JSON fence must parse. `npm run check:snippets` enforces it.
+- Pin the build. Pages describe one build at a time. Do not write "latest".
+- No copied prose or assets. The structure follows other wikis; the words and
   art are Kurblanc's.
-- **Gate unreleased UI.** A page describing a feature that is not in the public
+- Gate unreleased UI: a page describing a feature that is not in the public
   build gets `gated: true` in its frontmatter.
 
 ## When the format changes

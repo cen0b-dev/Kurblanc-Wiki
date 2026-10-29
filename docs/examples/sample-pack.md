@@ -22,10 +22,11 @@ will replace this page's warning; until then, this page stays gated.
 - Copying art proportions and archetype choices.
 - Comparing your converted pack against a complete content set.
 
-## What it is not
+## Limits
 
-- A D25 template. Do not copy its catalogue files into a new pack.
-- A download the public game can install yet.
+- The release is pre-D25, so convert it before loading it in a D25 build.
+- Start new packs from the fixture pack instead of copying its catalogue files.
+- Installing it needs a D25 build with the pack manager.
 
 ## Next
 

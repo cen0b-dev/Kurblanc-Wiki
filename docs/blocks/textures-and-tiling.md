@@ -34,8 +34,9 @@ Each instance can carry a crop and a tint:
 }
 ```
 
-`rect` is `[x, y, width, height]` with a nonnegative origin and positive size. A
-bad crop fails with the component path.
+`rect` is `[x, y, width, height]` with a nonnegative origin and positive size.
+
+A bad crop fails with the component path.
 
 ## Archetypes
 
@@ -131,8 +132,9 @@ Windows and fences use the same wall layer and the same combined-sheet layout.
 
 ## Reference
 
-- [`kurblanc:material_instances`](/reference/components/blocks#kurblanc-material-instances)
-- [`kurblanc:ground`](/reference/components/blocks#kurblanc-ground)
-- [`kurblanc:surface`](/reference/components/blocks#kurblanc-surface)
-- [`kurblanc:wall`](/reference/components/blocks#kurblanc-wall)
-- [`kurblanc:object`](/reference/components/blocks#kurblanc-object)
+See [`kurblanc:material_instances`](/reference/components/blocks#kurblanc-material-instances),
+[`kurblanc:ground`](/reference/components/blocks#kurblanc-ground),
+[`kurblanc:surface`](/reference/components/blocks#kurblanc-surface),
+[`kurblanc:wall`](/reference/components/blocks#kurblanc-wall) and
+[`kurblanc:object`](/reference/components/blocks#kurblanc-object) for the field
+tables.

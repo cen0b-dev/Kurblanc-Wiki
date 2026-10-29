@@ -65,10 +65,10 @@ Every definition has a namespaced identifier:
 The namespace is yours; `kurblanc` belongs to the built-in pack. The local part
 is lower snake case. The file's basename must equal the local part:
 `LP/blocks/stone_tile.json` defines `mypack:stone_tile` (or
-`kurblanc:stone_tile` — the namespace is not in the filename).
+`kurblanc:stone_tile`; the namespace is not in the filename).
 
-Every reference — drops, recipe stacks, water beds, block placers, spawn floors —
-uses the full namespaced ID. A bare name is an error, not an implicit
+Every reference uses the full namespaced ID: drops, recipe stacks, water beds,
+block placers, spawn floors. A bare name is an error, not an implicit
 `kurblanc:` prefix.
 
 ## What is deliberately absent
@@ -93,6 +93,6 @@ boot; changing it reloads the page into the new set.
 
 ## Next
 
-- [Your first block](/guide/first-block)
+- [Build your first block](/guide/first-block)
 - [Layers and collision](/blocks/layers-and-collision)
 - [Reference: block components](/reference/components/blocks)

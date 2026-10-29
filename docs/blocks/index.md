@@ -43,9 +43,9 @@ A door is still one file. Add `kurblanc:toggle_states` with `closed` and `open`
 objects; the loader generates the base block and `${id}_open`, cross-links them,
 and refuses an open state that can be placed. That is the whole pattern.
 
-## What a block is not
+## Block, item and texture are separate
 
-- A block is not its item. Add `LP/items/<id>.json` with
-  `kurblanc:block_placer` if the player should hold and place it.
-- A block is not its texture. The definition names an AP path; an asset pack can
-  replace that path without touching the logic file.
+- A block becomes holdable when you add `LP/items/<id>.json` with
+  `kurblanc:block_placer`.
+- A block names its texture by AP path, so an asset pack can replace that path
+  without touching the logic file.

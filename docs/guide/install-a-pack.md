@@ -6,7 +6,7 @@ gated: true
 
 This page describes the D25 pack manager. The public build does not ship it yet;
 until it does, use a development build and a dev folder (see
-[Your first block](/guide/first-block)).
+[Build your first block](/guide/first-block)).
 
 ## Three kinds of download
 

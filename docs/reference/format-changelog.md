@@ -4,7 +4,7 @@ This wiki documents one build at a time. There is no invented release number: th
 game has no public version that matches a pack format, so the build commit and
 date are the identity.
 
-## D25 — build `7050b38` — 2026-10-28
+## D25, build `7050b38`, 2026-10-28
 
 The current documented format.
 
@@ -28,7 +28,7 @@ The current documented format.
 The D25 design also introduced the pack manager and zip import. Those pages are
 marked **not in the public build yet** until the build ships.
 
-## Pre-D25 — the public build and `Kurblanc-Samples` `v0.2.0`
+## Pre-D25: the public build and `Kurblanc-Samples` `v0.2.0`
 
 The public game still loads an intermediate format:
 
@@ -39,5 +39,5 @@ The public game still loads an intermediate format:
 - Items and entities are already per-file, but use the older item shape.
 - `LP/recipes/` and `LP/worldgen/` may be present in the sample pack.
 
-This is **not** the format the wiki documents. Use
-[Legacy catalogues](/reference/legacy-catalogues) to convert.
+The wiki documents D25. Use
+[Legacy catalogues](/reference/legacy-catalogues) to convert this older format.
