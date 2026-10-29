@@ -117,6 +117,11 @@ There is no `LP/blocks.json`, `LP/items.json` or `LP/mobs.json` catalogue, and n
 `AP/textures/entity_texture.json`. The loader lists the folders. If you add a
 file, it loads; if you delete it, it is gone.
 
+The one shared asset map is `AP/textures/terrain_texture.json`. It assigns a short
+key to a PNG and can declare a strip `cell` for variant sprites. A block can also
+name a PNG path directly in `kurblanc:material_instances`, which is what the
+built-in pack does.
+
 ## Where packs live
 
 - **Linked folder.** In Workshop, **Link a folder** points the game at a folder

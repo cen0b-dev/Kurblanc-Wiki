@@ -1,8 +1,7 @@
 # Start here
 
 Kurblanc content is data. A block, item, recipe or entity is a JSON file plus its
-art; the game finds it in the pack folder. You do not edit engine code, and you do
-not update a catalogue.
+art; the game finds it in the pack folder. You do not edit engine code.
 
 An add-on has two halves:
 
@@ -36,4 +35,5 @@ your logic with their own art.
   `LP/blocks/stone_tile.json` defines `mypack:stone_tile`.
 - Art is named through a texture key in `AP/textures/terrain_texture.json`, not by
   a file path inside the block file.
-- No catalogues. Adding a file is how you add content.
+- No block, item or mob catalogue. Adding a definition file is how you add
+  content. Shared texture keys live in `AP/textures/terrain_texture.json`.
