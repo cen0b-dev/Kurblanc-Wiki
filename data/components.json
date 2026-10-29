@@ -1,0 +1,536 @@
+{
+  "format": "D25",
+  "groups": [
+    {
+      "id": "blocks",
+      "title": "Block components",
+      "components": [
+        {
+          "id": "kurblanc:layer",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Chooses the tile layer the block occupies and therefore how it is drawn and collided with.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "floor",
+              "range": "floor, wall, object",
+              "notes": "Defaults to wall when kurblanc:wall is present, otherwise floor. Not validated by the block parser."
+            }
+          ],
+          "example": { "kurblanc:layer": "wall" },
+          "behavior": "An unknown value is not a load error; the renderer decides what to do with it. Use one of the three documented names."
+        },
+        {
+          "id": "kurblanc:color",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Fallback colour used for block previews, particles and light when no light colour is given.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "#ffffff",
+              "range": "#rrggbb",
+              "notes": "Six hexadecimal digits; three-digit shorthand is rejected."
+            }
+          ],
+          "example": { "kurblanc:color": "#a9824f" },
+          "behavior": "kurblanc:color must be a #rrggbb string."
+        },
+        {
+          "id": "kurblanc:label",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Human-readable name shown in the inventory, tooltips and error messages.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "The local ID with underscores replaced by spaces",
+              "range": "any non-empty string",
+              "notes": "Falls back to the local part of the identifier when omitted."
+            }
+          ],
+          "example": { "kurblanc:label": "Wood wall" },
+          "behavior": "kurblanc:label must be a string."
+        },
+        {
+          "id": "kurblanc:placeable",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Allows or forbids placing this block from an item. Door and gate states use it to make the open state unplaceable.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "boolean",
+              "default": "true",
+              "range": "true, false",
+              "notes": "The closed state of a toggle pair must be placeable; the open state must set it to false."
+            }
+          ],
+          "example": { "kurblanc:placeable": false },
+          "behavior": "kurblanc:placeable must be a boolean. A toggle's open state must set it to false, and its closed state must not."
+        },
+        {
+          "id": "kurblanc:collision_box",
+          "aliases": ["minecraft:collision_box"],
+          "appliesTo": "block",
+          "summary": "Marks the block solid for the player, mobs and placement checks.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "boolean",
+              "default": "true",
+              "range": "true, false",
+              "notes": "Independent of light opacity. Floors are walkable even when solid is false."
+            }
+          ],
+          "example": { "kurblanc:collision_box": true },
+          "behavior": "kurblanc:collision_box must be a boolean."
+        },
+        {
+          "id": "kurblanc:opacity",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "How much sky and block light the tile absorbs, on the same 0–15 scale as light emission.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "default": "0",
+              "range": "0–15",
+              "notes": "0 is fully transparent, 15 blocks all light. This is not collision."
+            }
+          ],
+          "example": { "kurblanc:opacity": 15 },
+          "behavior": "kurblanc:opacity must be an integer 0-15."
+        },
+        {
+          "id": "kurblanc:destructible_by_mining",
+          "aliases": ["minecraft:destructible_by_mining"],
+          "appliesTo": "block",
+          "summary": "Sets how long the block takes to mine.",
+          "fields": [
+            {
+              "name": "seconds_to_destroy",
+              "type": "number",
+              "default": "Unbreakable when the component is omitted",
+              "range": "greater than 0",
+              "notes": "Stored as tenths of a second; 1.2 becomes 12 ticks of hardness."
+            }
+          ],
+          "example": { "kurblanc:destructible_by_mining": { "seconds_to_destroy": 1.2 } },
+          "behavior": "seconds_to_destroy must be positive. The component may also be set to false, which leaves the block unbreakable."
+        },
+        {
+          "id": "kurblanc:light_emission",
+          "aliases": ["minecraft:light_emission"],
+          "appliesTo": "block",
+          "summary": "Makes the block a light source.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "integer",
+              "default": "No light when omitted",
+              "range": "1–15",
+              "notes": "The light colour comes from kurblanc:light_color, then kurblanc:color."
+            }
+          ],
+          "example": { "kurblanc:light_emission": 8 },
+          "behavior": "kurblanc:light_emission must be an integer 1-15."
+        },
+        {
+          "id": "kurblanc:light_color",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Sets the colour of the light emitted by the block.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "The block's kurblanc:color",
+              "range": "#rrggbb",
+              "notes": "Only read when kurblanc:light_emission is present. Not validated by the block parser; use six hexadecimal digits."
+            }
+          ],
+          "example": { "kurblanc:light_color": "#ffb45a" },
+          "behavior": "No parser-level check here. A malformed colour can reach the renderer; keep it to #rrggbb."
+        },
+        {
+          "id": "kurblanc:drops",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Lists the items awarded when the block is mined.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "array of { item, count }",
+              "default": "No drops",
+              "range": "items must be namespaced and defined in an active logic pack",
+              "notes": "Validated after every pack loads, because the item definitions may come from another pack."
+            }
+          ],
+          "example": { "kurblanc:drops": [{ "item": "kurblanc:wood", "count": 8 }] },
+          "behavior": "kurblanc:drops must be an array. A missing item or a bare ID fails validation and names the block file."
+        },
+        {
+          "id": "kurblanc:material_instances",
+          "aliases": ["minecraft:material_instances"],
+          "appliesTo": "block",
+          "summary": "Binds the block to its texture and optional crop.",
+          "fields": [
+            {
+              "name": "*.texture",
+              "type": "string",
+              "default": "None",
+              "range": "AP path ending in .png, under textures/",
+              "notes": "The * key is the primary face; up is accepted as an alternative. No .. segments."
+            },
+            {
+              "name": "*.rect",
+              "type": "[x, y, width, height]",
+              "default": "The whole image",
+              "range": "nonnegative origin, positive size",
+              "notes": "Crops the primary texture on its sheet."
+            },
+            {
+              "name": "*.tint",
+              "type": "string",
+              "default": "None",
+              "range": "#rrggbb",
+              "notes": "Multiplies the texture colour."
+            },
+            {
+              "name": "front.texture",
+              "type": "string",
+              "default": "None",
+              "range": "AP path ending in .png, under textures/",
+              "notes": "Legacy separate front face. D25 walls use one combined sheet instead."
+            }
+          ],
+          "example": {
+            "kurblanc:material_instances": {
+              "*": { "texture": "textures/blocks/wood_wall.png" }
+            }
+          },
+          "behavior": "A bad path fails with: must be an AP path such as \"textures/blocks/stone.png\". A bad crop fails the rect rule."
+        },
+        {
+          "id": "kurblanc:ground",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Selects the ground autotiling archetype and its natural-terrain options.",
+          "fields": [
+            {
+              "name": "random_rotate",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Rotates plain fills and connected interiors by stable quarter-turns."
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "default": "None",
+              "range": "any string",
+              "notes": "Connects variants of the same material for tiling."
+            },
+            {
+              "name": "substrate",
+              "type": "string",
+              "default": "None",
+              "range": "a block ID",
+              "notes": "The material this ground is placed on."
+            },
+            {
+              "name": "tint",
+              "type": "string",
+              "default": "None",
+              "range": "#rrggbb",
+              "notes": "Not validated here; use a six-digit colour."
+            },
+            {
+              "name": "biome_tint",
+              "type": "boolean",
+              "default": "false",
+              "range": "true",
+              "notes": "Recolours natural ground per tile from the generator's biome tint. Only true enables it."
+            }
+          ],
+          "example": {
+            "kurblanc:ground": { "random_rotate": true, "group": "grass", "biome_tint": true }
+          },
+          "behavior": "The component must be an object. Values are coerced rather than rejected; keep to the documented types."
+        },
+        {
+          "id": "kurblanc:surface",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Selects the 47-shape construction surface autotiling archetype.",
+          "fields": [
+            {
+              "name": "group",
+              "type": "string",
+              "default": "None",
+              "range": "any string",
+              "notes": "Connects variants of the same surface material."
+            }
+          ],
+          "example": { "kurblanc:surface": { "group": "woodfloor" } },
+          "behavior": "The component must be an object. A surface and a ground component on the same block: surface wins because it is read later."
+        },
+        {
+          "id": "kurblanc:wall",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Selects the raised wall archetype and its one-sheet top/front art.",
+          "fields": [
+            {
+              "name": "lift",
+              "type": "integer",
+              "default": "18",
+              "range": "0–32",
+              "notes": "Wall top elevation in source pixels."
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "default": "None",
+              "range": "any string",
+              "notes": "Connects wall variants for autotiling."
+            },
+            {
+              "name": "top_rect",
+              "type": "[x, y, width, height]",
+              "default": "(0, 0, 192, 64)",
+              "range": "nonnegative origin, positive size",
+              "notes": "Escape hatch for a top region that is not in the standard position."
+            },
+            {
+              "name": "front_rect",
+              "type": "[x, y, width, height]",
+              "default": "(0, 64, 64, 19)",
+              "range": "nonnegative origin, positive size",
+              "notes": "Escape hatch for a front strip that is not in the standard position."
+            }
+          ],
+          "example": {
+            "kurblanc:wall": { "lift": 18, "group": "wall", "top_rect": [0, 0, 192, 64], "front_rect": [0, 64, 64, 19] }
+          },
+          "behavior": "Lift must be an integer 0-32. Rect overrides must be valid crops. Without a front region the wall draws top-only."
+        },
+        {
+          "id": "kurblanc:water",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Makes a floor tile behave as water with a visible submerged bed.",
+          "fields": [
+            {
+              "name": "bed",
+              "type": "string",
+              "default": "None",
+              "range": "namespaced block ID",
+              "notes": "The floor material seen through the water."
+            },
+            {
+              "name": "opacity",
+              "type": "number",
+              "default": "None",
+              "range": "0–1",
+              "notes": "Water tint strength, not the light opacity component."
+            }
+          ],
+          "example": { "kurblanc:water": { "bed": "kurblanc:sand", "opacity": 0.6 } },
+          "behavior": "kurblanc:water.bed must be a namespaced block ID. kurblanc:water.opacity must be from 0 to 1."
+        },
+        {
+          "id": "kurblanc:object",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Selects the raised-object archetype, including sprite crops, depth and foliage.",
+          "fields": [
+            {
+              "name": "height",
+              "type": "number",
+              "default": "0",
+              "range": "any number",
+              "notes": "Visual height in source pixels. Does not change collision."
+            },
+            {
+              "name": "shadow",
+              "type": "string",
+              "default": "None",
+              "range": "sprite",
+              "notes": "The only accepted value is sprite, which projects the sprite alpha."
+            },
+            {
+              "name": "contact_shadow",
+              "type": "[x, y, width, height]",
+              "default": "None",
+              "range": "radii 0–16",
+              "notes": "A root-contact ellipse for objects that should not use the full sprite silhouette."
+            },
+            {
+              "name": "sprite_offset",
+              "type": "[x, y]",
+              "default": "[0, 0]",
+              "range": "any finite numbers",
+              "notes": "Moves the sprite relative to the tile."
+            },
+            {
+              "name": "rect",
+              "type": "[x, y, width, height]",
+              "default": "The whole texture",
+              "range": "nonnegative origin, positive size",
+              "notes": "Crops the object from its sheet."
+            },
+            {
+              "name": "vertical_rect",
+              "type": "[x, y, width, height]",
+              "default": "None",
+              "range": "nonnegative origin, positive size",
+              "notes": "Alternate crop used when the object is drawn on a vertical face."
+            },
+            {
+              "name": "vertical_offset",
+              "type": "[x, y]",
+              "default": "[0, 0]",
+              "range": "any finite numbers",
+              "notes": "Offset for the vertical-face crop."
+            },
+            {
+              "name": "vertical_masks",
+              "type": "array of integers",
+              "default": "None",
+              "range": "each 0–15",
+              "notes": "Cardinal masks selecting which vertical faces use the alternate crop."
+            },
+            {
+              "name": "depth",
+              "type": "number",
+              "default": "0",
+              "range": "any number",
+              "notes": "Draw-order offset for the ground-layer sprite."
+            },
+            {
+              "name": "vertical_depth",
+              "type": "number",
+              "default": "0",
+              "range": "any number",
+              "notes": "Draw-order offset for the vertical-face sprite."
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "default": "None",
+              "range": "any string",
+              "notes": "Groups variants for shared rendering behaviour."
+            },
+            {
+              "name": "random_flip",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Horizontally mirrors the sprite from a stable tile hash."
+            },
+            {
+              "name": "variant_rects",
+              "type": "array of [x, y, width, height]",
+              "default": "None",
+              "range": "each a valid crop",
+              "notes": "Additional sprite variants sharing the same placement."
+            },
+            {
+              "name": "foliage.canopyEnd",
+              "type": "number",
+              "default": "None",
+              "range": "greater than 0 and less than 1",
+              "notes": "Fraction of the sprite treated as canopy. Field name is camelCase."
+            },
+            {
+              "name": "foliage.leafTextures",
+              "type": "array of strings",
+              "default": "None",
+              "range": "1–32 AP texture paths",
+              "notes": "Leaf art used for ambient flutter. Field name is camelCase."
+            }
+          ],
+          "example": {
+            "kurblanc:object": {
+              "height": 10,
+              "sprite_offset": [6, -7],
+              "rect": [6, 0, 5, 16],
+              "depth": 1
+            }
+          },
+          "behavior": "Crops, offsets, masks and foliage ranges are checked. Bad rects, masks or foliage fail with the component path."
+        },
+        {
+          "id": "kurblanc:pair",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Links matching toggleable blocks so they open and close together.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "None",
+              "range": "any string",
+              "notes": "Both halves of a double door use the same pair value."
+            }
+          ],
+          "example": { "kurblanc:pair": "door" },
+          "behavior": "kurblanc:pair must be a string."
+        },
+        {
+          "id": "kurblanc:toggle_states",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Turns one door or gate definition into the closed block and its generated open state.",
+          "fields": [
+            {
+              "name": "closed",
+              "type": "object of components",
+              "default": "None",
+              "range": "required",
+              "notes": "Overrides shared components for the closed state. Must remain placeable."
+            },
+            {
+              "name": "open",
+              "type": "object of components",
+              "default": "None",
+              "range": "required",
+              "notes": "Overrides shared components for the open state. Must set kurblanc:placeable to false."
+            }
+          ],
+          "example": {
+            "kurblanc:toggle_states": {
+              "closed": { "kurblanc:placeable": true, "kurblanc:collision_box": true },
+              "open": { "kurblanc:placeable": false, "kurblanc:collision_box": false }
+            }
+          },
+          "behavior": "Must contain exactly closed and open. The loader generates `${identifier}_open`, cross-links kurblanc:toggle, and refuses a placeable open state or an unplaceable closed state."
+        },
+        {
+          "id": "kurblanc:toggle",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "The ID of the other state in a door or gate pair.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "Generated",
+              "range": "namespaced block ID",
+              "notes": "Written by the loader when it expands kurblanc:toggle_states. Do not author it by hand."
+            }
+          ],
+          "example": { "kurblanc:toggle": "kurblanc:door_wood_open" },
+          "behavior": "Generated and cross-linked by the loader. An authored value is overwritten for a toggle pair."
+        }
+      ]
+    }
+  ]
+}
