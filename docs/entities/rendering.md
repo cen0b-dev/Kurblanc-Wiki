@@ -1,13 +1,11 @@
 # Entity rendering
 
-An entity's presentation is a set of animation strips. You can put it in the
-entity file as `kurblanc:render`, or in the asset pack as
-`AP/presentation/entities/<name>.json`. The asset-pack form is the same object
-with an `entity` field added.
+An entity's animation strips live in the `kurblanc:render` component inside
+`LP/entities/<id>.json`. There is no separate presentation file in the asset
+pack.
 
 ```json
 {
-  "entity": "mypack:wisp",
   "pixelScale": 2,
   "feet": 0,
   "alpha": 1,
@@ -96,12 +94,34 @@ Strip paths are pack-relative, end in `.png`, and are resolved through the activ
 asset packs. No `..` and no leading slash. The art does not need a
 `terrain_texture.json` entry; naming the file is enough.
 
-## Inline or asset-pack
+## Player
 
-Inline `kurblanc:render` keeps the entity and its art in one file and is the
-quickest way to start. A `presentation/entities/<name>.json` file is useful when
-an asset pack retextures an entity it does not own, because the presentation can
-change without editing the logic file.
+The player uses the same strip shape in `LP/player.json`, wrapped in
+`kurblanc:player`:
+
+```json
+{
+  "kurblanc:player": {
+    "pixelScale": 2,
+    "strips": {
+      "idle": {
+        "texture": "textures/player/idle.png",
+        "cell": [20, 32],
+        "frames": 1,
+        "fps": 1,
+        "loop": true
+      },
+      "walk": {
+        "texture": "textures/player/walk.png",
+        "cell": [20, 32],
+        "frames": 4,
+        "fps": 9.6,
+        "loop": true
+      }
+    }
+  }
+}
+```
 
 ## Validation
 

@@ -17,8 +17,8 @@ my-addon/
     manifest.json
     textures/blocks/*.png
     textures/items/*.png
-    presentation/entities/<name>.json
-    presentation/player.json
+    textures/entities/*.png
+    textures/player/*.png
     sounds.json
     music.json
 ```

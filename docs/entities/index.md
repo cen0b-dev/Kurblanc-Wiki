@@ -1,9 +1,9 @@
 # Entities
 
 An entity is one JSON file in `LP/entities/`. It defines the simulation:
-health, movement, collision, behaviour, combat, spawning and loot. Its art can
-live in the same file as a `kurblanc:render` component, or in an asset pack
-presentation file.
+health, movement, collision, behaviour, combat, spawning and loot. Its animation
+strips live in the same file as a `kurblanc:render` component; there is no
+separate presentation folder.
 
 ```json
 {
@@ -150,7 +150,7 @@ through a mask; every animation then needs a `mask` path.
 
 ## Rendering
 
-`kurblanc:render` is the inline presentation. It accepts `pixelScale` 1–4
+`kurblanc:render` is the inline render component. It accepts `pixelScale` 1–4
 (default 2), `feet` 0–32, `alpha` 0.05–1, `variantMode` `none` / `tint` / `mask`,
 `sourceFacing` `left` / `right`, and `strips`.
 
@@ -160,8 +160,9 @@ horizontal row with a one-pixel transparent gap between cells. Its width is
 `cell.width * frames + (frames - 1)` and its height is `cell.height`. A missing
 action falls back to `idle`.
 
-The same presentation can live in `AP/presentation/entities/<name>.json` with an
-`entity` field. See [Entity rendering](/entities/rendering).
+`kurblanc:render` names its own texture strips. There is no `AP/presentation`
+folder; the strips are part of the entity definition. See
+[Entity rendering](/entities/rendering).
 
 ## Loot and sound
 

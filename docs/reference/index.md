@@ -15,7 +15,7 @@ loader accepts.
 | [Recipes](/items/recipes) | `LP/recipes/<id>.json` ingredients and output |
 | [Drops & loot](/items/drops) | Block drops and `LP/loot_tables/` |
 | [Entities](/entities/) | `LP/entities/<id>.json` behaviour, combat and spawning |
-| [Entity rendering](/entities/rendering) | Animation strips, masks and presentation |
+| [Entity rendering](/entities/rendering) | Animation strips and masks |
 | [Worldgen settings](/worldgen/) | `LP/worldgen/settings.json` |
 | [Biomes](/worldgen/biomes) | `LP/worldgen/biomes/<id>.json` |
 | [Validation errors](/reference/validation-errors) | The messages you will actually see |
