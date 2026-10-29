@@ -15,17 +15,19 @@ if (!game) {
   process.exit(0)
 }
 
-const parserPath = resolve(game, 'src/world/block-parse.ts')
-let parseBlockFile
+const parserPath = resolve(game, 'src/world/bedrock-pack.ts')
+let parseBedrockBlock
+let parseTerrainTexture
 try {
-  ;({ parseBlockFile } = await import(pathToFileURL(parserPath).href))
+  ;({ parseBedrockBlock, parseTerrainTexture } = await import(pathToFileURL(parserPath).href))
 } catch (error) {
   console.error(`could not import ${parserPath}: ${error.message}`)
   console.error('Node 24 strips types on import; use node --experimental-strip-types if needed.')
   process.exit(1)
 }
 
-const fixtureDir = join(root, 'fixtures/full-pack/LP/blocks')
+const fixture = join(root, 'fixtures/full-pack')
+const fixtureDir = join(fixture, 'LP/blocks')
 const names = (await readdir(fixtureDir)).filter((name) => name.endsWith('.json')).sort()
 const failures = []
 let definitions = 0
@@ -33,21 +35,21 @@ let definitions = 0
 for (const name of names) {
   const raw = JSON.parse(await readFile(join(fixtureDir, name), 'utf8'))
   try {
-    const parsed = parseBlockFile(raw, `LP/blocks/${name}`)
-    if (!parsed.defs.length) throw new Error('returned no definitions')
-    definitions += parsed.defs.length
-    if (name === 'door.json' && parsed.defs.length !== 2) {
-      throw new Error(`expected 2 definitions for a toggle, got ${parsed.defs.length}`)
-    }
-    for (const def of parsed.defs) {
-      if (!/^[a-z0-9_]+:[a-z0-9_]+$/.test(def.id)) throw new Error(`un-namespaced id ${def.id}`)
-    }
-    if (name === 'door.json' && !parsed.defs.some((def) => def.id.endsWith('_open'))) {
-      throw new Error('toggle did not generate an _open state')
-    }
+    const { def } = parseBedrockBlock(raw, 'kurblanc', `LP/blocks/${name}`)
+    if (!def?.id) throw new Error('returned no block definition')
+    definitions += 1
+    if (!/^[a-z0-9_]+:[a-z0-9_]+$/.test(def.id)) throw new Error(`un-namespaced id ${def.id}`)
   } catch (error) {
     failures.push(`${name}: ${error.message}`)
   }
+}
+
+try {
+  const catalog = JSON.parse(await readFile(join(fixture, 'AP/textures/terrain_texture.json'), 'utf8'))
+  const parsed = parseTerrainTexture(catalog, 'memory://fixture/')
+  if (!parsed.sources.tile) throw new Error('missing "tile" texture key')
+} catch (error) {
+  failures.push(`AP/textures/terrain_texture.json: ${error.message}`)
 }
 
 if (failures.length) {

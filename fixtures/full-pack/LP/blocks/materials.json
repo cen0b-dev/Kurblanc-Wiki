@@ -1,15 +1,14 @@
 {
-  "format_version": "1.21.0",
+  "kurblanc:format": 1,
   "kurblanc:block": {
     "description": { "identifier": "kurblanc:materials" },
     "components": {
       "kurblanc:material_instances": {
         "*": {
-          "texture": "textures/blocks/tile.png",
-          "rect": [0, 0, 1, 1],
-          "tint": "#a9824f"
+          "texture": "tile",
+          "rect": [0, 0, 1, 1]
         },
-        "front": { "texture": "textures/blocks/tile.png" }
+        "front": { "texture": "tile" }
       }
     }
   }

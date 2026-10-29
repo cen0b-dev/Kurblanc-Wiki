@@ -4,7 +4,7 @@ import version from '../../../data/version.json'
 
 <template>
   <div class="version-banner">
-    Documents the {{ version.format }} content format
+    Documents Kurblanc {{ version.version }}
     <span aria-hidden="true">·</span>
     build <code>{{ version.gameCommit }}</code>
     <span aria-hidden="true">·</span>

@@ -1,8 +1,9 @@
 {
-  "format_version": "1.21.0",
+  "kurblanc:format": 1,
   "kurblanc:block": {
     "description": { "identifier": "kurblanc:object" },
     "components": {
+      "kurblanc:layer": "object",
       "kurblanc:object": {
         "height": 10,
         "shadow": "sprite",
@@ -16,10 +17,11 @@
         "vertical_depth": 2,
         "group": "tree",
         "random_flip": true,
-        "variant_rects": [[0, 0, 1, 1], [1, 0, 1, 1]],
+        "sway": true,
+        "variant_weights": [1, 2],
         "foliage": {
           "canopyEnd": 0.7,
-          "leafTextures": ["textures/blocks/tile.png"]
+          "leafTextures": ["tile"]
         }
       }
     }

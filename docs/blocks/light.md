@@ -17,12 +17,12 @@ light.
 }
 ```
 
-`light_emission` is an integer from 1 to 15. The colour is a `#rrggbb` string; if
-you omit it, the block's `kurblanc:color` is used. A torch is a small object with
-emission 8; a crystal wall might be 4.
+`light_emission` is an integer from 1 to 15. The colour is `#rrggbb`; if you omit
+it, `kurblanc:color` is used. A torch is a small object with emission 8; a crystal
+wall might be 4.
 
 Emission lights the block's own tile at that level and propagates outward. Light
-levels fall with distance and with the opacity of the tiles it crosses.
+falls with distance and with the opacity of the tiles it crosses.
 
 ## Blocking
 
@@ -33,18 +33,14 @@ levels fall with distance and with the opacity of the tiles it crosses.
 ```
 
 `opacity` is an integer from 0 to 15. `0` is fully transparent; `15` stops light
-dead. A tile's effective opacity is the highest of its three layers, so a solid
-wall above a floor controls how much light reaches the floor.
+dead. A tile's effective opacity is the highest of its layers, so a solid wall
+above a floor controls how much light reaches the floor.
 
 ## Daylight
 
-Sky light is separate from block light. During the day, surface tiles receive
-sky light; the level falls with depth, time of day and the opacity of what is
-above. Underground, only emitters keep a room lit.
-
-That is the design pressure behind torches: they are permanent, they cost a
-placement, and a cave with two of them should read as lit without flattening the
-dark around them.
+Sky light is separate from block light. During the day, surface tiles receive sky
+light; the level falls with depth, time of day and the opacity of what is above.
+Underground, only emitters keep a room lit.
 
 ## Reference
 

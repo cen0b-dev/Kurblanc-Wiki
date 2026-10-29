@@ -42,12 +42,12 @@ function renderComponent(component) {
   return lines.join('\n')
 }
 
-function renderGroup(group, manifest) {
+function renderGroup(group) {
   return [
     '<!-- generated: do not edit -->',
     `# ${group.title}`,
     '',
-    `Generated from \`data/components.json\` for ${manifest.format}. Do not edit this page by hand; edit the manifest and run \`npm run gen\`.`,
+    'Generated from `data/components.json`. Do not edit this page by hand; edit the manifest and run `npm run gen`.',
     '',
     ...group.components.map(renderComponent),
   ].join('\n').replace(/\n+$/, '\n')
@@ -58,7 +58,7 @@ let failures = 0
 
 for (const group of manifest.groups) {
   const target = join(root, 'docs', 'reference', 'components', `${group.id}.md`)
-  const rendered = renderGroup(group, manifest)
+  const rendered = renderGroup(group)
 
   if (check) {
     let existing = null

@@ -29,7 +29,7 @@ export default defineConfig({
         items: [
           { text: 'Start here', link: '/guide/' },
           { text: 'Pack anatomy', link: '/guide/pack-anatomy' },
-          { text: 'Install a pack', link: '/guide/install-a-pack' },
+          { text: 'Load a pack', link: '/guide/load-a-pack' },
           { text: 'Your first block', link: '/guide/first-block' },
         ],
       },
@@ -49,8 +49,7 @@ export default defineConfig({
           { text: 'Block components', link: '/reference/components/blocks' },
           { text: 'Validation errors', link: '/reference/validation-errors' },
           { text: 'Limits', link: '/reference/limits' },
-          { text: 'Format changelog', link: '/reference/format-changelog' },
-          { text: 'Legacy catalogues', link: '/reference/legacy-catalogues' },
+          { text: 'Changelog', link: '/reference/changelog' },
         ],
       },
       {

@@ -1,11 +1,15 @@
 # Kurblanc Creator Wiki
 
 Public, task-oriented documentation for adding content to Kurblanc: blocks,
-walls, doors, items, recipes, entities and player art.
+walls, doors, items and recipes, the packs that carry them, and the textures they
+use.
 
-The site documents the **D25 content format**, verified against the game build
-at commit `7050b38` (2026-10-28). The public game and the current sample pack
-are still on the earlier format; pages that depend on unreleased game UI say so.
+The site describes the current content format: two packs (`LP/` for logic, `AP/`
+for assets), one manifest each, and a definition file per thing.
+
+It is pinned to **Kurblanc 0.2.0**, build `87efd64` (2026-10-29). The banner text
+comes from `data/version.json`; change that file and the changelog together when
+you re-verify against a new build.
 
 ## Local development
 
@@ -26,8 +30,8 @@ GAME_DIR=~/Kurblonc npm run check:fixture
 ```
 
 `check:drift` and `check:fixture` read the game repository, which is private.
-They run locally with `GAME_DIR` (or `--game <path>`) and skip with a message
-when no game path is supplied. CI runs the rest.
+They run locally with `GAME_DIR` (or `--game <path>`) and skip with a message when
+no game path is supplied. CI runs the rest.
 
 Fields in the reference are fixture-backed and presence-checked against the
 parsers, not extracted with an AST. When the game's content format changes, run

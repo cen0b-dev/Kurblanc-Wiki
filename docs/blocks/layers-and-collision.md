@@ -1,17 +1,18 @@
 # Layers and collision
 
-Every block occupies exactly one layer. The layer decides what the renderer draws
-and what the player can walk through.
+Every block occupies exactly one layer. The layer decides how the renderer draws
+it and whether the player can walk through it.
 
 | Layer | Use for | Collision | Drawn as |
 |---|---|---|---|
 | `floor` | Ground, flooring, water | Never solid | Base tile |
-| `wall` | Walls, windows, fences, gates | Solid by default | Wall top plus front face |
-| `object` | Torches, trees, furniture | Solid by default | Raised sprite with depth |
+| `wall` | Walls, windows, fences, gates | Solid by default | Raised top plus front face |
+| `object` | Torches, trees, furniture, doors | Solid by default | Raised sprite with depth |
 
-Set it with `kurblanc:layer`. If you omit it, a block with a `kurblanc:wall`
-component becomes a wall; everything else becomes a floor. **Objects must set
-`"kurblanc:layer": "object"` explicitly**, or they will be treated as floors.
+Set the layer with `kurblanc:layer`. If you omit it, a block with a
+`kurblanc:wall` component becomes a wall; everything else becomes a floor.
+**Objects must set `"kurblanc:layer": "object"` explicitly**, or they are treated
+as floors.
 
 ## Collision
 
@@ -28,39 +29,89 @@ component becomes a wall; everything else becomes a floor. **Objects must set
 Floors cannot be solid. A floor with `"kurblanc:collision_box": true` is a content
 error, because the player would be trapped on the tile they stand on.
 
-Collision is independent of light. A framed window can be solid and still pass
-light; a tall grass tuft can be passable and still block light.
-
-## Mining and drops
-
-`kurblanc:destructible_by_mining.seconds_to_destroy` sets the mining time. Omitting
-the component leaves the block unbreakable; `"kurblanc:destructible_by_mining": false`
-says the same thing explicitly.
-
-Drops are a list of namespaced items:
+A solid raised block can use a smaller collision area with `kurblanc:footprint`:
 
 ```json
 {
-  "kurblanc:drops": [{ "item": "mypack:stone", "count": 4 }]
+  "kurblanc:footprint": {
+    "box": [4, 4, 24, 16],
+    "group": "fence"
+  }
 }
 ```
 
-The item must exist in an active logic pack. The loader validates drops after all
-packs are registered, so a drop can come from another pack.
+Collision is independent of light. A framed window can be solid and still pass
+light; a tall grass tuft can be passable and still block light.
 
-## Doors, gates and pairs
+## Mining
 
-`kurblanc:toggle_states` turns one definition into two runtime blocks:
-`mypack:door_wood` and `mypack:door_wood_open`. Shared components are written
-once; each state overrides what differs. The closed state must be placeable, the
-open state must not be, and the loader cross-links them automatically.
+Mining time is set in seconds:
 
-`kurblanc:pair` groups two matching doors or gates so they mirror and toggle
-together. Give both halves the same pair string.
+```json
+{
+  "kurblanc:destructible_by_mining": {
+    "seconds_to_destroy": 1.2,
+    "preferred_tool": "pickaxe"
+  }
+}
+```
+
+A preferred tool mines faster. `required_tool` gates harvesting entirely:
+
+```json
+{
+  "kurblanc:destructible_by_mining": {
+    "seconds_to_destroy": 2,
+    "required_tool": { "kind": "pickaxe", "min_tier": 2 }
+  }
+}
+```
+
+Omitting the component gives the default one-second break. `false` is accepted but
+does not make a block unbreakable.
+
+## Drops
+
+Drops are a list of items:
+
+```json
+{
+  "kurblanc:drops": [
+    { "item": "mypack:stone", "count": 1 },
+    { "item": "mypack:gem", "count": 1, "chance": 0.125 }
+  ]
+}
+```
+
+`chance` is optional, and each entry rolls independently. The item must exist in
+an active logic pack. To use a loot table instead, use `kurblanc:loot`; a block
+cannot have both.
+
+## Doors and gates
+
+A door or gate is two block files. Each names the other with `kurblanc:toggle`:
+
+```json
+{
+  "kurblanc:layer": "object",
+  "kurblanc:placeable": true,
+  "kurblanc:collision_box": true,
+  "kurblanc:toggle": "mypack:door_wood_open"
+}
+```
+
+The open file sets `"kurblanc:placeable": false`, `"kurblanc:collision_box": false`
+and points back at the closed block. The closed block is the one an item places.
+
+A double door adds `kurblanc:pair` with the same value on both leaves, so the two
+halves open together.
 
 ## Reference
 
-- [`kurblanc:layer`](/reference/components/blocks#kurblanc-layer)
-- [`kurblanc:collision_box`](/reference/components/blocks#kurblanc-collision-box)
-- [`kurblanc:destructible_by_mining`](/reference/components/blocks#kurblanc-destructible-by-mining)
-- [`kurblanc:toggle_states`](/reference/components/blocks#kurblanc-toggle-states)
+See [`kurblanc:layer`](/reference/components/blocks#kurblanc-layer),
+[`kurblanc:collision_box`](/reference/components/blocks#kurblanc-collision-box),
+[`kurblanc:footprint`](/reference/components/blocks#kurblanc-footprint),
+[`kurblanc:destructible_by_mining`](/reference/components/blocks#kurblanc-destructible-by-mining),
+[`kurblanc:drops`](/reference/components/blocks#kurblanc-drops) and
+[`kurblanc:toggle`](/reference/components/blocks#kurblanc-toggle) for the field
+tables.

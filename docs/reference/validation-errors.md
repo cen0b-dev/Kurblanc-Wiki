@@ -1,50 +1,44 @@
 # Validation errors
 
-Kurblanc fails loudly. A content error names the file and the JSON path, and the
-world does not open with a half-loaded pack. This page groups the messages you are
-most likely to see.
+Kurblanc fails loudly. A content error names the file and the field, and the world
+does not open with a half-loaded pack.
 
-## Pack and manifest
+## Manifest
 
-| Message | Cause |
+| Message | Fix |
 |---|---|
-| `LP/manifest.json: invalid JSON` | A trailing comma or comment in a manifest. |
-| `header.uuid and header.name are required` | One manifest header is missing a field. |
-| `version must be [major, minor, patch]` | Use three nonnegative integers, e.g. `[1, 0, 0]`. |
-| `block "…" is already defined by …` | Two active logic packs define the same namespaced ID. |
+| `Kurblanc manifests use kurblanc.schema` | Remove `format_version`; use `kurblanc.schema`. |
+| `header.uuid must be a UUID` | Use a UUID for the header, not a name. |
+| `header.name must be a non-empty string` | Give the pack a display name. |
+| `kurblanc.namespace must be lower_snake_case` | Use `mypack`, not `MyPack`. |
+| `kurblanc.min_engine must be a major.minor.patch version string` | Use a value such as `0.1.1`. |
+| `a pack must contain exactly one module` | An LP has one `data` module; an AP has one `resources` module. |
+| `format_version` / `header.min_engine_version` | Minecraft keys are not interpreted. Use the Kurblanc keys. |
 
 ## Block file
 
 | Message | Fix |
 |---|---|
-| `description.identifier must be namespace:lower_snake_case` | Use `mypack:stone_tile`. |
-| `description.identifier "…" must match the file name "…"` | Rename the file to the ID's local part. |
-| `kurblanc:block must be an object` | The root needs a `kurblanc:block` object. |
-| `kurblanc:color must be a #rrggbb string` | Six hex digits, no shorthand. |
-| `kurblanc:collision_box must be a boolean` | `true` or `false`, not `"true"`. |
-| `kurblanc:opacity must be an integer 0-15` | Use a whole number in range. |
-| `kurblanc:destructible_by_mining must be an object` | Use `{ "seconds_to_destroy": 0.8 }`, or `false`. |
-| `seconds_to_destroy must be positive` | Mining time must be greater than zero. |
-| `kurblanc:light_emission must be an integer 1-15` | Emit at least 1 and at most 15. |
-| `kurblanc:drops must be an array` | Use `[{ "item": "mypack:stone", "count": 4 }]`. |
-| `kurblanc:material_instances must be an object` | The component needs a `*` (or `up`) entry. |
-| `must be an AP path such as "textures/blocks/stone.png"` | Use a relative path under `textures/`, ending in `.png`, with no `..`. |
-| `must be [x, y, width, height] with a nonnegative origin and positive size` | Fix the crop or contact shadow. |
-| `material tint must be #rrggbb` | Tint colours use six hex digits. |
-| `kurblanc:wall.lift must be an integer 0-32` | Wall lift is a source-pixel elevation. |
-| `kurblanc:water.bed must be a namespaced block ID` | Use `mypack:sand`, not `sand`. |
-| `kurblanc:water.opacity must be from 0 to 1` | Water tint is a fraction, not 0–15. |
-| `kurblanc:object.contact_shadow radii must be 0-16` | Keep the width and height at 16 or below. |
-| `kurblanc:object.vertical_masks must contain cardinal masks 0-15` | Each mask is a cardinal bitmask. |
-| `foliage requires canopyEnd between 0 and 1 and 1–32 leaf texture keys` | Fix the canopy fraction or the leaf list. |
-
-### Toggle states
-
-| Message | Fix |
-|---|---|
-| `kurblanc:toggle_states must contain exactly "closed" and "open"` | Both keys, no others. |
-| `the open state must set kurblanc:placeable to false` | Open doors cannot be placed. |
-| `the closed state must be placeable` | The base state is the one an item places. |
+| `block files need "kurblanc:format": 1` | Add the marker at the top of the file. |
+| `Block definition missing kurblanc:block.description.identifier` | Add the block ID. |
+| `must be namespace:name in lower_snake_case` | Use `mypack:stone_tile`. |
+| `kurblanc:color must be #rrggbb` | Six hex digits, no shorthand. |
+| `kurblanc:collision_box must be a boolean` | Use `true` or `false`, not `"true"`. |
+| `kurblanc:opacity needs an integer opacity 0-15` | Use a whole number in range. |
+| `seconds_to_destroy must be finite and nonnegative` | Use 0 or more. |
+| `preferred_tool must be a tool kind` | Use `axe`, `pickaxe`, `shovel` or `sword`. |
+| `required_tool needs a tool kind and nonnegative min_tier` | Check the object. |
+| `kurblanc:drops must be an array` | Use `[{ "item": "mypack:stone", "count": 1 }]`. |
+| `drop chance must be a number between 0 and 1` | Fix the chance. |
+| `references unknown texture` | Add the key to `AP/textures/terrain_texture.json`. |
+| `rect must have nonnegative origin and positive size` | Fix the crop. |
+| `kurblanc:wall.lift must be an integer 0-32` | Use a source-pixel elevation. |
+| `kurblanc:water needs a bed block` | Use a floor block ID. |
+| `water opacity must be between 0 and 1` | Water tint is a fraction, not 0–15. |
+| `kurblanc:object.contactShadow needs a tile-local center and radii 0-16` | Fix the shadow. |
+| `kurblanc:object.verticalMasks must contain cardinal masks 0-15` | Fix the masks. |
+| `foliage requires canopyEnd between 0 and 1 and 1–32 leaf texture keys` | Fix the canopy. |
+| `variant_rects is gone` | Declare `cell` on the texture key instead. |
 
 ### Content registry
 
@@ -52,29 +46,35 @@ These fire after parsing, when the blocks are registered:
 
 | Message | Fix |
 |---|---|
-| `content: the first block must be "kurblanc:air"` | The built-in pack must provide `kurblanc:air` first. Third-party packs add to it. |
-| `content: more than 256 blocks are not supported` | Remove content; open door states count separately. |
+| `the first block must be "kurblanc:air"` | The built-in pack provides air; third-party packs add to it. |
+| `blocks exceed the 65536-slot palette` | Remove content. |
 | `has an unknown layer` | Use `floor`, `wall` or `object`. |
 | `floor … cannot be solid` | Floors are walkable. |
 | `shadow must be sprite on a raised block` | Sprite shadows are for walls and objects. |
-| `needs an integer opacity 0-15` | The registry double-checks opacity. |
+| `pair needs matching object toggle states` | Give both leaves the same `pair` and a `toggle`. |
+| `toggle must reference a block on the same layer` | Point at the other state. |
 
 ## Items and recipes
 
 | Message | Fix |
 |---|---|
-| `kurblanc:block_placer names unknown block` | The placed block must exist and be namespaced. |
-| `kurblanc:max_stack must be a positive integer` | Use a whole number above zero. |
-| `kurblanc:categories must be an array of lower_snake_case category names` | Fix the category list. |
-| `unknown item` in a recipe or drop | Define the item, and use its full namespaced ID. |
-| `duplicate recipe` | Two logic packs define the same recipe ID. |
+| `missing label` | Add `label`. |
+| `expected positive integer` | `maxStack` is a whole number above zero. |
+| `icon needs a known block or AP textures/*.png path` | Fix the icon. |
+| `unknown block` | The item's `block` must exist. |
+| `unknown item` in a recipe or drop | Define the item, with the right namespace. |
+| `recipe needs ingredients` | Add at least one ingredient. |
+| `duplicate block` / `duplicate item` / `duplicate recipe` | Two active packs define the same ID. |
 
-## World and pack set
+## World and packs
 
 | Message | Fix |
 |---|---|
-| `Missing packs block opening the world` | Reinstall or enable the exact `uuid + kind + version` set. |
-| `host runs a dev pack` / `game versions differ` | Use matching builds and installed zips for multiplayer. |
+| `required by … but not available` | Enable or reinstall the dependency. |
+| `needs … or newer` | Update the dependency. |
+| `the world stack has no available logic pack` | Enable at least one LP. |
+| `the world stack has no worldgen configuration` | Add `worldgen/settings.json` to a logic pack. |
+| `the first block in a world stack must be kurblanc:air` | Keep the built-in pack in the stack. |
 
 ## Reading an error
 

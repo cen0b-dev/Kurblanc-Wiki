@@ -37,28 +37,25 @@ not set and are advisory in CI.
 
 ## The rules
 
-- The parser is the source of truth: if the design prose and
-  `src/world/block-parse.ts` disagree, document what the parser does and note the
-  difference.
+- Describe what the game does now. Do not add release names, old formats or a
+  version history page.
+- The parser is the source of truth: if the prose and the game's pack code
+  disagree, document what the code does and note the difference.
 - Do not hand-edit generated pages. `docs/reference/components/*.md` comes from
   `data/components.json`. Edit the manifest, then `npm run gen`.
 - Do not duplicate field tables in guides. Link to the reference entry.
 - Every JSON fence must parse. `npm run check:snippets` enforces it.
-- Pin the build. Pages describe one build at a time. Do not write "latest".
-- No copied prose or assets. The structure follows other wikis; the words and
-  art are Kurblanc's.
-- Gate unreleased UI: a page describing a feature that is not in the public
-  build gets `gated: true` in its frontmatter.
+- No copied prose or assets. The structure follows other wikis; the words and art
+  are Kurblanc's.
 
 ## When the format changes
 
-1. Update `data/version.json`.
-2. Update `data/components.json` and the fixture pack.
-3. Run `npm run gen`, `npm run check`, `GAME_DIR=… npm run check:drift` and
+1. Update `data/components.json` and the fixture pack.
+2. Run `npm run gen`, `npm run check`, `GAME_DIR=… npm run check:drift` and
    `GAME_DIR=… npm run check:fixture`.
-4. Add an entry to the [format changelog](/reference/format-changelog).
+3. Update the guides where the task changed.
 
 ## Where to report a game bug
 
 The game repository is private. Report content-format bugs to the owner; the wiki
-should describe the build, not paper over it.
+should describe the game, not paper over it.

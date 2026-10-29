@@ -2,44 +2,56 @@
 
 These are engine limits, not style advice. They apply to every pack.
 
-| Limit | Value | Notes |
-|---|---|---|
-| Blocks | 256 | A door's generated open state counts as a block. `kurblanc:air` must be first. |
-| Light levels | 0–15 | Emission is 1–15; opacity is 0–15. |
-| Tile size | 32×32 px | Art is drawn at integer pixel scale. |
-| Wall sheet | 192×83 px | Top `192×64` at `(0, 0)`, front `64×19` at `(0, 64)`. |
-| Default stack | 512 | Override with `kurblanc:max_stack`. |
-| Player definitions | 1 | Exactly one active logic pack may provide `player.json`. |
+| Limit | Value |
+|---|---|
+| Blocks in the palette | 65536 |
+| Light levels | 0–15 |
+| Tile size | 32×32 px |
+| Default stack | 512 |
+| Files in one pack | 4096 |
+| One pack, uncompressed | 256 MiB |
+| One file | 32 MiB |
+| One JSON file | 4 MiB |
+| One image | 16 MiB, 4096 px per side |
+| Path length | 180 characters |
+| Path depth | 12 segments |
+| One `.kbpack` archive | 64 MiB |
+| Variant strip | 64 frames, 256 px cells |
+
+A limit breach rejects the whole pack. Nothing is loaded partially.
 
 ## IDs
 
 - Pattern: `namespace:lower_snake_case`.
-- The namespace is yours; `kurblanc` belongs to the built-in pack.
+- The namespace is yours; `kurblanc` belongs to the built-in content.
 - A definition file's basename equals the local part:
   `LP/blocks/stone_tile.json` → `mypack:stone_tile`.
-- References are always fully namespaced. A bare name is an error.
+- A bare identifier uses the pack namespace. A full ID is clearer.
 
-## Texture paths
+## Texture keys and paths
 
-- Start with `textures/`.
-- End with `.png`.
-- No `..` segments.
-- Resolved against the active asset packs; the higher-priority pack wins when two
-  supply the same path.
+- A block names a texture key, not a file path.
+- `AP/textures/terrain_texture.json` maps the key to a PNG under `textures/`.
+- Paths are relative, use `/`, end in `.png`, and contain no `..` segments.
+- Later asset packs win when two supply the same key.
 
 ## Crops and offsets
 
 - `rect`: `[x, y, width, height]`, origin 0 or greater, size greater than 0.
-- `sprite_offset`: `[x, y]`, finite numbers.
-- `contact_shadow`: radii 0–16.
+- `sprite_offset` and `vertical_offset`: `[x, y]`, finite numbers.
+- `contact_shadow`: centre 0–32, radii greater than 0 and at most 16.
 - `vertical_masks`: integers 0–15.
-- `foliage.canopyEnd`: greater than 0, less than 1.
-- `foliage.leafTextures`: 1–32 paths.
+- `foliage.canopyEnd`: greater than 0 and less than 1.
+- `foliage.leafTextures`: 1–32 texture keys.
+- `variant_weights`: one positive integer per strip frame.
 
-## Packs
+## Packs and worlds
 
-- Versions coexist; a world pins the exact set it was saved with.
-- A bundle installs as one logic pack and one asset pack.
-- Logic packs cannot redefine another active logic pack's IDs.
-- Asset packs may overlap freely; order decides.
-- Dev folders and different game builds cannot be sent over the network.
+- A pack has exactly one module: `data` for an LP, `resources` for an AP.
+- An add-on is one LP and one AP that depend on each other.
+- A world remembers the packs it was saved with. Missing content is reported, not
+  replaced.
+- Logic packs cannot define the same IDs unless the later pack in the stack wins.
+- Asset packs may overlap freely; order decides the winner.
+- A linked dev folder cannot be sent to another player. Share a `.kbpack` or
+  `.kbaddon`.

@@ -1,39 +1,39 @@
 # Start here
 
-Kurblanc content is data. A block, wall, door, item or entity is a JSON file plus
-textures; the game discovers it from the pack's folder. You do not edit engine
-code, and you do not update a catalogue.
+Kurblanc content is data. A block, item, recipe or entity is a JSON file plus its
+art; the game finds it in the pack folder. You do not edit engine code, and you do
+not update a catalogue.
 
-This wiki documents the **D25** format, verified against build `7050b38`
-(2026-10-28). The public game still runs the earlier format. See
-[Legacy catalogues](/reference/legacy-catalogues) if that is what you are
-modding.
+An add-on has two halves:
+
+- **LP** (logic pack) — what the content is and how it plays.
+- **AP** (asset pack) — what it looks like and sounds like.
+
+You can ship the two halves together, or keep them apart so other packs can use
+your logic with their own art.
 
 ## What you need
 
 - A text editor.
-- An image editor that can save PNGs with transparency.
-- A Kurblanc D25 build that can load a dev folder or install a pack. The public
-  build cannot yet; [Install a pack](/guide/install-a-pack) says so plainly.
+- An image editor that saves PNGs with transparency.
+- A folder on your computer for the add-on.
+- Kurblanc, with the add-on folder linked in Workshop. See
+  [Load a pack](/guide/load-a-pack).
 
 ## The shortest path
 
-1. [Pack anatomy](/guide/pack-anatomy): the two folders every pack has.
-2. [Build your first block](/guide/first-block): a floor tile from zero to loading.
-3. [Block components](/reference/components/blocks): the field-by-field table.
-4. [Validation errors](/reference/validation-errors): when it does not load.
-
-## The two kinds of documentation
-
-**Guides** teach a task in order. **Reference** pages say what the loader
-accepts. If a guide and the reference disagree, the reference wins; if the
-reference and the game disagree, the game wins, and that is a wiki bug worth
-reporting.
+1. [Pack anatomy](/guide/pack-anatomy) — the files and folders every add-on has.
+2. [Load a pack](/guide/load-a-pack) — link the folder and enable the packs.
+3. [Build your first block](/guide/first-block) — a floor tile from zero to placed.
+4. [Block components](/reference/components/blocks) — the field-by-field table.
+5. [Validation errors](/reference/validation-errors) — when something does not load.
 
 ## The rules that never change
 
-- IDs are namespaced: `mypack:stone_tile`, never `stone_tile`.
+- IDs are namespaced: `mypack:stone_tile`. A bare name takes the pack's namespace,
+  but writing the namespace is clearer.
 - A definition file's basename is the ID's local part:
-  `LP/blocks/stone_tile.json` → `mypack:stone_tile`.
-- Textures are AP-relative paths: `textures/blocks/stone_tile.png`.
+  `LP/blocks/stone_tile.json` defines `mypack:stone_tile`.
+- Art is named through a texture key in `AP/textures/terrain_texture.json`, not by
+  a file path inside the block file.
 - No catalogues. Adding a file is how you add content.

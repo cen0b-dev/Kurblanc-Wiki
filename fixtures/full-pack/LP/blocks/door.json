@@ -1,24 +1,16 @@
 {
-  "format_version": "1.21.0",
+  "kurblanc:format": 1,
   "kurblanc:block": {
     "description": { "identifier": "kurblanc:door" },
     "components": {
       "kurblanc:layer": "object",
-      "kurblanc:pair": "door",
+      "kurblanc:pair": "kurblanc:door",
+      "kurblanc:toggle": "kurblanc:door_open",
+      "kurblanc:placeable": true,
+      "kurblanc:collision_box": true,
+      "kurblanc:opacity": 15,
       "kurblanc:material_instances": {
-        "*": { "texture": "textures/blocks/tile.png" }
-      },
-      "kurblanc:toggle_states": {
-        "closed": {
-          "kurblanc:placeable": true,
-          "kurblanc:collision_box": true,
-          "kurblanc:opacity": 15
-        },
-        "open": {
-          "kurblanc:placeable": false,
-          "kurblanc:collision_box": false,
-          "kurblanc:opacity": 0
-        }
+        "*": { "texture": "tile" }
       }
     }
   }

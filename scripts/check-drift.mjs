@@ -18,8 +18,12 @@ if (!game) {
 
 const manifest = await loadManifest(root)
 const sources = [...new Set(manifest.groups.flatMap((group) => group.sources))]
+const fieldSources = [...new Set([
+  ...sources,
+  ...manifest.groups.flatMap((group) => group.fieldSources ?? []),
+])]
 const sourceComponents = await collectComponents(game, sources)
-const sourceText = (await readSources(game, sources)).map(({ text }) => text).join('\n')
+const sourceText = (await readSources(game, fieldSources)).map(({ text }) => text).join('\n')
 
 const expected = new Set()
 const fields = []

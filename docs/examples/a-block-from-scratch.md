@@ -1,37 +1,48 @@
 # A block from scratch
 
-This example builds a wall. A wall is a good test because it exercises the layer,
-the combined sheet, collision and an item in one small pack. The result is
-`mypack:stone_wall`.
+This example builds a wall. A wall exercises the layer, the top/front textures,
+collision and an item in one small pack. The result is `mypack:stone_wall`.
 
 ## Files
 
 ```
-public/packs/stone_wall/
+stone-wall/
   LP/
     manifest.json
     blocks/stone_wall.json
     items/stone_wall.json
   AP/
     manifest.json
-    textures/blocks/stone_wall.png
+    textures/terrain_texture.json
+    textures/blocks/stone_wall_top.png
+    textures/blocks/stone_wall_front.png
 ```
 
 ## LP manifest
 
 ```json
 {
-  "format_version": 2,
   "header": {
     "name": "Stone Wall",
     "description": "Adds a stone wall",
     "uuid": "33333333-3333-4333-8333-333333333331",
     "version": [1, 0, 0]
   },
+  "kurblanc": {
+    "schema": 1,
+    "namespace": "mypack",
+    "min_engine": "0.1.1"
+  },
   "modules": [
     {
       "type": "data",
       "uuid": "33333333-3333-4333-8333-333333333332",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "44444444-4444-4444-8444-444444444441",
       "version": [1, 0, 0]
     }
   ]
@@ -42,12 +53,16 @@ public/packs/stone_wall/
 
 ```json
 {
-  "format_version": 2,
   "header": {
     "name": "Stone Wall Assets",
-    "description": "Texture for the stone wall",
+    "description": "Textures for the stone wall",
     "uuid": "44444444-4444-4444-8444-444444444441",
     "version": [1, 0, 0]
+  },
+  "kurblanc": {
+    "schema": 1,
+    "namespace": "mypack",
+    "min_engine": "0.1.1"
   },
   "modules": [
     {
@@ -61,9 +76,11 @@ public/packs/stone_wall/
 
 ## Block
 
+`LP/blocks/stone_wall.json`:
+
 ```json
 {
-  "format_version": "1.21.0",
+  "kurblanc:format": 1,
   "kurblanc:block": {
     "description": { "identifier": "mypack:stone_wall" },
     "components": {
@@ -72,9 +89,13 @@ public/packs/stone_wall/
       "kurblanc:label": "Stone Wall",
       "kurblanc:collision_box": true,
       "kurblanc:opacity": 15,
-      "kurblanc:destructible_by_mining": { "seconds_to_destroy": 1.2 },
+      "kurblanc:destructible_by_mining": {
+        "seconds_to_destroy": 1.2,
+        "preferred_tool": "pickaxe"
+      },
       "kurblanc:material_instances": {
-        "*": { "texture": "textures/blocks/stone_wall.png" }
+        "*": { "texture": "stone_wall_top" },
+        "front": { "texture": "stone_wall_front" }
       },
       "kurblanc:wall": {
         "lift": 18,
@@ -88,36 +109,48 @@ public/packs/stone_wall/
 `kurblanc:layer: "wall"` is what makes the block raised. `opacity: 15` is light
 blocking, not collision; the wall is both.
 
-## Item
+## Texture keys
+
+`AP/textures/terrain_texture.json`:
 
 ```json
 {
-  "format_version": "1.21.0",
-  "kurblanc:item": {
-    "description": { "identifier": "mypack:stone_wall" },
-    "components": {
-      "kurblanc:block_placer": { "block": "mypack:stone_wall" }
-    }
+  "texture_data": {
+    "stone_wall_top": { "textures": "textures/blocks/stone_wall_top.png" },
+    "stone_wall_front": { "textures": "textures/blocks/stone_wall_front.png" }
   }
 }
 ```
 
-## Texture
+## Item
 
-Make a `192×83` PNG:
+`LP/items/stone_wall.json`:
 
-- top shape table at `(0, 0)`, `192×64`;
-- front strip at `(0, 64)`, `64×19`.
+```json
+{
+  "id": "mypack:stone_wall",
+  "label": "Stone Wall",
+  "maxStack": 512,
+  "block": "mypack:stone_wall",
+  "icon": { "block": "mypack:stone_wall" },
+  "categories": ["blocks"]
+}
+```
 
-The wall reads the top region for connection shapes and the front strip for the
-face. Leave the front region transparent for a top-only wall.
+## Art
+
+The top image uses the wall-top shape layout. A full sheet is 192×64; a compact
+48×32 sheet is expanded by the game. The front image is a 64×19 strip of 16-pixel
+face cells. Leave the front transparent for a top-only wall.
 
 ## Verify
 
-1. Put the folder at `public/packs/stone_wall/` in a D25 development build.
-2. Open `http://localhost:5173/?pack=stone_wall`.
-3. Take the item from the creative catalog and place it.
-4. Mine it and confirm it breaks in about 1.2 seconds.
+1. Put the folder where you keep packs.
+2. In Workshop, choose **Link a folder** and pick `stone-wall/`.
+3. Enable the LP and AP on a world.
+4. Place the wall and confirm it connects to a neighbouring wall of the same
+   `group`.
+5. Mine it and confirm it breaks in about 1.2 seconds.
 
 If it fails, the message names the file and field:
 [Validation errors](/reference/validation-errors).
@@ -126,7 +159,6 @@ If it fails, the message names the file and field:
 
 - Replace `mypack` with your namespace.
 - Keep the file basename equal to the ID's local part.
-- Keep the texture path relative to the AP.
+- Keep both texture keys in the AP and reference them from the block.
 - Change `group` so walls of the same material connect.
-- If your sheet is not in the standard layout, add `top_rect` and `front_rect`
-  instead of moving pixels.
+- Adjust `lift` if the top should sit higher or lower.

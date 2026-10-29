@@ -1,13 +1,16 @@
 {
-  "format_version": "1.21.0",
+  "kurblanc:format": 1,
   "kurblanc:block": {
     "description": { "identifier": "kurblanc:wall" },
     "components": {
+      "kurblanc:layer": "wall",
+      "kurblanc:material_instances": {
+        "*": { "texture": "tile" },
+        "front": { "texture": "tile" }
+      },
       "kurblanc:wall": {
         "lift": 18,
-        "group": "wall",
-        "top_rect": [0, 0, 192, 64],
-        "front_rect": [0, 64, 64, 19]
+        "group": "wall"
       }
     }
   }

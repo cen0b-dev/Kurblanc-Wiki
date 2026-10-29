@@ -1,0 +1,11 @@
+{
+  "kurblanc:format": 1,
+  "kurblanc:block": {
+    "description": {
+      "identifier": "kurblanc:object_default"
+    },
+    "components": {
+      "kurblanc:layer": "object"
+    }
+  }
+}

@@ -15,7 +15,7 @@ export async function loadManifest(root) {
   }
 
   if (!raw || !Array.isArray(raw.groups)) {
-    throw new Error('data/components.json: expected { format, groups: [] }')
+    throw new Error('data/components.json: expected { groups: [] }')
   }
 
   const seen = new Set()

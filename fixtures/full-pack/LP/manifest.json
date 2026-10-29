@@ -1,9 +1,10 @@
 {
-  "format_version": 2,
   "header": {
     "name": "Wiki fixture",
+    "description": "One definition for every documented block component",
     "uuid": "00000000-0000-4000-8000-000000000001",
     "version": [1, 0, 0]
   },
+  "kurblanc": { "schema": 1, "namespace": "kurblanc", "min_engine": "0.1.1" },
   "modules": [{ "type": "data", "uuid": "00000000-0000-4000-8000-000000000002", "version": [1, 0, 0] }]
 }
