@@ -1,7 +1,9 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:mining" },
+    "description": {
+      "identifier": "kurblanc:mining"
+    },
     "components": {
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 1.2,

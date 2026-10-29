@@ -1,7 +1,9 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:layer" },
+    "description": {
+      "identifier": "kurblanc:layer"
+    },
     "components": {
       "kurblanc:layer": "wall",
       "kurblanc:color": "#a9824f"

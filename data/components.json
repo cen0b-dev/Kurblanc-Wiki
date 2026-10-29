@@ -17,9 +17,17 @@
           "appliesTo": "block",
           "summary": "Chooses the layer the block occupies. The layer decides how the block is drawn and whether it is solid.",
           "fields": [
-            { "name": "value", "type": "string", "default": "floor", "range": "floor, wall, object", "notes": "A block with kurblanc:wall defaults to wall. Everything else defaults to floor." }
+            {
+              "name": "value",
+              "type": "string",
+              "default": "floor",
+              "range": "floor, wall, object",
+              "notes": "A block with kurblanc:wall defaults to wall. Everything else defaults to floor."
+            }
           ],
-          "example": { "kurblanc:layer": "wall" },
+          "example": {
+            "kurblanc:layer": "wall"
+          },
           "behavior": "An unknown value fails when the world content is registered. Objects must set \"object\" explicitly."
         },
         {
@@ -28,9 +36,17 @@
           "appliesTo": "block",
           "summary": "Fallback colour for previews, break particles and light when no light colour is given.",
           "fields": [
-            { "name": "value", "type": "string", "default": "#ffffff", "range": "#rrggbb", "notes": "Six hex digits. Shorthand and named colours are rejected." }
+            {
+              "name": "value",
+              "type": "string",
+              "default": "#ffffff",
+              "range": "#rrggbb",
+              "notes": "Six hex digits. Shorthand and named colours are rejected."
+            }
           ],
-          "example": { "kurblanc:color": "#8d8978" },
+          "example": {
+            "kurblanc:color": "#8d8978"
+          },
           "behavior": "A value that is not #rrggbb fails when the world content is registered."
         },
         {
@@ -39,9 +55,17 @@
           "appliesTo": "block",
           "summary": "Display name for the block and for an item that places it.",
           "fields": [
-            { "name": "value", "type": "string", "default": "the block ID", "range": "any text", "notes": "Optional." }
+            {
+              "name": "value",
+              "type": "string",
+              "default": "the block ID",
+              "range": "any text",
+              "notes": "Optional."
+            }
           ],
-          "example": { "kurblanc:label": "Stone Tile" },
+          "example": {
+            "kurblanc:label": "Stone Tile"
+          },
           "behavior": "A non-string value is stored as-is; keep it a string."
         },
         {
@@ -50,9 +74,17 @@
           "appliesTo": "block",
           "summary": "Chooses the sound set used for placing, breaking and stepping on the block.",
           "fields": [
-            { "name": "value", "type": "string", "default": "the default block sound", "range": "lower_snake_case sound set name", "notes": "The active asset pack must provide the set." }
+            {
+              "name": "value",
+              "type": "string",
+              "default": "the default block sound",
+              "range": "lower_snake_case sound set name",
+              "notes": "The active asset pack must provide the set."
+            }
           ],
-          "example": { "kurblanc:sound": "stone" },
+          "example": {
+            "kurblanc:sound": "stone"
+          },
           "behavior": "Anything other than a lower_snake_case name fails while the block is parsed."
         },
         {
@@ -61,20 +93,38 @@
           "appliesTo": "block",
           "summary": "Allows or forbids placing this block from an item.",
           "fields": [
-            { "name": "value", "type": "boolean", "default": "true", "range": "true, false", "notes": "Set false on the open state of a door or gate." }
+            {
+              "name": "value",
+              "type": "boolean",
+              "default": "true",
+              "range": "true, false",
+              "notes": "The loader sets this false on the generated open state of a door or gate."
+            }
           ],
-          "example": { "kurblanc:placeable": false },
+          "example": {
+            "kurblanc:placeable": false
+          },
           "behavior": "A non-boolean value fails when the world content is registered."
         },
         {
           "id": "kurblanc:collision_box",
-          "aliases": ["minecraft:collision_box"],
+          "aliases": [
+            "minecraft:collision_box"
+          ],
           "appliesTo": "block",
           "summary": "Makes a raised block solid or walk-through.",
           "fields": [
-            { "name": "value", "type": "boolean", "default": "true on wall and object layers; false on floor", "range": "true, false", "notes": "Floor blocks cannot be solid." }
+            {
+              "name": "value",
+              "type": "boolean",
+              "default": "true on wall and object layers; false on floor",
+              "range": "true, false",
+              "notes": "Floor blocks cannot be solid."
+            }
           ],
-          "example": { "kurblanc:collision_box": false },
+          "example": {
+            "kurblanc:collision_box": false
+          },
           "behavior": "A non-boolean value fails when the world content is registered; a solid floor is rejected."
         },
         {
@@ -83,12 +133,46 @@
           "appliesTo": "block",
           "summary": "Gives a raised block a smaller collision box than its tile.",
           "fields": [
-            { "name": "box", "type": "[x, y, width, height]", "default": "the full tile", "range": "origin -32 to 64, positive size, box inside 64×64", "notes": "Tile-local pixels." },
-            { "name": "verticalBox", "type": "[x, y, width, height]", "default": "box", "range": "same as box", "notes": "Used when the block is seen as a vertical face." },
-            { "name": "group", "type": "string", "default": "none", "range": "any non-empty string", "notes": "Keeps neighbouring footprints aligned." },
-            { "name": "verticalMasks", "type": "integer[]", "default": "none", "range": "each 0–15", "notes": "Cardinal masks that use verticalBox." }
+            {
+              "name": "box",
+              "type": "[x, y, width, height]",
+              "default": "the full tile",
+              "range": "origin -32 to 64, positive size, box inside 64×64",
+              "notes": "Tile-local pixels."
+            },
+            {
+              "name": "verticalBox",
+              "type": "[x, y, width, height]",
+              "default": "box",
+              "range": "same as box",
+              "notes": "Used when the block is seen as a vertical face."
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "default": "none",
+              "range": "any non-empty string",
+              "notes": "Keeps neighbouring footprints aligned."
+            },
+            {
+              "name": "verticalMasks",
+              "type": "integer[]",
+              "default": "none",
+              "range": "each 0–15",
+              "notes": "Cardinal masks that use verticalBox."
+            }
           ],
-          "example": { "kurblanc:footprint": { "box": [4, 4, 24, 16], "group": "fence" } },
+          "example": {
+            "kurblanc:footprint": {
+              "box": [
+                4,
+                4,
+                24,
+                16
+              ],
+              "group": "fence"
+            }
+          },
           "behavior": "Out-of-bounds rectangles, a floor block or a bad mask fails when the world content is registered."
         },
         {
@@ -97,9 +181,17 @@
           "appliesTo": "block",
           "summary": "Draws an object-facing sprite so it turns with the camera.",
           "fields": [
-            { "name": "value", "type": "boolean", "default": "false", "range": "true, false", "notes": "Only meaningful on the object layer." }
+            {
+              "name": "value",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Only meaningful on the object layer."
+            }
           ],
-          "example": { "kurblanc:billboard": true },
+          "example": {
+            "kurblanc:billboard": true
+          },
           "behavior": "A non-boolean value fails when the world content is registered."
         },
         {
@@ -108,22 +200,55 @@
           "appliesTo": "block",
           "summary": "How much light the block absorbs.",
           "fields": [
-            { "name": "value", "type": "integer", "default": "0", "range": "0–15", "notes": "0 is fully transparent; 15 stops light." }
+            {
+              "name": "value",
+              "type": "integer",
+              "default": "0",
+              "range": "0–15",
+              "notes": "0 is fully transparent; 15 stops light."
+            }
           ],
-          "example": { "kurblanc:opacity": 15 },
+          "example": {
+            "kurblanc:opacity": 15
+          },
           "behavior": "A value outside 0–15 or a non-integer fails when the world content is registered."
         },
         {
           "id": "kurblanc:destructible_by_mining",
-          "aliases": ["minecraft:destructible_by_mining"],
+          "aliases": [
+            "minecraft:destructible_by_mining"
+          ],
           "appliesTo": "block",
           "summary": "Sets mining time and the tools that speed it up or are required.",
           "fields": [
-            { "name": "seconds_to_destroy", "type": "number", "default": "1 second", "range": "0 or greater", "notes": "Converted to game ticks." },
-            { "name": "preferred_tool", "type": "string", "default": "none", "range": "axe, pickaxe, shovel, sword", "notes": "A matching tool mines at its own speed." },
-            { "name": "required_tool", "type": "object", "default": "none", "range": "{ kind, min_tier }", "notes": "The block cannot be harvested without that tool kind and tier." }
+            {
+              "name": "seconds_to_destroy",
+              "type": "number",
+              "default": "1 second",
+              "range": "0 or greater",
+              "notes": "Converted to game ticks."
+            },
+            {
+              "name": "preferred_tool",
+              "type": "string",
+              "default": "none",
+              "range": "axe, pickaxe, shovel, sword",
+              "notes": "A matching tool mines at its own speed."
+            },
+            {
+              "name": "required_tool",
+              "type": "object",
+              "default": "none",
+              "range": "{ kind, min_tier }",
+              "notes": "The block cannot be harvested without that tool kind and tier."
+            }
           ],
-          "example": { "kurblanc:destructible_by_mining": { "seconds_to_destroy": 1.2, "preferred_tool": "pickaxe" } },
+          "example": {
+            "kurblanc:destructible_by_mining": {
+              "seconds_to_destroy": 1.2,
+              "preferred_tool": "pickaxe"
+            }
+          },
           "behavior": "A bad mining field fails while the block is parsed. false is accepted and leaves the default mining time."
         },
         {
@@ -132,9 +257,19 @@
           "appliesTo": "block",
           "summary": "Points at a loot table instead of an inline drop list.",
           "fields": [
-            { "name": "table", "type": "string", "default": "none", "range": "a loot table ID", "notes": "Cannot be combined with kurblanc:drops." }
+            {
+              "name": "table",
+              "type": "string",
+              "default": "none",
+              "range": "a loot table ID",
+              "notes": "Cannot be combined with kurblanc:drops."
+            }
           ],
-          "example": { "kurblanc:loot": { "table": "mypack:stone_tile" } },
+          "example": {
+            "kurblanc:loot": {
+              "table": "mypack:stone_tile"
+            }
+          },
           "behavior": "A missing table or a definition that also has kurblanc:drops fails."
         },
         {
@@ -143,20 +278,44 @@
           "appliesTo": "block",
           "summary": "Lists the items a successful break can produce.",
           "fields": [
-            { "name": "value", "type": "array of { item, count, chance? }", "default": "no drops", "range": "item IDs, positive counts, chance 0–1", "notes": "Each entry rolls independently. Omit chance for a guaranteed drop." }
+            {
+              "name": "value",
+              "type": "array of { item, count, chance? }",
+              "default": "no drops",
+              "range": "item IDs, positive counts, chance 0–1",
+              "notes": "Each entry rolls independently. Omit chance for a guaranteed drop."
+            }
           ],
-          "example": { "kurblanc:drops": [{ "item": "mypack:stone", "count": 1, "chance": 0.5 }] },
+          "example": {
+            "kurblanc:drops": [
+              {
+                "item": "mypack:stone",
+                "count": 1,
+                "chance": 0.5
+              }
+            ]
+          },
           "behavior": "A non-array, an unknown item or a chance outside 0–1 fails."
         },
         {
           "id": "kurblanc:light_emission",
-          "aliases": ["minecraft:light_emission"],
+          "aliases": [
+            "minecraft:light_emission"
+          ],
           "appliesTo": "block",
           "summary": "Makes the block a light source.",
           "fields": [
-            { "name": "value", "type": "integer", "default": "none", "range": "1–15", "notes": "0 or less is ignored and leaves the block unlit." }
+            {
+              "name": "value",
+              "type": "integer",
+              "default": "none",
+              "range": "1–15",
+              "notes": "0 or less is ignored and leaves the block unlit."
+            }
           ],
-          "example": { "kurblanc:light_emission": 8 },
+          "example": {
+            "kurblanc:light_emission": 8
+          },
           "behavior": "A value above 15 fails when the world content is registered."
         },
         {
@@ -165,23 +324,57 @@
           "appliesTo": "block",
           "summary": "Tints the light the block emits.",
           "fields": [
-            { "name": "value", "type": "string", "default": "kurblanc:color", "range": "#rrggbb", "notes": "Only used together with kurblanc:light_emission." }
+            {
+              "name": "value",
+              "type": "string",
+              "default": "kurblanc:color",
+              "range": "#rrggbb",
+              "notes": "Only used together with kurblanc:light_emission."
+            }
           ],
-          "example": { "kurblanc:light_color": "#ffb45a" },
+          "example": {
+            "kurblanc:light_color": "#ffb45a"
+          },
           "behavior": "A value that is not #rrggbb fails when the world content is registered."
         },
         {
           "id": "kurblanc:material_instances",
-          "aliases": ["minecraft:material_instances"],
-          "appliesTo": "block",
-          "summary": "Binds the block faces to texture keys from the active asset packs.",
-          "fields": [
-            { "name": "* or up.texture", "type": "string", "default": "none", "range": "a texture key", "notes": "Primary face. The key is defined in AP/textures/terrain_texture.json." },
-            { "name": "* or up.rect", "type": "[x, y, width, height]", "default": "the whole image", "range": "nonnegative origin, positive size", "notes": "Crops one sprite from a packed sheet." },
-            { "name": "front.texture", "type": "string", "default": "none", "range": "a texture key", "notes": "Front face of a wall. Separate from the top texture." }
+          "aliases": [
+            "minecraft:material_instances"
           ],
-          "example": { "kurblanc:material_instances": { "*": { "texture": "stone_tile" } } },
-          "behavior": "A missing primary texture or an unknown key fails while content is resolved."
+          "appliesTo": "block",
+          "summary": "Binds the block faces to PNG paths from the active asset packs.",
+          "fields": [
+            {
+              "name": "* or up.texture",
+              "type": "string",
+              "default": "none",
+              "range": "a path under textures/ (or a texture key)",
+              "notes": "Primary face. Point at a PNG under textures/, or at a key in AP/textures/terrain_texture.json."
+            },
+            {
+              "name": "* or up.rect",
+              "type": "[x, y, width, height]",
+              "default": "the whole image",
+              "range": "nonnegative origin, positive size",
+              "notes": "Crops one sprite from a packed sheet."
+            },
+            {
+              "name": "front.texture",
+              "type": "string",
+              "default": "none",
+              "range": "a path under textures/ (or a texture key)",
+              "notes": "Front face of a wall. Separate from the top texture."
+            }
+          ],
+          "example": {
+            "kurblanc:material_instances": {
+              "*": {
+                "texture": "textures/blocks/stone_tile.png"
+              }
+            }
+          },
+          "behavior": "A missing primary texture or a path no active asset pack provides fails while content is resolved."
         },
         {
           "id": "kurblanc:biome_tint",
@@ -189,9 +382,17 @@
           "appliesTo": "block",
           "summary": "Recolours greyscale art with the colour of the biome the tile stands in.",
           "fields": [
-            { "name": "value", "type": "boolean", "default": "false", "range": "true, false", "notes": "The art must be authored neutral grey for the tint to read correctly." }
+            {
+              "name": "value",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "The art must be authored neutral grey for the tint to read correctly."
+            }
           ],
-          "example": { "kurblanc:biome_tint": true },
+          "example": {
+            "kurblanc:biome_tint": true
+          },
           "behavior": "A non-boolean value fails while the block is parsed."
         },
         {
@@ -200,13 +401,49 @@
           "appliesTo": "block",
           "summary": "Marks a floor block as natural ground with corner tiling and optional rotation.",
           "fields": [
-            { "name": "random_rotate", "type": "boolean", "default": "false", "range": "true, false", "notes": "Rotates each tile from a stable hash." },
-            { "name": "group", "type": "string", "default": "none", "range": "any non-empty string", "notes": "Ground of the same group connects." },
-            { "name": "substrate", "type": "string", "default": "none", "range": "a floor block ID", "notes": "The material shown under the surface." },
-            { "name": "tint", "type": "string", "default": "none", "range": "#rrggbb", "notes": "Fixed colour multiply for the art." },
-            { "name": "biome_tint", "type": "boolean", "default": "false", "range": "true, false", "notes": "Same as the top-level component when that is absent." }
+            {
+              "name": "random_rotate",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Rotates each tile from a stable hash."
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "default": "none",
+              "range": "any non-empty string",
+              "notes": "Ground of the same group connects."
+            },
+            {
+              "name": "substrate",
+              "type": "string",
+              "default": "none",
+              "range": "a floor block ID",
+              "notes": "The material shown under the surface."
+            },
+            {
+              "name": "tint",
+              "type": "string",
+              "default": "none",
+              "range": "#rrggbb",
+              "notes": "Fixed colour multiply for the art."
+            },
+            {
+              "name": "biome_tint",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Same as the top-level component when that is absent."
+            }
           ],
-          "example": { "kurblanc:ground": { "random_rotate": true, "group": "grass", "substrate": "mypack:dirt" } },
+          "example": {
+            "kurblanc:ground": {
+              "random_rotate": true,
+              "group": "grass",
+              "substrate": "mypack:dirt"
+            }
+          },
           "behavior": "Bad field types fail while the block is parsed or when content is registered."
         },
         {
@@ -215,9 +452,19 @@
           "appliesTo": "block",
           "summary": "Marks a floor block as a built surface that connects in 47 shapes.",
           "fields": [
-            { "name": "group", "type": "string", "default": "none", "range": "any non-empty string", "notes": "Surfaces of the same group connect." }
+            {
+              "name": "group",
+              "type": "string",
+              "default": "none",
+              "range": "any non-empty string",
+              "notes": "Surfaces of the same group connect."
+            }
           ],
-          "example": { "kurblanc:surface": { "group": "woodfloor" } },
+          "example": {
+            "kurblanc:surface": {
+              "group": "woodfloor"
+            }
+          },
           "behavior": "The texture must use the surface sheet layout; the game does not slice an arbitrary image."
         },
         {
@@ -226,10 +473,27 @@
           "appliesTo": "block",
           "summary": "Marks a block as a wall and sets how far its top is raised.",
           "fields": [
-            { "name": "lift", "type": "integer", "default": "0", "range": "0–32", "notes": "Top elevation in source pixels." },
-            { "name": "group", "type": "string", "default": "none", "range": "any non-empty string", "notes": "Walls of the same group connect." }
+            {
+              "name": "lift",
+              "type": "integer",
+              "default": "0",
+              "range": "0–32",
+              "notes": "Top elevation in source pixels."
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "default": "none",
+              "range": "any non-empty string",
+              "notes": "Walls of the same group connect."
+            }
           ],
-          "example": { "kurblanc:wall": { "lift": 18, "group": "stone" } },
+          "example": {
+            "kurblanc:wall": {
+              "lift": 18,
+              "group": "stone"
+            }
+          },
           "behavior": "A lift outside 0–32 fails when the world content is registered."
         },
         {
@@ -238,10 +502,27 @@
           "appliesTo": "block",
           "summary": "Turns a floor block into water with a visible bed underneath.",
           "fields": [
-            { "name": "bed", "type": "string", "default": "none", "range": "a floor block ID", "notes": "Shown where the water is shallow or exposed." },
-            { "name": "opacity", "type": "number", "default": "none", "range": "greater than 0, less than 1", "notes": "Water tint strength, not the 0–15 light opacity." }
+            {
+              "name": "bed",
+              "type": "string",
+              "default": "none",
+              "range": "a floor block ID",
+              "notes": "Shown where the water is shallow or exposed."
+            },
+            {
+              "name": "opacity",
+              "type": "number",
+              "default": "none",
+              "range": "greater than 0, less than 1",
+              "notes": "Water tint strength, not the 0–15 light opacity."
+            }
           ],
-          "example": { "kurblanc:water": { "bed": "mypack:sand", "opacity": 0.6 } },
+          "example": {
+            "kurblanc:water": {
+              "bed": "mypack:sand",
+              "opacity": 0.6
+            }
+          },
           "behavior": "A missing bed or an opacity outside the open range fails while the block is parsed."
         },
         {
@@ -250,27 +531,181 @@
           "appliesTo": "block",
           "summary": "Describes a raised sprite: crop, offset, depth, shadow and variants.",
           "fields": [
-            { "name": "height", "type": "number", "default": "8", "range": "any finite number", "notes": "Visual height only; collision stays on the tile footprint." },
-            { "name": "rect", "type": "[x, y, width, height]", "default": "the whole image", "range": "nonnegative origin, positive size", "notes": "Crops the sprite from its sheet." },
-            { "name": "sprite_offset", "type": "[x, y]", "default": "[0, 0]", "range": "finite numbers", "notes": "Moves the sprite relative to the tile." },
-            { "name": "depth", "type": "number", "default": "0", "range": "any finite number", "notes": "Draw order against floors." },
-            { "name": "vertical_depth", "type": "number", "default": "depth", "range": "any finite number", "notes": "Draw order against walls." },
-            { "name": "vertical_rect", "type": "[x, y, width, height]", "default": "rect", "range": "nonnegative origin, positive size", "notes": "Alternate crop for a vertical face." },
-            { "name": "vertical_offset", "type": "[x, y]", "default": "sprite_offset", "range": "finite numbers", "notes": "Offset for the vertical crop." },
-            { "name": "vertical_masks", "type": "integer[]", "default": "none", "range": "each 0–15", "notes": "Cardinal masks that use the vertical crop." },
-            { "name": "shadow", "type": "string", "default": "box shadow", "range": "sprite", "notes": "Projects the sprite alpha instead of a box." },
-            { "name": "contact_shadow", "type": "[x, y, rx, ry]", "default": "none", "range": "center 0–32, radii 0–16", "notes": "Root-contact ellipse." },
-            { "name": "group", "type": "string", "default": "none", "range": "any non-empty string", "notes": "Keeps neighbouring sprites sorted together." },
-            { "name": "random_flip", "type": "boolean", "default": "false", "range": "true, false", "notes": "Mirrors from a stable tile hash." },
-            { "name": "sway", "type": "boolean", "default": "false", "range": "true, false", "notes": "Adds ambient movement to foliage." },
-            { "name": "variant_weights", "type": "integer[]", "default": "stable hash", "range": "one positive weight per strip frame", "notes": "The strip's cell is declared on the texture key." },
-            { "name": "foliage", "type": "object", "default": "none", "range": "{ canopyEnd, leafTextures }", "notes": "canopyEnd is greater than 0 and less than 1; leafTextures holds 1–32 keys." },
-            { "name": "tint", "type": "string", "default": "none", "range": "#rrggbb", "notes": "Fixed colour multiply for the sprite." },
-            { "name": "biome_tint", "type": "boolean", "default": "false", "range": "true, false", "notes": "Same as the top-level component when that is absent." },
-            { "name": "biome_tint_scale", "type": "number", "default": "1", "range": "0–1", "notes": "Darkens a biome-tinted sprite." }
+            {
+              "name": "height",
+              "type": "number",
+              "default": "8",
+              "range": "any finite number",
+              "notes": "Visual height only; collision stays on the tile footprint."
+            },
+            {
+              "name": "rect",
+              "type": "[x, y, width, height]",
+              "default": "the whole image",
+              "range": "nonnegative origin, positive size",
+              "notes": "Crops the sprite from its sheet."
+            },
+            {
+              "name": "sprite_offset",
+              "type": "[x, y]",
+              "default": "[0, 0]",
+              "range": "finite numbers",
+              "notes": "Moves the sprite relative to the tile."
+            },
+            {
+              "name": "depth",
+              "type": "number",
+              "default": "0",
+              "range": "any finite number",
+              "notes": "Draw order against floors."
+            },
+            {
+              "name": "vertical_depth",
+              "type": "number",
+              "default": "depth",
+              "range": "any finite number",
+              "notes": "Draw order against walls."
+            },
+            {
+              "name": "vertical_rect",
+              "type": "[x, y, width, height]",
+              "default": "rect",
+              "range": "nonnegative origin, positive size",
+              "notes": "Alternate crop for a vertical face."
+            },
+            {
+              "name": "vertical_offset",
+              "type": "[x, y]",
+              "default": "sprite_offset",
+              "range": "finite numbers",
+              "notes": "Offset for the vertical crop."
+            },
+            {
+              "name": "vertical_masks",
+              "type": "integer[]",
+              "default": "none",
+              "range": "each 0–15",
+              "notes": "Cardinal masks that use the vertical crop."
+            },
+            {
+              "name": "shadow",
+              "type": "string",
+              "default": "box shadow",
+              "range": "sprite",
+              "notes": "Projects the sprite alpha instead of a box."
+            },
+            {
+              "name": "contact_shadow",
+              "type": "[x, y, rx, ry]",
+              "default": "none",
+              "range": "center 0–32, radii 0–16",
+              "notes": "Root-contact ellipse."
+            },
+            {
+              "name": "group",
+              "type": "string",
+              "default": "none",
+              "range": "any non-empty string",
+              "notes": "Keeps neighbouring sprites sorted together."
+            },
+            {
+              "name": "random_flip",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Mirrors from a stable tile hash."
+            },
+            {
+              "name": "sway",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Adds ambient movement to foliage."
+            },
+            {
+              "name": "variant_weights",
+              "type": "integer[]",
+              "default": "stable hash",
+              "range": "one positive weight per strip frame",
+              "notes": "The strip's cell is declared on the material instance."
+            },
+            {
+              "name": "foliage",
+              "type": "object",
+              "default": "none",
+              "range": "{ canopyEnd, leafTextures }",
+              "notes": "canopyEnd is greater than 0 and less than 1; leafTextures holds 1–32 keys."
+            },
+            {
+              "name": "tint",
+              "type": "string",
+              "default": "none",
+              "range": "#rrggbb",
+              "notes": "Fixed colour multiply for the sprite."
+            },
+            {
+              "name": "biome_tint",
+              "type": "boolean",
+              "default": "false",
+              "range": "true, false",
+              "notes": "Same as the top-level component when that is absent."
+            },
+            {
+              "name": "biome_tint_scale",
+              "type": "number",
+              "default": "1",
+              "range": "0–1",
+              "notes": "Darkens a biome-tinted sprite."
+            }
           ],
-          "example": { "kurblanc:object": { "height": 18, "sprite_offset": [-1, -14], "rect": [0, 0, 18, 31], "depth": -1, "group": "fence" } },
+          "example": {
+            "kurblanc:object": {
+              "height": 18,
+              "sprite_offset": [
+                -1,
+                -14
+              ],
+              "rect": [
+                0,
+                0,
+                18,
+                31
+              ],
+              "depth": -1,
+              "group": "fence"
+            }
+          },
           "behavior": "Bad rectangle sizes, masks, shadow values or tint colours fail while the block is parsed."
+        },
+        {
+          "id": "kurblanc:door",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Makes one block file into a working door with a closed and an open texture.",
+          "fields": [
+            {
+              "name": "closed",
+              "type": "string",
+              "default": "none",
+              "range": "a path under textures/",
+              "notes": "Art used while the door is closed and placeable."
+            },
+            {
+              "name": "open",
+              "type": "string",
+              "default": "none",
+              "range": "a path under textures/",
+              "notes": "Art used after the door opens. The loader creates the open state."
+            }
+          ],
+          "example": {
+            "kurblanc:door": {
+              "closed": "textures/blocks/door_wood_closed.png",
+              "open": "textures/blocks/door_wood_open.png"
+            }
+          },
+          "behavior": "Both textures are required. The loader generates the open block from the same file; do not add a second `_open` file.",
+          "documentedOnly": true
         },
         {
           "id": "kurblanc:terrain",
@@ -278,10 +713,26 @@
           "appliesTo": "block",
           "summary": "Makes a floor block take part in buildable terrain fill or cover.",
           "fields": [
-            { "name": "mode", "type": "string", "default": "none", "range": "fill, cover", "notes": "fill forms the ground mass; cover is applied on top." },
-            { "name": "face", "type": "string", "default": "none", "range": "a wall block ID", "notes": "Only allowed on fill, for the exposed edge." }
+            {
+              "name": "mode",
+              "type": "string",
+              "default": "none",
+              "range": "fill, cover",
+              "notes": "fill forms the ground mass; cover is applied on top."
+            },
+            {
+              "name": "face",
+              "type": "string",
+              "default": "none",
+              "range": "a wall block ID",
+              "notes": "Only allowed on fill, for the exposed edge."
+            }
           ],
-          "example": { "kurblanc:terrain": { "mode": "fill" } },
+          "example": {
+            "kurblanc:terrain": {
+              "mode": "fill"
+            }
+          },
           "behavior": "Terrain on anything but a floor, or face on cover, fails when content is registered."
         },
         {
@@ -290,33 +741,25 @@
           "appliesTo": "block",
           "summary": "Lets one object sit on another, such as a ladder attached to a wall.",
           "fields": [
-            { "name": "down", "type": "integer", "default": "none", "range": "1–16", "notes": "How many levels down the support may be." }
+            {
+              "name": "down",
+              "type": "integer",
+              "default": "none",
+              "range": "1–16",
+              "notes": "How many levels down the support may be."
+            }
           ],
-          "example": { "kurblanc:link": { "down": 1 } },
+          "example": {
+            "kurblanc:link": {
+              "down": 1
+            }
+          },
           "behavior": "A non-object link, an extra field or a level outside 1–16 fails."
-        },
-        {
-          "id": "kurblanc:pair",
-          "aliases": [],
-          "appliesTo": "block",
-          "summary": "Groups two matching door leaves so they open together.",
-          "fields": [
-            { "name": "value", "type": "string", "default": "none", "range": "a shared pair name", "notes": "Both leaves and both open states use the same value." }
-          ],
-          "example": { "kurblanc:pair": "mypack:door_wood" },
-          "behavior": "A pair without a matching object toggle state fails when content is registered."
-        },
-        {
-          "id": "kurblanc:toggle",
-          "aliases": [],
-          "appliesTo": "block",
-          "summary": "Names the block a door or gate becomes when used.",
-          "fields": [
-            { "name": "value", "type": "string", "default": "none", "range": "a block ID on the same layer", "notes": "Use it on both states, pointing at each other." }
-          ],
-          "example": { "kurblanc:toggle": "mypack:door_wood_open" },
-          "behavior": "A missing target, air, or a block on another layer fails when content is registered."
         }
+      ],
+      "ignoredSourceComponents": [
+        "kurblanc:pair",
+        "kurblanc:toggle"
       ]
     }
   ]

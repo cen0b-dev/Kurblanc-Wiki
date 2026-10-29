@@ -1,7 +1,7 @@
 # Your first block
 
 This walkthrough adds a placeable stone floor tile. It needs two manifests, one
-block file, one item file, one texture and one texture entry.
+block file, one item file and one texture.
 
 The namespace is `mypack`. The block's ID is `mypack:stone_tile`, so its file is
 `LP/blocks/stone_tile.json`.
@@ -16,7 +16,6 @@ my-addon/
     items/stone_tile.json
   AP/
     manifest.json
-    textures/terrain_texture.json
     textures/blocks/stone_tile.png
 ```
 
@@ -98,31 +97,17 @@ Use your own UUIDs everywhere; a header UUID identifies the pack.
       "kurblanc:label": "Stone Tile",
       "kurblanc:destructible_by_mining": { "seconds_to_destroy": 0.8 },
       "kurblanc:material_instances": {
-        "*": { "texture": "stone_tile" }
+        "*": { "texture": "textures/blocks/stone_tile.png" }
       }
     }
   }
 }
 ```
 
-`stone_tile` is a texture key, not a file path. Step 5 defines it.
+The texture path is relative to the asset pack, starts with `textures/` and ends
+in `.png`.
 
-## 5. Register the texture
-
-`AP/textures/terrain_texture.json`:
-
-```json
-{
-  "texture_data": {
-    "stone_tile": { "textures": "textures/blocks/stone_tile.png" }
-  }
-}
-```
-
-The path is relative to the asset pack. A later asset pack can replace the same
-key, which is how a retexture works without touching the logic file.
-
-## 6. Make it placeable
+## 5. Make it placeable
 
 A block does not become an item by itself. Add `LP/items/stone_tile.json`:
 
@@ -140,12 +125,12 @@ A block does not become an item by itself. Add `LP/items/stone_tile.json`:
 `block` is what gets placed. `icon` can name a block or a texture path under
 `textures/`.
 
-## 7. Draw the texture
+## 6. Draw the texture
 
 Create a 32×32 PNG at `AP/textures/blocks/stone_tile.png`. Pixels are scaled
 nearest-neighbour, so keep edges hard. Transparent pixels are allowed.
 
-## 8. Load it
+## 7. Load it
 
 In Kurblanc, open **Workshop**, choose **Link a folder**, and pick `my-addon/`.
 The game finds the LP and AP and lists both as linked packs. Enable them on a
@@ -163,7 +148,7 @@ The error names the file and the field. The most common ones:
 | `Kurblanc manifests use kurblanc.schema` | Remove `format_version` from the manifest and add `kurblanc.schema`. |
 | `header.uuid must be a UUID` | Use a real UUID, not a short name. |
 | `A pack must contain exactly one module` | An LP has one `data` module; an AP has one `resources` module. |
-| `references unknown texture` | Add the key to `AP/textures/terrain_texture.json`. |
+| `texture is not provided by any active asset pack` | Check the path against the AP. |
 | `unknown block` from an item | The item's `block` must match a loaded block ID. |
 
 See [Validation errors](/reference/validation-errors) for the full list.

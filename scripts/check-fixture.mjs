@@ -17,9 +17,8 @@ if (!game) {
 
 const parserPath = resolve(game, 'src/world/bedrock-pack.ts')
 let parseBedrockBlock
-let parseTerrainTexture
 try {
-  ;({ parseBedrockBlock, parseTerrainTexture } = await import(pathToFileURL(parserPath).href))
+  ;({ parseBedrockBlock } = await import(pathToFileURL(parserPath).href))
 } catch (error) {
   console.error(`could not import ${parserPath}: ${error.message}`)
   console.error('Node 24 strips types on import; use node --experimental-strip-types if needed.')
@@ -42,14 +41,6 @@ for (const name of names) {
   } catch (error) {
     failures.push(`${name}: ${error.message}`)
   }
-}
-
-try {
-  const catalog = JSON.parse(await readFile(join(fixture, 'AP/textures/terrain_texture.json'), 'utf8'))
-  const parsed = parseTerrainTexture(catalog, 'memory://fixture/')
-  if (!parsed.sources.tile) throw new Error('missing "tile" texture key')
-} catch (error) {
-  failures.push(`AP/textures/terrain_texture.json: ${error.message}`)
 }
 
 if (failures.length) {

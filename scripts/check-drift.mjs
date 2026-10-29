@@ -26,10 +26,14 @@ const sourceComponents = await collectComponents(game, sources)
 const sourceText = (await readSources(game, fieldSources)).map(({ text }) => text).join('\n')
 
 const expected = new Set()
+const documentedOnly = new Set()
+const ignoredSource = new Set()
 const fields = []
 for (const group of manifest.groups) {
+  for (const ignored of group.ignoredSourceComponents ?? []) ignoredSource.add(ignored)
   for (const component of group.components) {
     expected.add(component.id)
+    if (component.documentedOnly) documentedOnly.add(component.id)
     for (const alias of component.aliases ?? []) expected.add(alias)
     for (const field of component.fields) {
       const name = field.name.split('.').pop()
@@ -38,9 +42,14 @@ for (const group of manifest.groups) {
   }
 }
 
-const missing = [...sourceComponents].filter((id) => !expected.has(id)).sort()
-const stale = [...expected].filter((id) => !sourceComponents.has(id)).sort()
+const missing = [...sourceComponents]
+  .filter((id) => !expected.has(id) && !ignoredSource.has(id))
+  .sort()
+const stale = [...expected]
+  .filter((id) => !sourceComponents.has(id) && !documentedOnly.has(id))
+  .sort()
 const unknownFields = fields
+  .filter(({ component }) => !documentedOnly.has(component))
   .filter(({ name }) => !sourceText.includes(name))
   .map(({ component, name }) => `${component}.${name}`)
 

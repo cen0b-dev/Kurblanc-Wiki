@@ -15,7 +15,7 @@ hero:
 
 features:
   - title: One definition, one texture
-    details: A block is a JSON file and a texture key. Adding the file is how you add the block.
+    details: A block is a JSON file and a texture path. Adding the file is how you add the block.
   - title: Logic and art stay separate
     details: A logic pack describes behaviour. An asset pack supplies the art it names.
   - title: Edit from a linked folder

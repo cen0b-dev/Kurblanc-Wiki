@@ -89,22 +89,23 @@ cannot have both.
 
 ## Doors and gates
 
-A door or gate is two block files. Each names the other with `kurblanc:toggle`:
+A door is one block file with a `kurblanc:door` component:
 
 ```json
 {
   "kurblanc:layer": "object",
   "kurblanc:placeable": true,
   "kurblanc:collision_box": true,
-  "kurblanc:toggle": "mypack:door_wood_open"
+  "kurblanc:door": {
+    "closed": "textures/blocks/door_wood_closed.png",
+    "open": "textures/blocks/door_wood_open.png"
+  }
 }
 ```
 
-The open file sets `"kurblanc:placeable": false`, `"kurblanc:collision_box": false`
-and points back at the closed block. The closed block is the one an item places.
-
-A double door adds `kurblanc:pair` with the same value on both leaves, so the two
-halves open together.
+`closed` and `open` are texture paths in the asset pack. The loader creates the
+open state from the same file, makes it non-placeable and removes its collision.
+Use one door file per door; do not add a second `_open` file.
 
 ## Reference
 
@@ -113,5 +114,5 @@ See [`kurblanc:layer`](/reference/components/blocks#kurblanc-layer),
 [`kurblanc:footprint`](/reference/components/blocks#kurblanc-footprint),
 [`kurblanc:destructible_by_mining`](/reference/components/blocks#kurblanc-destructible-by-mining),
 [`kurblanc:drops`](/reference/components/blocks#kurblanc-drops) and
-[`kurblanc:toggle`](/reference/components/blocks#kurblanc-toggle) for the field
+[`kurblanc:door`](/reference/components/blocks#kurblanc-door) for the field
 tables.

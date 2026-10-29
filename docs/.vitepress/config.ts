@@ -43,13 +43,26 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Items',
+        items: [
+          { text: 'Items', link: '/items/' },
+          { text: 'Recipes', link: '/items/recipes' },
+        ],
+      },
+      {
+        text: 'Entities',
+        items: [
+          { text: 'Entities', link: '/entities/' },
+          { text: 'Rendering', link: '/entities/rendering' },
+        ],
+      },
+      {
         text: 'Reference',
         items: [
           { text: 'Components', link: '/reference/' },
           { text: 'Block components', link: '/reference/components/blocks' },
           { text: 'Validation errors', link: '/reference/validation-errors' },
           { text: 'Limits', link: '/reference/limits' },
-          { text: 'Changelog', link: '/reference/changelog' },
         ],
       },
       {

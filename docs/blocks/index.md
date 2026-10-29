@@ -2,7 +2,7 @@
 
 A block is one JSON file in `LP/blocks/`. It defines what the tile *is*: which
 layer it occupies, whether it collides, how long it takes to mine, what it emits,
-and which texture key it uses. The art lives in an asset pack.
+and which texture file it uses. The art lives in an asset pack.
 
 ```json
 {
@@ -13,7 +13,7 @@ and which texture key it uses. The art lives in an asset pack.
       "kurblanc:layer": "floor",
       "kurblanc:color": "#8d8978",
       "kurblanc:material_instances": {
-        "*": { "texture": "stone_tile" }
+        "*": { "texture": "textures/blocks/stone_tile.png" }
       }
     }
   }
@@ -28,7 +28,7 @@ Everything else has a default.
 1. **Gameplay:** layer, collision, mining, drops.
 2. **Light:** opacity and emission.
 3. **Rendering:** the tiling style (`ground`, `surface`, `wall`, `water` or
-   `object`) and the texture key binding.
+   `object`) and the texture path binding.
 
 The [component reference](/reference/components/blocks) has every field. The
 concept pages explain the choices:
@@ -39,14 +39,24 @@ concept pages explain the choices:
 
 ## Doors and gates
 
-A door is two block files with matching `kurblanc:toggle` values. The closed file
-is placeable and solid; the open file is not placeable and has no collision. A
-double door adds `kurblanc:pair` to both leaves so they move together. There is no
-generated state and no hidden second block.
+A door is one block file with a `kurblanc:door` component. The component names a
+closed texture and an open texture. The loader creates the open block and links
+the two states, so you do not add a second file.
+
+```json
+{
+  "kurblanc:layer": "object",
+  "kurblanc:door": {
+    "closed": "textures/blocks/door_wood_closed.png",
+    "open": "textures/blocks/door_wood_open.png"
+  }
+}
+```
 
 ## Block, item and texture are separate
 
 - A block becomes holdable when you add `LP/items/<id>.json` with `block` set to
   the block ID.
-- A block names a texture key, and `AP/textures/terrain_texture.json` maps that key
-  to a PNG. An asset pack can replace the key without touching the logic file.
+- A block names a PNG under `textures/` in an asset pack. A later asset pack can
+  replace the same path, which is how a retexture works without touching the logic
+  file.

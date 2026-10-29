@@ -1,7 +1,9 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:light" },
+    "description": {
+      "identifier": "kurblanc:light"
+    },
     "components": {
       "kurblanc:light_emission": 8,
       "kurblanc:light_color": "#ffb45a"

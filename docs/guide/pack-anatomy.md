@@ -15,7 +15,6 @@ my-addon/
     worldgen/settings.json
   AP/                      Asset pack — what the content looks like
     manifest.json
-    textures/terrain_texture.json
     textures/blocks/*.png
     textures/items/*.png
     presentation/entities/<name>.json
@@ -117,10 +116,9 @@ There is no `LP/blocks.json`, `LP/items.json` or `LP/mobs.json` catalogue, and n
 `AP/textures/entity_texture.json`. The loader lists the folders. If you add a
 file, it loads; if you delete it, it is gone.
 
-The one shared asset map is `AP/textures/terrain_texture.json`. It assigns a short
-key to a PNG and can declare a strip `cell` for variant sprites. A block can also
-name a PNG path directly in `kurblanc:material_instances`, which is what the
-built-in pack does.
+Blocks name PNG paths directly in `kurblanc:material_instances`. A
+`terrain_texture.json` key table is still read if a pack has one, but new art
+does not need it.
 
 ## Where packs live
 

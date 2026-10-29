@@ -1,9 +1,17 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:drops" },
+    "description": {
+      "identifier": "kurblanc:drops"
+    },
     "components": {
-      "kurblanc:drops": [{ "item": "kurblanc:wood", "count": 8, "chance": 0.5 }]
+      "kurblanc:drops": [
+        {
+          "item": "kurblanc:wood",
+          "count": 8,
+          "chance": 0.5
+        }
+      ]
     }
   }
 }

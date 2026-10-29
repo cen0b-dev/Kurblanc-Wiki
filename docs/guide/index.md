@@ -33,7 +33,6 @@ your logic with their own art.
   but writing the namespace is clearer.
 - A definition file's basename is the ID's local part:
   `LP/blocks/stone_tile.json` defines `mypack:stone_tile`.
-- Art is named through a texture key in `AP/textures/terrain_texture.json`, not by
-  a file path inside the block file.
+- Art is named by a path under `textures/` inside the asset pack.
 - No block, item or mob catalogue. Adding a definition file is how you add
-  content. Shared texture keys live in `AP/textures/terrain_texture.json`.
+  content.

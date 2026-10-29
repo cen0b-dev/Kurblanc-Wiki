@@ -50,7 +50,7 @@ available, use **Add pack** with an archive instead.
 
 Linking makes a pack available; it does not force it into every world. Open the
 world's pack list and enable the LP and AP you want. The order matters when two
-packs provide the same ID or texture key: the later pack wins.
+packs provide the same ID or texture path: the later pack wins.
 
 ## Install a finished pack
 

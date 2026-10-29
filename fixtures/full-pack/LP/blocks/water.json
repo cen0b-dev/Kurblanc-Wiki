@@ -1,9 +1,14 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:water" },
+    "description": {
+      "identifier": "kurblanc:water"
+    },
     "components": {
-      "kurblanc:water": { "bed": "kurblanc:sand", "opacity": 0.6 }
+      "kurblanc:water": {
+        "bed": "kurblanc:sand",
+        "opacity": 0.6
+      }
     }
   }
 }

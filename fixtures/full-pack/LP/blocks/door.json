@@ -1,16 +1,17 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:door" },
+    "description": {
+      "identifier": "kurblanc:door"
+    },
     "components": {
       "kurblanc:layer": "object",
-      "kurblanc:pair": "kurblanc:door",
-      "kurblanc:toggle": "kurblanc:door_open",
       "kurblanc:placeable": true,
       "kurblanc:collision_box": true,
       "kurblanc:opacity": 15,
-      "kurblanc:material_instances": {
-        "*": { "texture": "tile" }
+      "kurblanc:door": {
+        "closed": "textures/blocks/door_closed.png",
+        "open": "textures/blocks/door_open.png"
       }
     }
   }

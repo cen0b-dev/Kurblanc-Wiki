@@ -83,7 +83,7 @@ Allows or forbids placing this block from an item.
 
 | Field | Type | Default | Range | Notes |
 |---|---|---|---|---|
-| `value` | boolean | true | true, false | Set false on the open state of a door or gate. |
+| `value` | boolean | true | true, false | The loader sets this false on the generated open state of a door or gate. |
 
 ```json
 {
@@ -287,25 +287,25 @@ Tints the light the block emits.
 **Applies to:** block
 **Aliases:** `minecraft:material_instances`
 
-Binds the block faces to texture keys from the active asset packs.
+Binds the block faces to PNG paths from the active asset packs.
 
 | Field | Type | Default | Range | Notes |
 |---|---|---|---|---|
-| `* or up.texture` | string | none | a texture key | Primary face. The key is defined in AP/textures/terrain_texture.json. |
+| `* or up.texture` | string | none | a path under textures/ (or a texture key) | Primary face. Point at a PNG under textures/, or at a key in AP/textures/terrain_texture.json. |
 | `* or up.rect` | [x, y, width, height] | the whole image | nonnegative origin, positive size | Crops one sprite from a packed sheet. |
-| `front.texture` | string | none | a texture key | Front face of a wall. Separate from the top texture. |
+| `front.texture` | string | none | a path under textures/ (or a texture key) | Front face of a wall. Separate from the top texture. |
 
 ```json
 {
   "kurblanc:material_instances": {
     "*": {
-      "texture": "stone_tile"
+      "texture": "textures/blocks/stone_tile.png"
     }
   }
 }
 ```
 
-**On bad input:** A missing primary texture or an unknown key fails while content is resolved.
+**On bad input:** A missing primary texture or a path no active asset pack provides fails while content is resolved.
 
 ## `kurblanc:biome_tint`
 
@@ -436,7 +436,7 @@ Describes a raised sprite: crop, offset, depth, shadow and variants.
 | `group` | string | none | any non-empty string | Keeps neighbouring sprites sorted together. |
 | `random_flip` | boolean | false | true, false | Mirrors from a stable tile hash. |
 | `sway` | boolean | false | true, false | Adds ambient movement to foliage. |
-| `variant_weights` | integer[] | stable hash | one positive weight per strip frame | The strip's cell is declared on the texture key. |
+| `variant_weights` | integer[] | stable hash | one positive weight per strip frame | The strip's cell is declared on the material instance. |
 | `foliage` | object | none | { canopyEnd, leafTextures } | canopyEnd is greater than 0 and less than 1; leafTextures holds 1–32 keys. |
 | `tint` | string | none | #rrggbb | Fixed colour multiply for the sprite. |
 | `biome_tint` | boolean | false | true, false | Same as the top-level component when that is absent. |
@@ -463,6 +463,28 @@ Describes a raised sprite: crop, offset, depth, shadow and variants.
 ```
 
 **On bad input:** Bad rectangle sizes, masks, shadow values or tint colours fail while the block is parsed.
+
+## `kurblanc:door`
+
+**Applies to:** block
+
+Makes one block file into a working door with a closed and an open texture.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `closed` | string | none | a path under textures/ | Art used while the door is closed and placeable. |
+| `open` | string | none | a path under textures/ | Art used after the door opens. The loader creates the open state. |
+
+```json
+{
+  "kurblanc:door": {
+    "closed": "textures/blocks/door_wood_closed.png",
+    "open": "textures/blocks/door_wood_open.png"
+  }
+}
+```
+
+**On bad input:** Both textures are required. The loader generates the open block from the same file; do not add a second `_open` file.
 
 ## `kurblanc:terrain`
 
@@ -504,39 +526,3 @@ Lets one object sit on another, such as a ladder attached to a wall.
 ```
 
 **On bad input:** A non-object link, an extra field or a level outside 1–16 fails.
-
-## `kurblanc:pair`
-
-**Applies to:** block
-
-Groups two matching door leaves so they open together.
-
-| Field | Type | Default | Range | Notes |
-|---|---|---|---|---|
-| `value` | string | none | a shared pair name | Both leaves and both open states use the same value. |
-
-```json
-{
-  "kurblanc:pair": "mypack:door_wood"
-}
-```
-
-**On bad input:** A pair without a matching object toggle state fails when content is registered.
-
-## `kurblanc:toggle`
-
-**Applies to:** block
-
-Names the block a door or gate becomes when used.
-
-| Field | Type | Default | Range | Notes |
-|---|---|---|---|---|
-| `value` | string | none | a block ID on the same layer | Use it on both states, pointing at each other. |
-
-```json
-{
-  "kurblanc:toggle": "mypack:door_wood_open"
-}
-```
-
-**On bad input:** A missing target, air, or a block on another layer fails when content is registered.

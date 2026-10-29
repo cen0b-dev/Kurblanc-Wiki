@@ -1,28 +1,18 @@
 # Textures and tiling
 
-A block names a texture key:
+A block names its art by path:
 
 ```json
 {
   "kurblanc:material_instances": {
-    "*": { "texture": "stone_tile" }
+    "*": { "texture": "textures/blocks/stone_tile.png" }
   }
 }
 ```
 
-The key is defined in the asset pack, `AP/textures/terrain_texture.json`:
-
-```json
-{
-  "texture_data": {
-    "stone_tile": { "textures": "textures/blocks/stone_tile.png" }
-  }
-}
-```
-
-Two asset packs supplying the same key: the later pack wins. That is how a
-retexture works without touching the logic file. A block that names a key no
-active asset pack defines fails to load.
+The path is relative to the asset pack, starts with `textures/`, ends in `.png`,
+and may not contain `..`. Two asset packs supplying the same path: the later pack
+wins. That is how a retexture works without touching the logic file.
 
 ## Material instances
 
@@ -33,7 +23,7 @@ is the wall face. A tile can crop one sprite out of a packed sheet:
 {
   "kurblanc:material_instances": {
     "*": {
-      "texture": "stone_sheet",
+      "texture": "textures/blocks/stone_sheet.png",
       "rect": [0, 0, 16, 16]
     }
   }
@@ -42,8 +32,6 @@ is the wall face. A tile can crop one sprite out of a packed sheet:
 
 `rect` is `[x, y, width, height]` with a nonnegative origin and positive size. A
 bad crop fails with the component path.
-
-Do not combine `rect` with a variant strip. Strip frame 0 is the sprite.
 
 ## Tiling styles
 
@@ -57,6 +45,7 @@ The renderer needs to know how to stitch the art. Pick one:
 | `kurblanc:wall` | Wall | Separate top and front textures, raised |
 | `kurblanc:water` | Water | Floor tile with a visible bed |
 | `kurblanc:object` | Object | Cropped sprite with offset, depth and variants |
+| `kurblanc:door` | Door | Closed and open textures |
 
 ### Ground
 
@@ -85,13 +74,13 @@ layout; the game does not slice an arbitrary picture.
 
 ### Walls
 
-A wall uses two texture keys and a lift:
+A wall uses two texture paths and a lift:
 
 ```json
 {
   "kurblanc:material_instances": {
-    "*": { "texture": "stone_wall_top" },
-    "front": { "texture": "stone_wall_front" }
+    "*": { "texture": "textures/blocks/stone_wall_top.png" },
+    "front": { "texture": "textures/blocks/stone_wall_front.png" }
   },
   "kurblanc:wall": {
     "lift": 18,
@@ -101,7 +90,7 @@ A wall uses two texture keys and a lift:
 ```
 
 `lift` is the top elevation in source pixels, from 0 to 32. A wall with no front
-key draws top-only. Windows and fences use the same wall layer and the same
+texture draws top-only. Windows and fences use the same wall layer and the same
 top-plus-front pair.
 
 ### Water
@@ -140,19 +129,34 @@ between 0 and 1, separate from the 0–15 light opacity.
 - `contact_shadow` supplies a root-contact ellipse when the full silhouette is
   wrong.
 - `foliage` marks a canopy for ambient flutter.
-- `variant_weights` picks among strip frames; the strip itself is declared in
-  `terrain_texture.json`.
+- `variant_weights` picks among strip frames.
+
+### Doors
+
+A door is one block with two textures:
+
+```json
+{
+  "kurblanc:door": {
+    "closed": "textures/blocks/door_wood_closed.png",
+    "open": "textures/blocks/door_wood_open.png"
+  }
+}
+```
+
+The closed texture is the placed state. The open texture is used after the door is
+used. The loader creates the open block, so there is no second file.
 
 ## Variant strips
 
 Variants are one horizontal strip with a one-pixel transparent gap between cells.
-Declare the cell on the texture key:
+Declare the cell on the material instance:
 
 ```json
 {
-  "texture_data": {
-    "pebble": {
-      "textures": "textures/blocks/pebble.png",
+  "kurblanc:material_instances": {
+    "*": {
+      "texture": "textures/blocks/pebble.png",
       "cell": [12, 10]
     }
   }
@@ -160,7 +164,8 @@ Declare the cell on the texture key:
 ```
 
 The engine reads the image and counts the frames. Frame 0 is the base sprite. A
-block that uses the key gets every frame; `variant_weights` can bias the choice.
+block that uses the texture gets every frame; `variant_weights` can bias the
+choice.
 
 ## Reference
 
@@ -168,6 +173,6 @@ See [`kurblanc:material_instances`](/reference/components/blocks#kurblanc-materi
 [`kurblanc:ground`](/reference/components/blocks#kurblanc-ground),
 [`kurblanc:surface`](/reference/components/blocks#kurblanc-surface),
 [`kurblanc:wall`](/reference/components/blocks#kurblanc-wall),
-[`kurblanc:water`](/reference/components/blocks#kurblanc-water) and
-[`kurblanc:object`](/reference/components/blocks#kurblanc-object) for the field
-tables.
+[`kurblanc:water`](/reference/components/blocks#kurblanc-water),
+[`kurblanc:object`](/reference/components/blocks#kurblanc-object) and
+[`kurblanc:door`](/reference/components/blocks#kurblanc-door) for the field tables.

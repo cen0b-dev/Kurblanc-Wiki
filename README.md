@@ -7,10 +7,6 @@ use.
 The site describes the current content format: two packs (`LP/` for logic, `AP/`
 for assets), one manifest each, and a definition file per thing.
 
-It is pinned to **Kurblanc 0.2.0**, build `87efd64` (2026-10-29). The banner text
-comes from `data/version.json`; change that file and the changelog together when
-you re-verify against a new build.
-
 ## Local development
 
 ```bash

@@ -13,7 +13,6 @@ stone-wall/
     items/stone_wall.json
   AP/
     manifest.json
-    textures/terrain_texture.json
     textures/blocks/stone_wall_top.png
     textures/blocks/stone_wall_front.png
 ```
@@ -94,8 +93,8 @@ stone-wall/
         "preferred_tool": "pickaxe"
       },
       "kurblanc:material_instances": {
-        "*": { "texture": "stone_wall_top" },
-        "front": { "texture": "stone_wall_front" }
+        "*": { "texture": "textures/blocks/stone_wall_top.png" },
+        "front": { "texture": "textures/blocks/stone_wall_front.png" }
       },
       "kurblanc:wall": {
         "lift": 18,
@@ -108,19 +107,6 @@ stone-wall/
 
 `kurblanc:layer: "wall"` is what makes the block raised. `opacity: 15` is light
 blocking, not collision; the wall is both.
-
-## Texture keys
-
-`AP/textures/terrain_texture.json`:
-
-```json
-{
-  "texture_data": {
-    "stone_wall_top": { "textures": "textures/blocks/stone_wall_top.png" },
-    "stone_wall_front": { "textures": "textures/blocks/stone_wall_front.png" }
-  }
-}
-```
 
 ## Item
 
@@ -159,6 +145,6 @@ If it fails, the message names the file and field:
 
 - Replace `mypack` with your namespace.
 - Keep the file basename equal to the ID's local part.
-- Keep both texture keys in the AP and reference them from the block.
+- Keep both texture paths under `AP/textures/` and reference them from the block.
 - Change `group` so walls of the same material connect.
 - Adjust `lift` if the top should sit higher or lower.

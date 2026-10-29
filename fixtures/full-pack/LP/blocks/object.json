@@ -1,27 +1,61 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:object" },
+    "description": {
+      "identifier": "kurblanc:object"
+    },
     "components": {
       "kurblanc:layer": "object",
       "kurblanc:object": {
         "height": 10,
         "shadow": "sprite",
-        "contact_shadow": [0, 0, 8, 4],
-        "sprite_offset": [6, -7],
-        "rect": [0, 0, 1, 1],
-        "vertical_rect": [0, 0, 1, 1],
-        "vertical_offset": [0, 0],
-        "vertical_masks": [5, 13, 7, 4, 1],
+        "contact_shadow": [
+          0,
+          0,
+          8,
+          4
+        ],
+        "sprite_offset": [
+          6,
+          -7
+        ],
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "vertical_rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "vertical_offset": [
+          0,
+          0
+        ],
+        "vertical_masks": [
+          5,
+          13,
+          7,
+          4,
+          1
+        ],
         "depth": 1,
         "vertical_depth": 2,
         "group": "tree",
         "random_flip": true,
         "sway": true,
-        "variant_weights": [1, 2],
+        "variant_weights": [
+          1,
+          2
+        ],
         "foliage": {
           "canopyEnd": 0.7,
-          "leafTextures": ["tile"]
+          "leafTextures": [
+            "tile"
+          ]
         }
       }
     }

@@ -1,9 +1,13 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:surface" },
+    "description": {
+      "identifier": "kurblanc:surface"
+    },
     "components": {
-      "kurblanc:surface": { "group": "woodfloor" }
+      "kurblanc:surface": {
+        "group": "woodfloor"
+      }
     }
   }
 }

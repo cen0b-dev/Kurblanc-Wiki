@@ -30,15 +30,15 @@ does not open with a half-loaded pack.
 | `required_tool needs a tool kind and nonnegative min_tier` | Check the object. |
 | `kurblanc:drops must be an array` | Use `[{ "item": "mypack:stone", "count": 1 }]`. |
 | `drop chance must be a number between 0 and 1` | Fix the chance. |
-| `references unknown texture` | Add the key to `AP/textures/terrain_texture.json`. |
+| `texture is not provided by any active asset pack` | Fix the path or enable the AP. |
 | `rect must have nonnegative origin and positive size` | Fix the crop. |
 | `kurblanc:wall.lift must be an integer 0-32` | Use a source-pixel elevation. |
 | `kurblanc:water needs a bed block` | Use a floor block ID. |
 | `water opacity must be between 0 and 1` | Water tint is a fraction, not 0–15. |
 | `kurblanc:object.contactShadow needs a tile-local center and radii 0-16` | Fix the shadow. |
 | `kurblanc:object.verticalMasks must contain cardinal masks 0-15` | Fix the masks. |
-| `foliage requires canopyEnd between 0 and 1 and 1–32 leaf texture keys` | Fix the canopy. |
-| `variant_rects is gone` | Declare `cell` on the texture key instead. |
+| `foliage requires canopyEnd between 0 and 1 and 1–32 leaf texture paths` | Fix the canopy. |
+| `variant_rects is gone` | Declare `cell` on the material instance instead. |
 
 ### Content registry
 
@@ -51,8 +51,7 @@ These fire after parsing, when the blocks are registered:
 | `has an unknown layer` | Use `floor`, `wall` or `object`. |
 | `floor … cannot be solid` | Floors are walkable. |
 | `shadow must be sprite on a raised block` | Sprite shadows are for walls and objects. |
-| `pair needs matching object toggle states` | Give both leaves the same `pair` and a `toggle`. |
-| `toggle must reference a block on the same layer` | Point at the other state. |
+| `kurblanc:door needs closed and open textures` | Give both paths, under `textures/`. |
 
 ## Items and recipes
 
@@ -60,11 +59,27 @@ These fire after parsing, when the blocks are registered:
 |---|---|
 | `missing label` | Add `label`. |
 | `expected positive integer` | `maxStack` is a whole number above zero. |
+| `tools require maxStack 1` | A tool must stack to 1. |
+| `invalid tool kind` | Use `axe`, `pickaxe`, `shovel` or `sword`. |
+| `unknown tool field` | Remove the extra tool key. |
 | `icon needs a known block or AP textures/*.png path` | Fix the icon. |
 | `unknown block` | The item's `block` must exist. |
 | `unknown item` in a recipe or drop | Define the item, with the right namespace. |
 | `recipe needs ingredients` | Add at least one ingredient. |
 | `duplicate block` / `duplicate item` / `duplicate recipe` | Two active packs define the same ID. |
+
+## Entities
+
+| Message | Fix |
+|---|---|
+| `description.identifier … must be namespace:name` | Use `mypack:wisp`. |
+| `kurblanc:behavior.kind must be "passive" or "hostile"` | Fix the kind. |
+| `panic_speed must not be slower than movement` | Raise panic speed. |
+| `a passive mob cannot deal attack damage` | Set damage to 0. |
+| `a hostile mob needs a sight range and an attack interval` | Set both above 0. |
+| `kurblanc:spawn.floors names unknown block` | Use a loaded block ID. |
+| `spawn floor … must be a floor block` | Spawn floors cannot be walls or objects. |
+| `animations.<action> needs a mask` | Add masks or change `variantMode`. |
 
 ## World and packs
 

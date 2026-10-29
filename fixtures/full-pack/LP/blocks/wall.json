@@ -1,12 +1,18 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:wall" },
+    "description": {
+      "identifier": "kurblanc:wall"
+    },
     "components": {
       "kurblanc:layer": "wall",
       "kurblanc:material_instances": {
-        "*": { "texture": "tile" },
-        "front": { "texture": "tile" }
+        "*": {
+          "texture": "textures/blocks/tile.png"
+        },
+        "front": {
+          "texture": "textures/blocks/tile.png"
+        }
       },
       "kurblanc:wall": {
         "lift": 18,

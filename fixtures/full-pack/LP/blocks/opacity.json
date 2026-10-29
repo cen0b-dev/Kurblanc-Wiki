@@ -1,7 +1,9 @@
 {
   "kurblanc:format": 1,
   "kurblanc:block": {
-    "description": { "identifier": "kurblanc:opacity" },
+    "description": {
+      "identifier": "kurblanc:opacity"
+    },
     "components": {
       "kurblanc:opacity": 15
     }

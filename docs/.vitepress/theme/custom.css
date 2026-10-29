@@ -50,16 +50,22 @@ h2,
   letter-spacing: 0.01em;
 }
 
-.version-banner {
-  padding: 6px 16px;
-  font-size: 12px;
-  letter-spacing: 0.02em;
-  text-align: center;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-alt);
-  border-bottom: 1px solid var(--vp-c-divider);
+body {
+  font-family: ui-sans-serif, system-ui, sans-serif;
 }
 
-.version-banner code {
-  color: var(--vp-c-text-1);
+h1 {
+  font-family: Ashen, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+}
+
+.VPHero .name,
+.VPHero .text {
+  font-family: Ashen, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+}
+
+h2,
+.VPSidebarItem .text {
+  letter-spacing: 0.01em;
 }

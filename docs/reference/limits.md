@@ -28,12 +28,12 @@ A limit breach rejects the whole pack. Nothing is loaded partially.
   `LP/blocks/stone_tile.json` → `mypack:stone_tile`.
 - A bare identifier uses the pack namespace. A full ID is clearer.
 
-## Texture keys and paths
+## Texture paths
 
-- A block names a texture key, not a file path.
-- `AP/textures/terrain_texture.json` maps the key to a PNG under `textures/`.
+- A block names a PNG under `textures/`.
 - Paths are relative, use `/`, end in `.png`, and contain no `..` segments.
-- Later asset packs win when two supply the same key.
+- Later asset packs win when two supply the same path.
+- A door names one closed path and one open path.
 
 ## Crops and offsets
 
@@ -42,7 +42,7 @@ A limit breach rejects the whole pack. Nothing is loaded partially.
 - `contact_shadow`: centre 0–32, radii greater than 0 and at most 16.
 - `vertical_masks`: integers 0–15.
 - `foliage.canopyEnd`: greater than 0 and less than 1.
-- `foliage.leafTextures`: 1–32 texture keys.
+- `foliage.leafTextures`: 1–32 texture paths.
 - `variant_weights`: one positive integer per strip frame.
 
 ## Packs and worlds
