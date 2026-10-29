@@ -85,7 +85,8 @@ Drops are a list of items:
 
 `chance` is optional, and each entry rolls independently. The item must exist in
 an active logic pack. To use a loot table instead, use `kurblanc:loot`; a block
-cannot have both.
+cannot have both. See [Drops & loot](/items/drops) for table conditions and
+nested pools.
 
 ## Doors and gates
 

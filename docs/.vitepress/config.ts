@@ -47,6 +47,7 @@ export default defineConfig({
         items: [
           { text: 'Items', link: '/items/' },
           { text: 'Recipes', link: '/items/recipes' },
+          { text: 'Drops & loot', link: '/items/drops' },
         ],
       },
       {
@@ -54,6 +55,13 @@ export default defineConfig({
         items: [
           { text: 'Entities', link: '/entities/' },
           { text: 'Rendering', link: '/entities/rendering' },
+        ],
+      },
+      {
+        text: 'Worldgen',
+        items: [
+          { text: 'Settings', link: '/worldgen/' },
+          { text: 'Biomes', link: '/worldgen/biomes' },
         ],
       },
       {

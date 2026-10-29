@@ -95,6 +95,9 @@ Blocks award items through `kurblanc:drops`:
 successful break. The item must exist in the active stack. A block that uses
 `kurblanc:loot` cannot also use `kurblanc:drops`.
 
+For weighted pools, tool conditions and nested tables, see
+[Drops & loot](/items/drops).
+
 ## Recipes
 
 Recipes live in `LP/recipes/`, one file per recipe. See

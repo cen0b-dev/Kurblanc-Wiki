@@ -13,8 +13,11 @@ loader accepts.
 | [Block components](/reference/components/blocks) | Every `kurblanc:*` key accepted in `LP/blocks/<id>.json` |
 | [Items](/items/) | `LP/items/<id>.json` fields, tools, icons and placement |
 | [Recipes](/items/recipes) | `LP/recipes/<id>.json` ingredients and output |
+| [Drops & loot](/items/drops) | Block drops and `LP/loot_tables/` |
 | [Entities](/entities/) | `LP/entities/<id>.json` behaviour, combat and spawning |
 | [Entity rendering](/entities/rendering) | Animation strips, masks and presentation |
+| [Worldgen settings](/worldgen/) | `LP/worldgen/settings.json` |
+| [Biomes](/worldgen/biomes) | `LP/worldgen/biomes/<id>.json` |
 | [Validation errors](/reference/validation-errors) | The messages you will actually see |
 | [Limits](/reference/limits) | IDs, textures, light, layers and pack sizes |
 
