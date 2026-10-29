@@ -1,0 +1,10 @@
+{
+  "format_version": "1.21.0",
+  "kurblanc:block": {
+    "description": { "identifier": "kurblanc:layer" },
+    "components": {
+      "kurblanc:layer": "wall",
+      "kurblanc:color": "#a9824f"
+    }
+  }
+}

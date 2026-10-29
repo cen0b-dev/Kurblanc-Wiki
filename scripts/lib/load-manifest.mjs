@@ -23,6 +23,9 @@ export async function loadManifest(root) {
     if (!group || typeof group.id !== 'string' || typeof group.title !== 'string' || !Array.isArray(group.components)) {
       throw new Error('data/components.json: each group needs id, title and components[]')
     }
+    if (!Array.isArray(group.sources) || group.sources.some((source) => typeof source !== 'string' || !source)) {
+      throw new Error(`data/components.json: ${group.id} needs sources[] of parser files`)
+    }
     for (const component of group.components) {
       if (!component || typeof component.id !== 'string') {
         throw new Error(`data/components.json: ${group.id} has a component without an id`)

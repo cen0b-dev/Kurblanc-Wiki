@@ -1,0 +1,9 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Wiki fixture assets",
+    "uuid": "00000000-0000-4000-8000-000000000003",
+    "version": [1, 0, 0]
+  },
+  "modules": [{ "type": "resources", "uuid": "00000000-0000-4000-8000-000000000004", "version": [1, 0, 0] }]
+}

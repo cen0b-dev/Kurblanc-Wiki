@@ -4,6 +4,7 @@
     {
       "id": "blocks",
       "title": "Block components",
+      "sources": ["src/world/block-parse.ts", "src/world/pack-types.ts"],
       "components": [
         {
           "id": "kurblanc:layer",

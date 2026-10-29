@@ -1,0 +1,9 @@
+{
+  "format_version": "1.21.0",
+  "kurblanc:block": {
+    "description": { "identifier": "kurblanc:drops" },
+    "components": {
+      "kurblanc:drops": [{ "item": "kurblanc:wood", "count": 8 }]
+    }
+  }
+}
