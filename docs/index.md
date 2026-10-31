@@ -28,7 +28,7 @@ sharing.
 
 ## Working on something else?
 
-- [Blocks](/blocks/): floors, walls, doors and objects.
+- [Blocks](/blocks/): floors, walls, doors, multi-tile objects and containers.
 - [Items](/items/) and [recipes](/items/recipes): things to hold, place and craft.
 - [Drops and loot](/items/drops): rewards from mining and creatures.
 - [Entities](/entities/): creatures, behavior and animation.

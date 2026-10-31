@@ -176,6 +176,115 @@
           "behavior": "Out-of-bounds rectangles, a floor block or a bad mask fails when the game registers the world content."
         },
         {
+          "id": "kurblanc:occupancy",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Makes an object block cover more than one tile, with the placed tile as the anchor.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "[width, height]",
+              "default": "[1, 1]",
+              "range": "1–4 tiles per axis",
+              "notes": "Use it on the object layer. Only the anchor tile stores the block. A covered tile resolves to the anchor for placement, targeting, mining, interaction and collision. A save and a chunk snapshot still store one tile."
+            }
+          ],
+          "example": {
+            "kurblanc:occupancy": [
+              2,
+              1
+            ]
+          },
+          "behavior": "A value that is not two integers from 1 to 4 fails while the parser reads the block."
+        },
+        {
+          "id": "kurblanc:mining_protection",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Stops mining inside a tile rectangle relative to an object.",
+          "fields": [
+            {
+              "name": "box",
+              "type": "[dx, dy, width, height]",
+              "default": "none",
+              "range": "origin -8 to 8, size 1 or more, far edge at most 9",
+              "notes": "Tile offsets from the block's own tile. A tile inside the box refuses a mining attempt. Use it on the object layer."
+            }
+          ],
+          "example": {
+            "kurblanc:mining_protection": {
+              "box": [
+                0,
+                0,
+                2,
+                1
+              ]
+            }
+          },
+          "behavior": "A box outside the bound, a non-integer value or a block that is not an object fails while the parser reads the block."
+        },
+        {
+          "id": "kurblanc:station",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Marks an object block as a crafting station.",
+          "fields": [
+            {
+              "name": "value",
+              "type": "object",
+              "default": "none",
+              "range": "an empty object",
+              "notes": "A recipe joins this station's set when its station field names this block's ID. The station holds no state."
+            }
+          ],
+          "example": {
+            "kurblanc:station": {}
+          },
+          "behavior": "A station with any key fails while the parser reads the block. A recipe that names a block without this component fails while the game resolves content."
+        },
+        {
+          "id": "kurblanc:storage",
+          "aliases": [],
+          "appliesTo": "block",
+          "summary": "Gives an object or wall block a container with host-owned contents.",
+          "fields": [
+            {
+              "name": "slots",
+              "type": "integer",
+              "default": "none",
+              "range": "1–64",
+              "notes": "The number of stacks that the container holds."
+            },
+            {
+              "name": "open.texture",
+              "type": "string",
+              "default": "none",
+              "range": "a path under textures/",
+              "notes": "The sprite to show while a player has the container open."
+            },
+            {
+              "name": "open.sprite_offset",
+              "type": "[x, y]",
+              "default": "the closed sprite offset",
+              "range": "finite numbers",
+              "notes": "Moves the open sprite from the closed position."
+            }
+          ],
+          "example": {
+            "kurblanc:storage": {
+              "slots": 32,
+              "open": {
+                "texture": "textures/blocks/chest_open.png",
+                "sprite_offset": [
+                  0,
+                  -9
+                ]
+              }
+            }
+          },
+          "behavior": "A floor block, a slot count outside 1–64 or an unknown key fails while the parser reads the block. Mining the block drops its contents."
+        },
+        {
           "id": "kurblanc:billboard",
           "aliases": [],
           "appliesTo": "block",
@@ -343,7 +452,7 @@
             "minecraft:material_instances"
           ],
           "appliesTo": "block",
-          "summary": "Chooses the primary texture of the block and an optional wall-front texture. Use a PNG path or a key in terrain_texture.json from an active AP.",
+          "summary": "Chooses the textures of the block: a primary face, an optional wall front, and optional wall masks. Use a PNG path or a key in terrain_texture.json from an active AP.",
           "fields": [
             {
               "name": "* or up.texture",
@@ -372,6 +481,20 @@
               "default": "omitted",
               "range": "1–256 pixels per dimension",
               "notes": "For a direct PNG path, declares the cell size of a horizontal variant strip. Frames have one-pixel gaps. For a texture key, declare cell in terrain_texture.json instead. Do not combine strips and crop rectangles."
+            },
+            {
+              "name": "top_mask.texture",
+              "type": "string",
+              "default": "none",
+              "range": "a path under textures/ (or a texture key)",
+              "notes": "Clips the wall top to the alpha of this texture. The mask keeps the colors of the material."
+            },
+            {
+              "name": "front_mask.texture",
+              "type": "string",
+              "default": "none",
+              "range": "a path under textures/ (or a texture key)",
+              "notes": "Clips the wall front to the alpha of this texture. A mask can have one extra seam row, which repeats the last material row."
             }
           ],
           "example": {
@@ -381,7 +504,7 @@
               }
             }
           },
-          "behavior": "A missing primary texture fails while the game resolves content. A path that no active asset pack supplies also fails."
+          "behavior": "A block without a primary texture fails while the game resolves content. A path that no active asset pack supplies still loads: the block keeps its gameplay and draws the magenta missing-texture checker."
         },
         {
           "id": "kurblanc:biome_tint",
@@ -442,6 +565,13 @@
               "default": "false",
               "range": "true, false",
               "notes": "Same as the top-level component when that is absent."
+            },
+            {
+              "name": "autotile",
+              "type": "boolean",
+              "default": "true",
+              "range": "true, false",
+              "notes": "Set it to false to draw one plain texture and keep the substrate. An omitted value or true uses the ground autotile sheet."
             }
           ],
           "example": {

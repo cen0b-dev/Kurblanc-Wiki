@@ -17,6 +17,8 @@ These are engine limits, not style advice. They apply to every pack.
 | Path depth | 12 segments |
 | One `.kbpack` archive | 64 MiB |
 | Variant strip | 64 frames, 256 px cells |
+| Container slots | 64 |
+| One multi-tile object | 4×4 tiles |
 
 A limit breach rejects the whole pack. The game loads nothing partially.
 

@@ -13,6 +13,8 @@ pack yet, start with [Your first block](/guide/first-block).
 | Animation frames and masks | [Entity rendering](/entities/rendering) |
 | Terrain settings | [World generation](/worldgen/) |
 | Climate and biome materials | [Biomes](/worldgen/biomes) |
+| Multi-tile objects and stations | [Multi-tile & stations](/blocks/multi-tile) |
+| Container contents | [Containers](/blocks/storage) |
 | A file that will not load | [Validation errors](/reference/validation-errors) |
 | File sizes and other caps | [Limits](/reference/limits) |
 

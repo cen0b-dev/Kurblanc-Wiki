@@ -39,6 +39,8 @@ export default defineConfig({
           { text: 'Overview', link: '/blocks/' },
           { text: 'Layers & collision', link: '/blocks/layers-and-collision' },
           { text: 'Textures & tiling', link: '/blocks/textures-and-tiling' },
+          { text: 'Multi-tile & stations', link: '/blocks/multi-tile' },
+          { text: 'Containers', link: '/blocks/storage' },
           { text: 'Light', link: '/blocks/light' },
         ],
       },

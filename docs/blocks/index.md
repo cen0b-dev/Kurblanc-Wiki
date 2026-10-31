@@ -36,6 +36,8 @@ For examples and explanations, read:
 
 - [Layers and collision](/blocks/layers-and-collision)
 - [Textures and tiling](/blocks/textures-and-tiling)
+- [Multi-tile objects and stations](/blocks/multi-tile)
+- [Containers](/blocks/storage)
 - [Light](/blocks/light)
 
 ## Doors and gates

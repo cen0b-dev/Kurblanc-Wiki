@@ -1,0 +1,21 @@
+{
+  "kurblanc:format": 1,
+  "kurblanc:block": {
+    "description": {
+      "identifier": "kurblanc:storage"
+    },
+    "components": {
+      "kurblanc:layer": "object",
+      "kurblanc:storage": {
+        "slots": 32,
+        "open": {
+          "texture": "tile",
+          "sprite_offset": [
+            0,
+            -3
+          ]
+        }
+      }
+    }
+  }
+}

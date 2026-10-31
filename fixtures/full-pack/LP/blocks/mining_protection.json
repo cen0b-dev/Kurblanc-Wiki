@@ -1,0 +1,19 @@
+{
+  "kurblanc:format": 1,
+  "kurblanc:block": {
+    "description": {
+      "identifier": "kurblanc:mining_protection"
+    },
+    "components": {
+      "kurblanc:layer": "object",
+      "kurblanc:mining_protection": {
+        "box": [
+          0,
+          0,
+          2,
+          1
+        ]
+      }
+    }
+  }
+}

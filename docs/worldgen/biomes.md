@@ -42,6 +42,7 @@ the biome. `spawnBiome` uses that ID.
 | `treeChance` | 0–1 | Tree placement chance. |
 | `treeSpacing` | integer 3–12 | Optional minimum spacing. |
 | `waterThreshold` | 0–1 | Water placement threshold. |
+| `precipitation` | 0–1 | Optional weather strength. Default 1. A desert uses 0 to suppress rain and snow. |
 
 ## Decorations
 

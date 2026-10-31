@@ -141,6 +141,99 @@ Gives a raised block a collision box that is smaller than its tile.
 
 **Validation:** Out-of-bounds rectangles, a floor block or a bad mask fails when the game registers the world content.
 
+## `kurblanc:occupancy`
+
+**Applies to:** block
+
+Makes an object block cover more than one tile, with the placed tile as the anchor.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `value` | [width, height] | [1, 1] | 1–4 tiles per axis | Use it on the object layer. Only the anchor tile stores the block. A covered tile resolves to the anchor for placement, targeting, mining, interaction and collision. A save and a chunk snapshot still store one tile. |
+
+```json
+{
+  "kurblanc:occupancy": [
+    2,
+    1
+  ]
+}
+```
+
+**Validation:** A value that is not two integers from 1 to 4 fails while the parser reads the block.
+
+## `kurblanc:mining_protection`
+
+**Applies to:** block
+
+Stops mining inside a tile rectangle relative to an object.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `box` | [dx, dy, width, height] | none | origin -8 to 8, size 1 or more, far edge at most 9 | Tile offsets from the block's own tile. A tile inside the box refuses a mining attempt. Use it on the object layer. |
+
+```json
+{
+  "kurblanc:mining_protection": {
+    "box": [
+      0,
+      0,
+      2,
+      1
+    ]
+  }
+}
+```
+
+**Validation:** A box outside the bound, a non-integer value or a block that is not an object fails while the parser reads the block.
+
+## `kurblanc:station`
+
+**Applies to:** block
+
+Marks an object block as a crafting station.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `value` | object | none | an empty object | A recipe joins this station's set when its station field names this block's ID. The station holds no state. |
+
+```json
+{
+  "kurblanc:station": {}
+}
+```
+
+**Validation:** A station with any key fails while the parser reads the block. A recipe that names a block without this component fails while the game resolves content.
+
+## `kurblanc:storage`
+
+**Applies to:** block
+
+Gives an object or wall block a container with host-owned contents.
+
+| Field | Type | Default | Range | Notes |
+|---|---|---|---|---|
+| `slots` | integer | none | 1–64 | The number of stacks that the container holds. |
+| `open.texture` | string | none | a path under textures/ | The sprite to show while a player has the container open. |
+| `open.sprite_offset` | [x, y] | the closed sprite offset | finite numbers | Moves the open sprite from the closed position. |
+
+```json
+{
+  "kurblanc:storage": {
+    "slots": 32,
+    "open": {
+      "texture": "textures/blocks/chest_open.png",
+      "sprite_offset": [
+        0,
+        -9
+      ]
+    }
+  }
+}
+```
+
+**Validation:** A floor block, a slot count outside 1–64 or an unknown key fails while the parser reads the block. Mining the block drops its contents.
+
 ## `kurblanc:billboard`
 
 **Applies to:** block
@@ -287,7 +380,7 @@ Tints the light that the block emits.
 **Applies to:** block
 **Aliases:** `minecraft:material_instances`
 
-Chooses the primary texture of the block and an optional wall-front texture. Use a PNG path or a key in terrain_texture.json from an active AP.
+Chooses the textures of the block: a primary face, an optional wall front, and optional wall masks. Use a PNG path or a key in terrain_texture.json from an active AP.
 
 | Field | Type | Default | Range | Notes |
 |---|---|---|---|---|
@@ -295,6 +388,8 @@ Chooses the primary texture of the block and an optional wall-front texture. Use
 | `* or up.rect` | [x, y, width, height] | the whole image | nonnegative origin, positive size | Crops one sprite from a packed sheet. |
 | `front.texture` | string | none | a path under textures/ (or a texture key) | The front face of a wall. It is separate from the top texture. |
 | `*.cell` | [integer, integer] | omitted | 1–256 pixels per dimension | For a direct PNG path, declares the cell size of a horizontal variant strip. Frames have one-pixel gaps. For a texture key, declare cell in terrain_texture.json instead. Do not combine strips and crop rectangles. |
+| `top_mask.texture` | string | none | a path under textures/ (or a texture key) | Clips the wall top to the alpha of this texture. The mask keeps the colors of the material. |
+| `front_mask.texture` | string | none | a path under textures/ (or a texture key) | Clips the wall front to the alpha of this texture. A mask can have one extra seam row, which repeats the last material row. |
 
 ```json
 {
@@ -306,7 +401,7 @@ Chooses the primary texture of the block and an optional wall-front texture. Use
 }
 ```
 
-**Validation:** A missing primary texture fails while the game resolves content. A path that no active asset pack supplies also fails.
+**Validation:** A block without a primary texture fails while the game resolves content. A path that no active asset pack supplies still loads: the block keeps its gameplay and draws the magenta missing-texture checker.
 
 ## `kurblanc:biome_tint`
 
@@ -339,6 +434,7 @@ Marks a floor block as natural ground with corner tiling and optional rotation.
 | `substrate` | string | none | a floor block ID | The material that the game shows under the surface. |
 | `tint` | string | none | #rrggbb | A fixed color multiply for the art. |
 | `biome_tint` | boolean | false | true, false | Same as the top-level component when that is absent. |
+| `autotile` | boolean | true | true, false | Set it to false to draw one plain texture and keep the substrate. An omitted value or true uses the ground autotile sheet. |
 
 ```json
 {

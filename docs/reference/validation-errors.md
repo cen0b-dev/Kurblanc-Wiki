@@ -33,7 +33,7 @@ follow the file that you probably edit.
 | `required_tool needs a tool kind and nonnegative min_tier` | Check the object. |
 | `kurblanc:drops must be an array` | Use `[{ "item": "mypack:stone", "count": 1 }]`. |
 | `drop chance must be a number between 0 and 1` | Fix the chance. |
-| `texture is not provided by any active asset pack` | Fix the path or enable the AP. |
+| `texture is not provided by any active asset pack` | Fix the path or enable the AP. A missing block texture still loads the pack, and the block draws the magenta checker. |
 | `rect must have nonnegative origin and positive size` | Fix the crop. |
 | `kurblanc:wall.lift must be an integer 0-32` | Use a source-pixel elevation. |
 | `kurblanc:water needs a bed block` | Use a floor block ID. |
@@ -42,6 +42,15 @@ follow the file that you probably edit.
 | `kurblanc:object.verticalMasks must contain cardinal masks 0-15` | Fix the masks. |
 | `foliage requires canopyEnd between 0 and 1 and 1–32 leaf texture paths` | Fix the canopy. |
 | `variant_rects is gone` | Declare `cell` on the material instance instead. |
+| `kurblanc:occupancy needs two integer tile sizes from 1 to 4` | Use a value such as `[2, 1]`. |
+| `mining_protection needs a bounded object tile box` | Keep the box inside the -8 to 8 tile range. |
+| `kurblanc:station needs an empty object` | Use `{}` and no keys. |
+| `kurblanc:storage needs a slot count and optional open state` | Use `{ "slots": 32 }` or add `open`. |
+| `kurblanc:storage slots must be 1-64` | Use a slot count in range. |
+| `kurblanc:storage needs an object or wall block` | Move the container off the floor layer. |
+| `kurblanc:storage.open needs a texture and optional sprite_offset` | Fix the open state. |
+| `kurblanc:storage.open.texture needs a texture path` | Name a PNG under `textures/`. |
+| `kurblanc:storage.open.sprite_offset needs 2 finite numbers` | Use `[x, y]`. |
 
 ### Content registry
 
@@ -98,13 +107,17 @@ These errors fire after parsing, when the game registers the blocks:
 | `the world stack has no available logic pack` | Enable at least one LP. |
 | `the world stack has no worldgen configuration` | Add `worldgen/settings.json` to a logic pack. |
 | `the first block in a world stack must be kurblanc:air` | Keep the built-in pack in the stack. |
+| `miningProtection needs a bounded object tile box` | Keep the box inside the -8 to 8 tile range. |
+| `has an unknown layer` | Use `floor`, `wall` or `object`. |
+| `floor … cannot be solid` | Floors are walkable. |
 
 ## Still stuck?
 
 Make sure the world has both halves of your add-on enabled. An unknown block or
-item usually means a misspelled ID or a missing LP. A missing texture usually
-means a wrong path or a missing AP. IDs contain colons, so read the whole error.
-Do not split the error at the first colon.
+item usually means a misspelled ID or a missing LP. A missing block texture
+keeps the pack loaded and shows the magenta checker, so read the content's
+missing list. IDs contain colons, so read the whole error. Do not split the
+error at the first colon.
 
 For field types and defaults, see
 [Block components](/reference/components/blocks).

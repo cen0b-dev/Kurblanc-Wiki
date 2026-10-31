@@ -44,6 +44,9 @@ A solid raised block can use a smaller collision area with `kurblanc:footprint`:
 Collision is independent of light. A framed window can be solid and still pass
 light. A tall grass tuft can be passable and still block light.
 
+A multi-tile object collides across its whole rectangle. See [Multi-tile objects
+and stations](/blocks/multi-tile).
+
 ## Mining
 
 Set the mining time in seconds:

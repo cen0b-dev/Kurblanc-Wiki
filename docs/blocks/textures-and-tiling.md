@@ -15,6 +15,10 @@ The path is relative to the asset pack. It starts with `textures/`, ends in
 `.png`, and cannot contain `..`. If two asset packs supply the same path, the
 later pack wins. Thus an AP can replace a texture with a PNG at the same path.
 
+A missing texture does not reject the pack. The block keeps its gameplay and
+draws the magenta missing-texture checker. The content reports the missing
+asset. An entity or a player with no art draws nothing.
+
 You can also name a key from `AP/textures/terrain_texture.json`. For example,
 this catalog maps the key `stone_tile` to a file:
 
@@ -79,6 +83,10 @@ The renderer needs to know how to join the art. Pick one:
 natural ground from the biome of the tile. The `substrate` field names the floor
 block under the surface.
 
+`autotile` defaults to true. Set it to false to draw one plain texture and keep
+the substrate. An exposed edge of a plain ground block still shows its
+substrate block.
+
 ### Surface
 
 ```json
@@ -108,6 +116,25 @@ A wall uses two texture paths and a lift:
 `lift` is the top elevation in source pixels, from 0 to 32. A wall with no front
 texture draws the top only. Windows and fences use the same wall layer and the
 same top-plus-front pair.
+
+A wall can clip its art with a mask. Add `top_mask` or `front_mask` to the
+material instances, each with its own texture:
+
+```json
+{
+  "kurblanc:material_instances": {
+    "*": { "texture": "textures/blocks/stone_wall_top.png" },
+    "front": { "texture": "textures/blocks/stone_wall_front.png" },
+    "top_mask": { "texture": "textures/blocks/stone_wall_top_mask.png" },
+    "front_mask": { "texture": "textures/blocks/stone_wall_front_mask.png" }
+  }
+}
+```
+
+The mask alpha clips the material and does not change its colors. A compact
+top mask expands through the 47-shape table. A mask must match the material
+size. A front mask can have one extra seam row, and the game fills that row
+with the last material row.
 
 ### Water
 

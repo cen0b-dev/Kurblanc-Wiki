@@ -1,0 +1,16 @@
+{
+  "kurblanc:format": 1,
+  "kurblanc:block": {
+    "description": {
+      "identifier": "kurblanc:station"
+    },
+    "components": {
+      "kurblanc:layer": "object",
+      "kurblanc:occupancy": [
+        2,
+        1
+      ],
+      "kurblanc:station": {}
+    }
+  }
+}

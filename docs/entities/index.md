@@ -171,6 +171,10 @@ action falls back to `idle`.
 over a separate presentation for that entity. See
 [Entity rendering](/entities/rendering).
 
+`kurblanc:footprints` is optional. It accepts `{ "legs": 0 }`, `2` or `4`
+(default `2`) and sets how many feet leave snow prints. Use `0` for a slime and
+`4` for a four-legged animal.
+
 ## Loot and sound
 
 - `kurblanc:loot.table` names a file in `LP/loot_tables/<name>.json`. Do not also
@@ -195,4 +199,5 @@ player. Unknown IDs list the loaded roster.
 | `kurblanc:spawn.floors names unknown block` | Use a loaded block ID. |
 | `spawn floor … must be a floor block` | Spawn floors cannot be walls or objects. |
 | `animations.<action> needs a mask` | Add masks or change `variantMode`. |
+| `kurblanc:footprints.legs must be 0, 2 or 4` | Use one of the three values. |
 | `image is …; a … strip needs height …` | Fix the strip geometry. |
