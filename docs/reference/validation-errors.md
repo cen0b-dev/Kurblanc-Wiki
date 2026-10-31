@@ -1,19 +1,22 @@
 # Validation errors
 
-Kurblanc fails loudly. A content error names the file and the field, and the world
-does not open with a half-loaded pack.
+Start with the file name in the error. Open that file, then find the named field.
+Check its spelling, type and references. After you fix it, rescan or reload.
+
+A failed content reload keeps the previous valid content active. The errors below
+follow the file that you probably edit.
 
 ## Manifest
 
 | Message | Fix |
 |---|---|
-| `Kurblanc manifests use kurblanc.schema` | Remove `format_version`; use `kurblanc.schema`. |
+| `Kurblanc manifests use kurblanc.schema` | Remove `format_version`. Use `kurblanc.schema`. |
 | `header.uuid must be a UUID` | Use a UUID for the header, not a name. |
 | `header.name must be a non-empty string` | Give the pack a display name. |
 | `kurblanc.namespace must be lower_snake_case` | Use `mypack`, not `MyPack`. |
 | `kurblanc.min_engine must be a major.minor.patch version string` | Use a value such as `0.1.1`. |
-| `a pack must contain exactly one module` | An LP has one `data` module; an AP has one `resources` module. |
-| `format_version` / `header.min_engine_version` | Minecraft keys are not interpreted. Use the Kurblanc keys. |
+| `a pack must contain exactly one module` | An LP has one `data` module. An AP has one `resources` module. |
+| `format_version` / `header.min_engine_version` | The game does not interpret Minecraft keys. Use the Kurblanc keys. |
 
 ## Block file
 
@@ -42,11 +45,11 @@ does not open with a half-loaded pack.
 
 ### Content registry
 
-These fire after parsing, when the blocks are registered:
+These errors fire after parsing, when the game registers the blocks:
 
 | Message | Fix |
 |---|---|
-| `the first block must be "kurblanc:air"` | The built-in pack provides air; third-party packs add to it. |
+| `the first block must be "kurblanc:air"` | The built-in pack supplies air. Third-party packs add to it. |
 | `blocks exceed the 65536-slot palette` | Remove content. |
 | `has an unknown layer` | Use `floor`, `wall` or `object`. |
 | `floor … cannot be solid` | Floors are walkable. |
@@ -71,7 +74,7 @@ These fire after parsing, when the blocks are registered:
 | `unknown block` | The item's `block` must exist. |
 | `unknown item` in a recipe or drop | Define the item, with the right namespace. |
 | `recipe needs ingredients` | Add at least one ingredient. |
-| `duplicate block` / `duplicate item` / `duplicate recipe` | Two active packs define the same ID. |
+| `duplicate block` / `duplicate item` / `duplicate recipe` | Two files in one pack define the same ID. A later pack can override an earlier pack. |
 
 ## Entities
 
@@ -96,11 +99,12 @@ These fire after parsing, when the blocks are registered:
 | `the world stack has no worldgen configuration` | Add `worldgen/settings.json` to a logic pack. |
 | `the first block in a world stack must be kurblanc:air` | Keep the built-in pack in the stack. |
 
-## Reading an error
+## Still stuck?
 
-1. The path before the colon is the file.
-2. The rest names the field or the rule.
-3. Fix the definition, not the engine.
+Make sure the world has both halves of your add-on enabled. An unknown block or
+item usually means a misspelled ID or a missing LP. A missing texture usually
+means a wrong path or a missing AP. IDs contain colons, so read the whole error.
+Do not split the error at the first colon.
 
-If the message is not on this page, the component reference is the next stop:
+For field types and defaults, see
 [Block components](/reference/components/blocks).

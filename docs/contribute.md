@@ -1,8 +1,7 @@
 # Contribute
 
-This site is a standalone VitePress repository:
-`cen0b-dev/Kurblanc-Wiki`. It documents the game's content format; it does not
-contain game code.
+This site is a standalone VitePress repository: `cen0b-dev/Kurblanc-Wiki`. It
+documents the content format of the game. It does not hold game code.
 
 ## Local setup
 
@@ -12,7 +11,7 @@ npm run dev
 ```
 
 The site serves under `/Kurblanc-Wiki/`. Use `BASE_PATH=/ npm run dev` for a
-root-served preview.
+preview that serves from the root.
 
 ## Before you push
 
@@ -21,31 +20,32 @@ npm run check
 npm run build
 ```
 
-`check` parses every JSON snippet, regenerates the component reference in check
-mode, and loads the fixture pack if a game path is available. `build` fails on
-broken internal links.
+`check` parses every JSON snippet. It also regenerates the component reference in
+check mode. If a game path is available, it loads the block fixtures. It loads
+the first-block tutorial too. `build` fails on a broken internal link.
 
-To run the game-dependent checks:
+To run the checks that need the game:
 
 ```bash
 GAME_DIR=~/Kurblonc npm run check:drift
 GAME_DIR=~/Kurblonc npm run check:fixture
+GAME_DIR=~/Kurblonc npm run check:tutorial
 ```
 
-The game repository is private, so these skip with a message when `GAME_DIR` is
-not set and are advisory in CI.
+The game repository is private. Thus these checks skip with a message when
+`GAME_DIR` is not set. They are advisory in CI.
 
 ## The rules
 
 - Describe what the game does now. Do not add release names, old formats or a
   version history page.
-- The parser is the source of truth: if the prose and the game's pack code
-  disagree, document what the code does and note the difference.
+- The parser is the source of truth. If the prose and the pack code of the game
+  disagree, document what the code does. Then note the difference.
 - Do not hand-edit generated pages. `docs/reference/components/*.md` comes from
-  `data/components.json`. Edit the manifest, then `npm run gen`.
+  `data/components.json`. Edit the manifest, then run `npm run gen`.
 - Do not duplicate field tables in guides. Link to the reference entry.
 - Every JSON fence must parse. `npm run check:snippets` enforces it.
-- No copied prose or assets. The structure follows other wikis; the words and art
+- No copied prose or assets. The structure follows other wikis. The words and art
   are Kurblanc's.
 
 ## When the format changes
@@ -57,5 +57,5 @@ not set and are advisory in CI.
 
 ## Where to report a game bug
 
-The game repository is private. Report content-format bugs to the owner; the wiki
-should describe the game, not paper over it.
+The game repository is private. Report content-format bugs to the owner. The wiki
+must describe the game. It must not hide a defect.

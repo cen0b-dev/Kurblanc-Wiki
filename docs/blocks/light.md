@@ -1,14 +1,6 @@
-# Light
+# Block lighting
 
-Kurblanc uses a 0–15 light scale. Two components matter:
-
-- `kurblanc:light_emission` makes a block a light source.
-- `kurblanc:opacity` is how much light the block absorbs.
-
-They are independent. A solid wall can be transparent; a passable plant can block
-light.
-
-## Emitting
+To make a block glow, add emission and a color to its `components` object:
 
 ```json
 {
@@ -17,33 +9,37 @@ light.
 }
 ```
 
-`light_emission` is an integer from 1 to 15. The colour is `#rrggbb`; if you omit
-it, `kurblanc:color` is used. A torch is a small object with emission 8; a crystal
-wall might be 4.
+This makes a warm light source. Emission values run from 1 to 15. A higher value
+reaches farther. Omit emission for an unlit block. If you omit `light_color`, the
+light uses the block's `color`.
 
-Emission lights the block's own tile at that level and propagates outward. Light
-falls with distance and with the opacity of the tiles it crosses.
+## Let light through a block
 
-## Blocking
+`kurblanc:opacity` controls light absorption on a scale from 0 to 15. For example,
+a solid window can let light through:
 
 ```json
 {
-  "kurblanc:opacity": 15
+  "kurblanc:layer": "wall",
+  "kurblanc:collision_box": true,
+  "kurblanc:opacity": 0
 }
 ```
 
-`opacity` is an integer from 0 to 15. `0` is fully transparent; `15` stops light
-dead. A tile's effective opacity is the highest of its layers, so a solid wall
-above a floor controls how much light reaches the floor.
+Collision and opacity do different jobs. Collision stops movement. Opacity
+reduces transmitted light. Set opacity to 15 for full blocking. A tile uses the
+highest opacity among its layers.
 
-## Daylight
+Transparent pixels in a PNG do not set the gameplay opacity. Set the component
+explicitly when a block should transmit light.
 
-Sky light is separate from block light. During the day, surface tiles receive sky
-light; the level falls with depth, time of day and the opacity of what is above.
-Underground, only emitters keep a room lit.
+## Test the result
 
-## Reference
+Place your light in a dark area. Compare it with the same block without
+emission. Daylight can make a small light source hard to see. The worldgen pack
+can also set ambient light in caves. Thus a cave is not always black without
+emitters.
 
-- [`kurblanc:light_emission`](/reference/components/blocks#kurblanc-light-emission)
-- [`kurblanc:light_color`](/reference/components/blocks#kurblanc-light-color)
-- [`kurblanc:opacity`](/reference/components/blocks#kurblanc-opacity)
+See [light emission](/reference/components/blocks#kurblanc-light-emission),
+[light color](/reference/components/blocks#kurblanc-light-color) and
+[opacity](/reference/components/blocks#kurblanc-opacity) for accepted values.

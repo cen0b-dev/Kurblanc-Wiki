@@ -15,45 +15,45 @@
           "id": "kurblanc:layer",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Chooses the layer the block occupies. The layer decides how the block is drawn and whether it is solid.",
+          "summary": "Chooses the layer that the block uses. The layer decides how the game draws the block and whether the block is solid.",
           "fields": [
             {
               "name": "value",
               "type": "string",
               "default": "floor",
               "range": "floor, wall, object",
-              "notes": "A block with kurblanc:wall defaults to wall. Everything else defaults to floor."
+              "notes": "A block with kurblanc:wall defaults to wall. All other blocks default to floor."
             }
           ],
           "example": {
             "kurblanc:layer": "wall"
           },
-          "behavior": "An unknown value fails when the world content is registered. Objects must set \"object\" explicitly."
+          "behavior": "An unknown value fails when the game registers the world content. Objects must set \"object\" explicitly."
         },
         {
           "id": "kurblanc:color",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Fallback colour for previews, break particles and light when no light colour is given.",
+          "summary": "Sets the fallback color for previews, break particles and light when you give no light color.",
           "fields": [
             {
               "name": "value",
               "type": "string",
               "default": "#ffffff",
               "range": "#rrggbb",
-              "notes": "Six hex digits. Shorthand and named colours are rejected."
+              "notes": "Six hex digits. The game rejects shorthand and named colors."
             }
           ],
           "example": {
             "kurblanc:color": "#8d8978"
           },
-          "behavior": "A value that is not #rrggbb fails when the world content is registered."
+          "behavior": "A value that is not #rrggbb fails when the game registers the world content."
         },
         {
           "id": "kurblanc:label",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Display name for the block and for an item that places it.",
+          "summary": "Sets the display name for the block and for an item that places it.",
           "fields": [
             {
               "name": "value",
@@ -66,26 +66,26 @@
           "example": {
             "kurblanc:label": "Stone Tile"
           },
-          "behavior": "A non-string value is stored as-is; keep it a string."
+          "behavior": "The game stores a non-string value as-is. Keep it a string."
         },
         {
           "id": "kurblanc:sound",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Chooses the sound set used for placing, breaking and stepping on the block.",
+          "summary": "Chooses the sound set that the game uses to place, break and step on the block.",
           "fields": [
             {
               "name": "value",
               "type": "string",
               "default": "the default block sound",
               "range": "lower_snake_case sound set name",
-              "notes": "The active asset pack must provide the set."
+              "notes": "The active asset pack must supply the set."
             }
           ],
           "example": {
             "kurblanc:sound": "stone"
           },
-          "behavior": "Anything other than a lower_snake_case name fails while the block is parsed."
+          "behavior": "A name that is not lower_snake_case fails while the parser reads the block."
         },
         {
           "id": "kurblanc:placeable",
@@ -98,7 +98,7 @@
               "type": "boolean",
               "default": "true",
               "range": "true, false",
-              "notes": "The open state of a door or gate sets this to false; the closed state is placeable."
+              "notes": "The open state of a door or gate sets this to false. The closed state is placeable."
             }
           ],
           "example": {
@@ -117,7 +117,7 @@
             {
               "name": "value",
               "type": "boolean",
-              "default": "true on wall and object layers; false on floor",
+              "default": "true on wall and object layers, false on floor",
               "range": "true, false",
               "notes": "Floor blocks cannot be solid."
             }
@@ -125,19 +125,19 @@
           "example": {
             "kurblanc:collision_box": false
           },
-          "behavior": "A non-boolean value fails when the world content is registered; a solid floor is rejected."
+          "behavior": "A non-boolean value fails when the game registers the world content. The game rejects a solid floor."
         },
         {
           "id": "kurblanc:footprint",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Gives a raised block a smaller collision box than its tile.",
+          "summary": "Gives a raised block a collision box that is smaller than its tile.",
           "fields": [
             {
               "name": "box",
               "type": "[x, y, width, height]",
               "default": "the full tile",
-              "range": "origin -32 to 64, positive size, box inside 64\u00d764",
+              "range": "origin -32 to 64, positive size, box inside 64×64",
               "notes": "Tile-local pixels."
             },
             {
@@ -145,20 +145,20 @@
               "type": "[x, y, width, height]",
               "default": "box",
               "range": "same as box",
-              "notes": "Used when the block is seen as a vertical face."
+              "notes": "The game uses it for a vertical face."
             },
             {
               "name": "group",
               "type": "string",
               "default": "none",
               "range": "any non-empty string",
-              "notes": "Keeps neighbouring footprints aligned."
+              "notes": "Keeps neighbor footprints aligned."
             },
             {
               "name": "verticalMasks",
               "type": "integer[]",
               "default": "none",
-              "range": "each 0\u201315",
+              "range": "each 0–15",
               "notes": "Cardinal masks that use verticalBox."
             }
           ],
@@ -173,45 +173,45 @@
               "group": "fence"
             }
           },
-          "behavior": "Out-of-bounds rectangles, a floor block or a bad mask fails when the world content is registered."
+          "behavior": "Out-of-bounds rectangles, a floor block or a bad mask fails when the game registers the world content."
         },
         {
           "id": "kurblanc:billboard",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Draws an object-facing sprite so it turns with the camera.",
+          "summary": "Draws an object-facing sprite that turns with the camera.",
           "fields": [
             {
               "name": "value",
               "type": "boolean",
               "default": "false",
               "range": "true, false",
-              "notes": "Only meaningful on the object layer."
+              "notes": "Meaningful only on the object layer."
             }
           ],
           "example": {
             "kurblanc:billboard": true
           },
-          "behavior": "A non-boolean value fails when the world content is registered."
+          "behavior": "A non-boolean value fails when the game registers the world content."
         },
         {
           "id": "kurblanc:opacity",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "How much light the block absorbs.",
+          "summary": "Sets how much light the block absorbs.",
           "fields": [
             {
               "name": "value",
               "type": "integer",
               "default": "0",
-              "range": "0\u201315",
-              "notes": "0 is fully transparent; 15 stops light."
+              "range": "0–15",
+              "notes": "A value of 0 is fully transparent. A value of 15 stops light."
             }
           ],
           "example": {
             "kurblanc:opacity": 15
           },
-          "behavior": "A value outside 0\u201315 or a non-integer fails when the world content is registered."
+          "behavior": "A value outside 0–15 or a non-integer fails when the game registers the world content."
         },
         {
           "id": "kurblanc:destructible_by_mining",
@@ -219,14 +219,14 @@
             "minecraft:destructible_by_mining"
           ],
           "appliesTo": "block",
-          "summary": "Sets mining time and the tools that speed it up or are required.",
+          "summary": "Sets the mining time and the tools that speed it up. It also names the tools that the block needs.",
           "fields": [
             {
               "name": "seconds_to_destroy",
               "type": "number",
               "default": "1 second",
               "range": "0 or greater",
-              "notes": "Converted to game ticks."
+              "notes": "The game converts it to game ticks."
             },
             {
               "name": "preferred_tool",
@@ -240,7 +240,7 @@
               "type": "object",
               "default": "none",
               "range": "{ kind, min_tier }",
-              "notes": "The block cannot be harvested without that tool kind and tier."
+              "notes": "You cannot harvest the block without that tool kind and tier."
             }
           ],
           "example": {
@@ -249,7 +249,7 @@
               "preferred_tool": "pickaxe"
             }
           },
-          "behavior": "A bad mining field fails while the block is parsed. false is accepted and leaves the default mining time."
+          "behavior": "A bad mining field fails while the parser reads the block. The game accepts false and keeps the default mining time."
         },
         {
           "id": "kurblanc:loot",
@@ -262,7 +262,7 @@
               "type": "string",
               "default": "none",
               "range": "a loot table ID",
-              "notes": "Cannot be combined with kurblanc:drops."
+              "notes": "You cannot combine it with kurblanc:drops."
             }
           ],
           "example": {
@@ -270,19 +270,19 @@
               "table": "mypack:stone_tile"
             }
           },
-          "behavior": "A missing table or a definition that also has kurblanc:drops fails."
+          "behavior": "A missing table or a definition that also holds kurblanc:drops fails."
         },
         {
           "id": "kurblanc:drops",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Lists the items a successful break can produce.",
+          "summary": "Lists the items that a successful break can produce.",
           "fields": [
             {
               "name": "value",
               "type": "array of { item, count, chance? }",
               "default": "no drops",
-              "range": "item IDs, positive counts, chance 0\u20131",
+              "range": "item IDs, positive counts, chance 0–1",
               "notes": "Each entry rolls independently. Omit chance for a guaranteed drop."
             }
           ],
@@ -295,7 +295,7 @@
               }
             ]
           },
-          "behavior": "A non-array, an unknown item or a chance outside 0\u20131 fails."
+          "behavior": "A non-array, an unknown item or a chance outside 0–1 fails."
         },
         {
           "id": "kurblanc:light_emission",
@@ -309,33 +309,33 @@
               "name": "value",
               "type": "integer",
               "default": "none",
-              "range": "1\u201315",
-              "notes": "0 or less is ignored and leaves the block unlit."
+              "range": "1–15",
+              "notes": "The game ignores 0 or less and leaves the block unlit."
             }
           ],
           "example": {
             "kurblanc:light_emission": 8
           },
-          "behavior": "A value above 15 fails when the world content is registered."
+          "behavior": "A value above 15 fails when the game registers the world content."
         },
         {
           "id": "kurblanc:light_color",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Tints the light the block emits.",
+          "summary": "Tints the light that the block emits.",
           "fields": [
             {
               "name": "value",
               "type": "string",
               "default": "kurblanc:color",
               "range": "#rrggbb",
-              "notes": "Only used together with kurblanc:light_emission."
+              "notes": "The game uses it only with kurblanc:light_emission."
             }
           ],
           "example": {
             "kurblanc:light_color": "#ffb45a"
           },
-          "behavior": "A value that is not #rrggbb fails when the world content is registered."
+          "behavior": "A value that is not #rrggbb fails when the game registers the world content."
         },
         {
           "id": "kurblanc:material_instances",
@@ -343,14 +343,14 @@
             "minecraft:material_instances"
           ],
           "appliesTo": "block",
-          "summary": "Binds the block faces to PNG paths from the active asset packs.",
+          "summary": "Chooses the primary texture of the block and an optional wall-front texture. Use a PNG path or a key in terrain_texture.json from an active AP.",
           "fields": [
             {
               "name": "* or up.texture",
               "type": "string",
               "default": "none",
               "range": "a path under textures/ (or a texture key)",
-              "notes": "Primary face. Point at a PNG under textures/, or at a key in AP/textures/terrain_texture.json."
+              "notes": "The primary face. Point at a PNG under textures/, or at a key in AP/textures/terrain_texture.json."
             },
             {
               "name": "* or up.rect",
@@ -364,7 +364,14 @@
               "type": "string",
               "default": "none",
               "range": "a path under textures/ (or a texture key)",
-              "notes": "Front face of a wall. Separate from the top texture."
+              "notes": "The front face of a wall. It is separate from the top texture."
+            },
+            {
+              "name": "*.cell",
+              "type": "[integer, integer]",
+              "default": "omitted",
+              "range": "1–256 pixels per dimension",
+              "notes": "For a direct PNG path, declares the cell size of a horizontal variant strip. Frames have one-pixel gaps. For a texture key, declare cell in terrain_texture.json instead. Do not combine strips and crop rectangles."
             }
           ],
           "example": {
@@ -374,26 +381,26 @@
               }
             }
           },
-          "behavior": "A missing primary texture or a path no active asset pack provides fails while content is resolved."
+          "behavior": "A missing primary texture fails while the game resolves content. A path that no active asset pack supplies also fails."
         },
         {
           "id": "kurblanc:biome_tint",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Recolours greyscale art with the colour of the biome the tile stands in.",
+          "summary": "Recolors grayscale art with the color of the biome that the tile stands in.",
           "fields": [
             {
               "name": "value",
               "type": "boolean",
               "default": "false",
               "range": "true, false",
-              "notes": "The art must be authored neutral grey for the tint to read correctly."
+              "notes": "The art must use neutral gray for the tint to read correctly."
             }
           ],
           "example": {
             "kurblanc:biome_tint": true
           },
-          "behavior": "A non-boolean value fails while the block is parsed."
+          "behavior": "A non-boolean value fails while the parser reads the block."
         },
         {
           "id": "kurblanc:ground",
@@ -420,14 +427,14 @@
               "type": "string",
               "default": "none",
               "range": "a floor block ID",
-              "notes": "The material shown under the surface."
+              "notes": "The material that the game shows under the surface."
             },
             {
               "name": "tint",
               "type": "string",
               "default": "none",
               "range": "#rrggbb",
-              "notes": "Fixed colour multiply for the art."
+              "notes": "A fixed color multiply for the art."
             },
             {
               "name": "biome_tint",
@@ -444,7 +451,7 @@
               "substrate": "mypack:dirt"
             }
           },
-          "behavior": "Bad field types fail while the block is parsed or when content is registered."
+          "behavior": "Bad field types fail while the parser reads the block or when the game registers content."
         },
         {
           "id": "kurblanc:surface",
@@ -465,19 +472,19 @@
               "group": "woodfloor"
             }
           },
-          "behavior": "The texture must use the surface sheet layout; the game does not slice an arbitrary image."
+          "behavior": "The texture must use the surface sheet layout. The game does not slice an arbitrary image."
         },
         {
           "id": "kurblanc:wall",
           "aliases": [],
           "appliesTo": "block",
-          "summary": "Marks a block as a wall and sets how far its top is raised.",
+          "summary": "Marks a block as a wall and sets the height of its raised top.",
           "fields": [
             {
               "name": "lift",
               "type": "integer",
               "default": "0",
-              "range": "0\u201332",
+              "range": "0–32",
               "notes": "Top elevation in source pixels."
             },
             {
@@ -494,7 +501,7 @@
               "group": "stone"
             }
           },
-          "behavior": "A lift outside 0\u201332 fails when the world content is registered."
+          "behavior": "A lift outside 0–32 fails when the game registers the world content."
         },
         {
           "id": "kurblanc:water",
@@ -507,14 +514,14 @@
               "type": "string",
               "default": "none",
               "range": "a floor block ID",
-              "notes": "Shown where the water is shallow or exposed."
+              "notes": "The game shows it where the water is shallow or exposed."
             },
             {
               "name": "opacity",
               "type": "number",
               "default": "none",
               "range": "greater than 0, less than 1",
-              "notes": "Water tint strength, not the 0\u201315 light opacity."
+              "notes": "Water tint strength, not the 0–15 light opacity."
             }
           ],
           "example": {
@@ -523,7 +530,7 @@
               "opacity": 0.6
             }
           },
-          "behavior": "A missing bed or an opacity outside the open range fails while the block is parsed."
+          "behavior": "A missing bed or an opacity outside the open range fails while the parser reads the block."
         },
         {
           "id": "kurblanc:object",
@@ -536,7 +543,7 @@
               "type": "number",
               "default": "8",
               "range": "any finite number",
-              "notes": "Visual height only; collision stays on the tile footprint."
+              "notes": "Visual height only. Collision stays on the tile footprint."
             },
             {
               "name": "rect",
@@ -571,20 +578,20 @@
               "type": "[x, y, width, height]",
               "default": "rect",
               "range": "nonnegative origin, positive size",
-              "notes": "Alternate crop for a vertical face."
+              "notes": "An alternate crop for a vertical face."
             },
             {
               "name": "vertical_offset",
               "type": "[x, y]",
               "default": "sprite_offset",
               "range": "finite numbers",
-              "notes": "Offset for the vertical crop."
+              "notes": "The offset for the vertical crop."
             },
             {
               "name": "vertical_masks",
               "type": "integer[]",
               "default": "none",
-              "range": "each 0\u201315",
+              "range": "each 0–15",
               "notes": "Cardinal masks that use the vertical crop."
             },
             {
@@ -592,21 +599,21 @@
               "type": "string",
               "default": "box shadow",
               "range": "sprite",
-              "notes": "Projects the sprite alpha instead of a box."
+              "notes": "Projects the alpha of the sprite instead of a box."
             },
             {
               "name": "contact_shadow",
               "type": "[x, y, rx, ry]",
               "default": "none",
-              "range": "center 0\u201332, radii 0\u201316",
-              "notes": "Root-contact ellipse."
+              "range": "center 0–32, radii 0–16",
+              "notes": "The root-contact ellipse."
             },
             {
               "name": "group",
               "type": "string",
               "default": "none",
               "range": "any non-empty string",
-              "notes": "Keeps neighbouring sprites sorted together."
+              "notes": "Keeps neighbor sprites sorted together."
             },
             {
               "name": "random_flip",
@@ -627,21 +634,21 @@
               "type": "integer[]",
               "default": "stable hash",
               "range": "one positive weight per strip frame",
-              "notes": "The strip's cell is declared on the material instance."
+              "notes": "Declare the cell of the strip on the material instance."
             },
             {
               "name": "foliage",
               "type": "object",
               "default": "none",
               "range": "{ canopyEnd, leafTextures }",
-              "notes": "canopyEnd is greater than 0 and less than 1; leafTextures holds 1\u201332 keys."
+              "notes": "canopyEnd is greater than 0 and less than 1. leafTextures holds 1–32 keys."
             },
             {
               "name": "tint",
               "type": "string",
               "default": "none",
               "range": "#rrggbb",
-              "notes": "Fixed colour multiply for the sprite."
+              "notes": "A fixed color multiply for the sprite."
             },
             {
               "name": "biome_tint",
@@ -654,8 +661,8 @@
               "name": "biome_tint_scale",
               "type": "number",
               "default": "1",
-              "range": "0\u20131",
-              "notes": "Darkens a biome-tinted sprite."
+              "range": "0–1",
+              "notes": "Darkens a sprite that has a biome tint."
             }
           ],
           "example": {
@@ -675,7 +682,7 @@
               "group": "fence"
             }
           },
-          "behavior": "Bad rectangle sizes, masks, shadow values or tint colours fail while the block is parsed."
+          "behavior": "Bad rectangle sizes, masks, shadow values or tint colors fail while the parser reads the block."
         },
         {
           "id": "kurblanc:terrain",
@@ -688,14 +695,14 @@
               "type": "string",
               "default": "none",
               "range": "fill, cover",
-              "notes": "fill forms the ground mass; cover is applied on top."
+              "notes": "fill forms the ground mass. The game applies cover on top."
             },
             {
               "name": "face",
               "type": "string",
               "default": "none",
               "range": "a wall block ID",
-              "notes": "Only allowed on fill, for the exposed edge."
+              "notes": "Allowed only on fill, for the exposed edge."
             }
           ],
           "example": {
@@ -703,7 +710,7 @@
               "mode": "fill"
             }
           },
-          "behavior": "Terrain on anything but a floor, or face on cover, fails when content is registered."
+          "behavior": "Terrain on anything but a floor, or face on cover, fails when the game registers content."
         },
         {
           "id": "kurblanc:link",
@@ -715,8 +722,8 @@
               "name": "down",
               "type": "integer",
               "default": "none",
-              "range": "1\u201316",
-              "notes": "How many levels down the support may be."
+              "range": "1–16",
+              "notes": "How many levels down the support can be."
             }
           ],
           "example": {
@@ -724,7 +731,7 @@
               "down": 1
             }
           },
-          "behavior": "A non-object link, an extra field or a level outside 1\u201316 fails."
+          "behavior": "A non-object link, an extra field or a level outside 1–16 fails."
         },
         {
           "id": "kurblanc:pair",
@@ -737,7 +744,7 @@
               "type": "string",
               "default": "none",
               "range": "any non-empty string",
-              "notes": "Both halves use the same value. Requires a kurblanc:toggle on both."
+              "notes": "Both halves use the same value. Both halves need a kurblanc:toggle."
             }
           ],
           "example": {
@@ -756,7 +763,7 @@
               "type": "string",
               "default": "none",
               "range": "namespaced block ID",
-              "notes": "Point at the open file from the closed file, and back at the closed file from the open file."
+              "notes": "The closed file points at the open file. The open file points back at the closed file."
             }
           ],
           "example": {
@@ -775,14 +782,14 @@
               "type": "string or state object",
               "default": "required",
               "range": "texture path, or an object with texture and optional art overrides",
-              "notes": "The placed state. A string names its texture; an object can add rect, sprite_offset, vertical_rect, vertical_offset, vertical_masks, height, depth, vertical_depth, footprint and label."
+              "notes": "The placed state. A string names its texture. An object can add rect, sprite_offset, vertical_rect, vertical_offset, vertical_masks, height, depth, vertical_depth, footprint and label."
             },
             {
               "name": "open",
               "type": "string or state object",
               "default": "required",
               "range": "texture path, or an object with texture and optional art overrides",
-              "notes": "The generated open state. Same fields as closed; placeable, collision and opacity are forced off."
+              "notes": "The generated open state. It takes the same fields as closed. The game forces placeable, collision and opacity off."
             }
           ],
           "example": {

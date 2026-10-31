@@ -105,8 +105,8 @@ stone-wall/
 }
 ```
 
-`kurblanc:layer: "wall"` is what makes the block raised. `opacity: 15` is light
-blocking, not collision; the wall is both.
+`kurblanc:layer: "wall"` makes the block raised. `opacity: 15` sets light
+blocking, not collision. The wall has both.
 
 ## Item
 
@@ -125,16 +125,16 @@ blocking, not collision; the wall is both.
 
 ## Art
 
-The top image uses the wall-top shape layout. A full sheet is 192×64; a compact
-48×32 sheet is expanded by the game. The front image is a 64×19 strip of 16-pixel
-face cells. Leave the front transparent for a top-only wall.
+The top image uses the wall-top shape layout. A full sheet is 192×64. The game
+expands a compact 48×32 sheet. The front image is a 64×19 strip of 16-pixel face
+cells. Leave the front transparent for a top-only wall.
 
 ## Verify
 
 1. Put the folder where you keep packs.
 2. In Workshop, choose **Link a folder** and pick `stone-wall/`.
 3. Enable the LP and AP on a world.
-4. Place the wall and confirm it connects to a neighbouring wall of the same
+4. Place the wall and confirm it connects to a neighboring wall of the same
    `group`.
 5. Mine it and confirm it breaks in about 1.2 seconds.
 

@@ -1,10 +1,15 @@
 # Your first block
 
-This walkthrough adds a placeable stone floor tile. It needs two manifests, one
-block file, one item file and one texture.
+This tutorial adds a stone floor tile to the creative inventory. You will make
+two small packs: one for the block and item, and one for their texture.
 
-The namespace is `mypack`. The block's ID is `mypack:stone_tile`, so its file is
-`LP/blocks/stone_tile.json`.
+Use a text editor, a PNG editor and a spare creative world. Enable the built-in
+logic and asset packs in that world. This add-on supplies only the new tile.
+
+We will call the block `mypack:stone_tile`. The namespace `mypack` is a prefix
+that keeps your IDs separate from the IDs of other creators. Name the file
+`stone_tile.json` to keep it easy to find. The ID inside the file is what
+matters.
 
 ## 1. Make the folder
 
@@ -52,8 +57,11 @@ my-addon/
 }
 ```
 
-The dependency UUID must match the asset pack's `header.uuid` in the next step.
-Use your own UUIDs everywhere; a header UUID identifies the pack.
+The dependency UUID matches the asset pack's `header.uuid` below. It tells the
+game this LP needs that AP. The four UUIDs in these two examples work together.
+When you publish your own pack, generate four new UUIDs. Then update the
+dependency to match your new AP header UUID. Keep them unchanged when you update
+that pack.
 
 ## 3. Write the asset manifest
 
@@ -104,8 +112,13 @@ Use your own UUIDs everywhere; a header UUID identifies the pack.
 }
 ```
 
-The texture path is relative to the asset pack, starts with `textures/` and ends
-in `.png`.
+This block goes on the `floor` layer, so you can walk over it. The `color`
+component supplies the fallback color and break particles. The mining component
+sets the base break time to 0.8 seconds.
+
+`material_instances.*.texture` points to the PNG inside your AP. Do not include
+`AP/` in this path. You can also use a texture key from an AP catalog, but this
+example uses the path directly.
 
 ## 5. Make it placeable
 
@@ -122,32 +135,44 @@ A block does not become an item by itself. Add `LP/items/stone_tile.json`:
 }
 ```
 
-`block` is what gets placed. `icon` can name a block or a texture path under
-`textures/`.
+The `block` field sets what the game places. `icon` can name a block or a
+texture path under `textures/`.
 
 ## 6. Draw the texture
 
-Create a 32×32 PNG at `AP/textures/blocks/stone_tile.png`. Pixels are scaled
-nearest-neighbour, so keep edges hard. Transparent pixels are allowed.
+Create a 32×32 PNG at `AP/textures/blocks/stone_tile.png`. The game scales pixels
+nearest-neighbor, so keep edges hard. You can use transparent pixels.
 
 ## 7. Load it
 
 In Kurblanc, open **Workshop**, choose **Link a folder**, and pick `my-addon/`.
-The game finds the LP and AP and lists both as linked packs. Enable them on a
-world, then place the tile from the creative inventory.
+The game finds the LP and AP and lists both as linked packs. Add both to your
+creative world's pack list, after the built-in packs, then enter the world.
+Open the inventory, search for **Stone Tile**, put it on the hotbar and place it.
+You should be able to walk across it and mine it.
+
+Mining removes this example tile without dropping an item. To make it drop
+itself, add this component beside `kurblanc:layer` in the block file:
+
+```json
+{ "kurblanc:drops": [{ "item": "mypack:stone_tile", "count": 1 }] }
+```
+
+This is a component fragment, not a replacement for the whole file. The other
+small JSON examples in the block guides use the same convention.
 
 After an edit, rescan the linked folder or run `/reload` inside the world.
 
 ## When it does not load
 
-The error names the file and the field. The most common ones:
+The error names the file and the field. These are the most common errors:
 
 | Message | Fix |
 |---|---|
 | `block files use "kurblanc:format": 1` | Add `"kurblanc:format": 1` at the top of the block file. |
 | `Kurblanc manifests use kurblanc.schema` | Remove `format_version` from the manifest and add `kurblanc.schema`. |
 | `header.uuid must be a UUID` | Use a real UUID, not a short name. |
-| `A pack must contain exactly one module` | An LP has one `data` module; an AP has one `resources` module. |
+| `A pack must contain exactly one module` | An LP has one `data` module. An AP has one `resources` module. |
 | `texture is not provided by any active asset pack` | Check the path against the AP. |
 | `unknown block` from an item | The item's `block` must match a loaded block ID. |
 

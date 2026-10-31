@@ -1,38 +1,36 @@
-# Start here
+# Make a content pack
 
-Kurblanc content is data. A block, item, recipe or entity is a JSON file plus its
-art; the game finds it in the pack folder. You do not edit engine code.
+You can add blocks, items, crafting recipes and creatures to Kurblanc. Edit JSON
+files and draw textures. You do not need to write game code.
 
-An add-on has two halves:
+Start with [Your first block](/guide/first-block). It walks through a small
+add-on: a stone floor tile. You can find the tile in the creative inventory and
+place it in a world. Keep the built-in packs enabled while you test the add-on.
+They supply the rest of the game.
 
-- **LP** (logic pack) — what the content is and how it plays.
-- **AP** (asset pack) — what it looks like and sounds like.
+## How the files fit together
 
-You can ship the two halves together, or keep them apart so other packs can use
-your logic with their own art.
+An add-on usually contains two folders:
 
-## What you need
+- **LP**, the logic pack, defines things such as a block's mining time or a recipe's ingredients.
+- **AP**, the asset pack, holds textures, animation images and audio.
 
-- A text editor.
-- An image editor that saves PNGs with transparency.
-- A folder on your computer for the add-on.
-- Kurblanc, with the add-on folder linked in Workshop. See
-  [Load a pack](/guide/load-a-pack).
+For example, an LP defines `mypack:stone_tile` and asks for an image named
+`textures/blocks/stone_tile.png`. The AP supplies that image. An item in the LP
+lets you hold and place the block.
 
-## The shortest path
+Both packs have a `manifest.json`. The manifest gives the pack a name and a
+unique ID. The packs appear separately in Workshop and in a world's pack list.
 
-1. [Pack anatomy](/guide/pack-anatomy) — the files and folders every add-on has.
-2. [Load a pack](/guide/load-a-pack) — link the folder and enable the packs.
-3. [Build your first block](/guide/first-block) — a floor tile from zero to placed.
-4. [Block components](/reference/components/blocks) — the field-by-field table.
-5. [Validation errors](/reference/validation-errors) — when something does not load.
+## After your first block
 
-## The rules that never change
-
-- IDs are namespaced: `mypack:stone_tile`. A bare name takes the pack's namespace,
-  but writing the namespace is clearer.
-- A definition file's basename is the ID's local part:
-  `LP/blocks/stone_tile.json` defines `mypack:stone_tile`.
-- Art is named by a path under `textures/` inside the asset pack.
-- No block, item or mob catalogue. Adding a definition file is how you add
-  content.
+| I want to… | Read |
+|---|---|
+| Understand the folders and IDs | [Pack anatomy](/guide/pack-anatomy) |
+| Load, update or share a pack | [Load a pack](/guide/load-a-pack) |
+| Make a wall, door or decorative object | [Blocks](/blocks/) |
+| Add something to hold or craft | [Items](/items/) and [Recipes](/items/recipes) |
+| Change what mining or killing drops | [Drops and loot tables](/items/drops) |
+| Add a creature | [Entities](/entities/) |
+| Change terrain and biomes | [World generation](/worldgen/) |
+| Fix a pack that will not load | [Validation errors](/reference/validation-errors) |

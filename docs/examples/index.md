@@ -1,14 +1,11 @@
 # Examples
 
-Two ways to see a complete pack:
+Start with [Your first block](/guide/first-block) for a complete floor-tile add-on.
+Then try [A block from scratch](/examples/a-block-from-scratch) to make a wall
+with separate top and front artwork.
 
-- [A block from scratch](/examples/a-block-from-scratch): a wall, its item and
-  its two textures, assembled step by step.
-- [The sample pack](/examples/sample-pack): a complete add-on to compare against.
+[The sample pack](/examples/sample-pack) explains where to find the game's
+published content. Use it to inspect existing definitions and texture layouts.
 
-The fixtures in the wiki repository are the examples the checks load.
-`fixtures/full-pack/` has one definition for every documented block component. To
-start from a working file, copy the fixture that matches your style and change the
-IDs and texture paths.
-
-Every JSON example on this site is parsed by `npm run check:snippets`.
+The wiki repository also has `fixtures/full-pack/` for block parsing checks.
+These are parser test inputs, not a finished add-on to import into a world.

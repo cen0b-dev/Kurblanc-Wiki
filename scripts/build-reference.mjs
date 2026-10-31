@@ -37,7 +37,7 @@ function renderComponent(component) {
   lines.push(JSON.stringify(component.example, null, 2))
   lines.push('```')
   lines.push('')
-  lines.push(`**On bad input:** ${component.behavior}`)
+  lines.push(`**Validation:** ${component.behavior}`)
   lines.push('')
   return lines.join('\n')
 }
@@ -47,7 +47,7 @@ function renderGroup(group) {
     '<!-- generated: do not edit -->',
     `# ${group.title}`,
     '',
-    'Generated from `data/components.json`. Do not edit this page by hand; edit the manifest and run `npm run gen`.',
+    'Put these components inside the `components` object of a block definition. Examples here are fragments. [Your first block](/guide/first-block) shows a complete file.',
     '',
     ...group.components.map(renderComponent),
   ].join('\n').replace(/\n+$/, '\n')

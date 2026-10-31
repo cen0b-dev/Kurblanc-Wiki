@@ -1,29 +1,28 @@
 # The sample pack
 
-The sample repository is
-[`Bandit-Fox/Kurblanc-Samples`](https://github.com/Bandit-Fox/Kurblanc-Samples).
+The game's publishing script exports the bundled logic and assets to
+[Kurblanc-Samples](https://github.com/Bandit-Fox/Kurblanc-Samples). The source
+layout is `packs/kurblonc/LP/` and `packs/kurblonc/AP/`.
 
-It is a complete add-on with real block, item, recipe and entity files. Use it to
-see how a pack is arranged and to compare art proportions and tiling choices.
-Copy the structure, not the IDs: every pack needs its own namespace and UUIDs.
+Use the sample to see how the game makes existing blocks, recipes, creatures and
+texture sheets. It is a copy of the game's built-in content, so it uses the
+built-in IDs. For your first add-on, follow [Your first block](/guide/first-block)
+instead of enabling a second copy of the whole game pack.
 
-## What it is good for
+## Download or inspect it
 
-- Seeing a full set of block, item and entity definitions.
-- Checking how a texture sheet is cropped or split.
-- Comparing your pack against a working content set.
+Look for matching LP and AP archives in the sample repository's releases, or
+browse the JSON files in `packs/kurblonc/`. Use files from the same release as the
+game that you test. Older samples may use a different format.
 
-## Using it
+The publishing script names its exports `kurblonc-LP-<version>.kbpack`,
+`kurblonc-AP-<version>.kbpack` and `kurblonc-<version>.kbaddon`.
 
-1. Download or clone the repository.
-2. Find the add-on folder that contains `LP/` and `AP/`.
-3. Link that folder in Workshop, or zip it as a `.kbaddon` to install it.
-4. Enable the LP and AP on a world.
+## Reuse an example
 
-If a file in the sample does not match a field on this site, the
-[component reference](/reference/components/blocks) is the current answer.
+Copy only the files you need into your own add-on. Give your manifests new UUIDs,
+choose your namespace and update the copied IDs and references. Keep references
+to built-in content only when your pack deliberately depends on it.
 
-## Next
-
-- [Pack anatomy](/guide/pack-anatomy)
-- [Load a pack](/guide/load-a-pack)
+If the sample and wiki disagree, check which game release the sample came from.
+A reference table cannot make an older pack compatible with a newer loader.

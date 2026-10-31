@@ -20,13 +20,12 @@ namespaced loot table in `LP/loot_tables/`. Use one or the other, not both.
 | `count` | Positive integer. |
 | `chance` | Optional 0–1. Omitted means guaranteed. Each entry rolls independently after a successful break. |
 
-The drop list is metadata on the block; it does not change the resulting
-inventory stack. A block that uses `kurblanc:loot` cannot also use
-`kurblanc:drops`.
+Each successful drop creates that item and quantity when the block breaks. A
+block that uses `kurblanc:loot` cannot also use `kurblanc:drops`.
 
 ## Loot tables
 
-Loot tables live in `LP/loot_tables/<name>.json`. A block points at one:
+Loot tables are in `LP/loot_tables/<name>.json`. A block points at one:
 
 ```json
 {
@@ -61,17 +60,17 @@ The table file:
 | Field | Notes |
 |---|---|
 | `kurblanc:format` | Must be `1`. |
-| `id` | Namespaced table ID; unique in the active stack. |
+| `id` | Namespaced table ID. Unique within its pack. Later packs can override it. |
 | `pools` | 1–64 pools. |
-| `rolls` | A number or `{ min, max }`; 0–64. |
+| `rolls` | A number or `{ min, max }`, from 0 to 64. |
 | `entries` | 1–64 entries per pool. |
-| `weight` | Positive integer; relative pick weight within the pool. |
+| `weight` | Positive integer. Relative pick weight within the pool. |
 
 Entry types:
 
-- `item`: `name` is an item ID; optional `functions`.
-- `empty`: no item; `name` is not allowed.
-- `loot_table`: `name` is another table; nests.
+- `item`: `name` is an item ID, with optional `functions`.
+- `empty`: no item. `name` is not allowed.
+- `loot_table`: `name` is another table. It nests.
 
 Conditions:
 
@@ -113,7 +112,7 @@ An entity loot table is not the same as a block drop list. Do not also add
 | `drop chance must be a number between 0 and 1` | Fix the chance. |
 | `unknown item` | Define the item, with the right namespace. |
 | `table` / `pools` errors | Check the table shape and the limits above. |
-| `duplicate loot table` | Two active packs use the same table ID. |
+| `duplicate loot table` | Two files in one pack use the same table ID. |
 
 ## Related
 

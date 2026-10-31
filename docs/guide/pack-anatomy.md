@@ -23,13 +23,18 @@ my-addon/
     music.json
 ```
 
-Only the manifests are required. Every other file is optional, and each folder
-adds content by the files inside it. There is no index file to update.
+A pack needs a manifest. Add only the folders you use. A texture replacement
+pack, for example, can contain just an AP manifest and PNGs. A small add-on can
+rely on the built-in packs for world generation, player art and other content.
+
+The loader reads JSON files directly inside `blocks/`, `items/`, `recipes/` and
+`entities/`. Keep those definitions in the named folder, without subfolders.
+Loot tables can use subfolders. You do not need to maintain a content index.
 
 ## Manifests
 
 Each pack has one manifest and exactly one module: `data` for an LP, `resources`
-for an AP. Manifests do not use `format_version`; they use `kurblanc.schema`.
+for an AP. Manifests do not use `format_version`. They use `kurblanc.schema`.
 
 `LP/manifest.json`:
 
@@ -87,10 +92,11 @@ for an AP. Manifests do not use `format_version`; they use `kurblanc.schema`.
 }
 ```
 
-Use fresh UUIDs for every header and module. `dependencies` is optional: add an
-entry when one pack must load below another. The game discovers LP and AP folders
-independently, so a linked add-on does not need the dependency just to find its
-art. A logic pack that only uses built-in art can omit it.
+Use fresh UUIDs for every header and module. Add an entry to `dependencies`
+only when a pack cannot work without another pack. The field is optional. The
+game discovers LP and AP folders independently. A linked add-on does not need the
+dependency just to find its art. A logic pack that uses only built-in art can
+omit it.
 
 `kurblanc.namespace` is the default for IDs written without a namespace.
 `kurblanc.min_engine` is the oldest game version the pack accepts.
@@ -103,31 +109,35 @@ Every definition has a namespaced identifier:
 { "description": { "identifier": "mypack:stone_tile" } }
 ```
 
-The namespace is yours; `kurblanc` belongs to the built-in content. Both parts
-are lower snake case. The file's basename must equal the local part:
-`LP/blocks/stone_tile.json` defines `mypack:stone_tile`.
+The namespace is yours. The `kurblanc` namespace belongs to the built-in
+content. Both parts are lower snake case. Use the local part as the filename to
+make files easy to find: `LP/blocks/stone_tile.json` can define
+`mypack:stone_tile`. The identifier inside the JSON is authoritative. Matching
+the filename is a convention.
 
 References use the same IDs: drops, recipe ingredients, water beds, toggle
 targets, spawn floors. A bare name uses the pack's namespace, but a full ID is
-easier to read and survives moving a file between packs.
+easier to read. It also survives moving a file between packs.
 
-## What is deliberately absent
+## How the loader finds content
 
-There is no `LP/blocks.json`, `LP/items.json` or `LP/mobs.json` catalogue, and no
-`AP/textures/entity_texture.json`. The loader lists the folders. If you add a
-file, it loads; if you delete it, it is gone.
+There is no `LP/blocks.json`, `LP/items.json` or `LP/mobs.json` catalog, and no
+`AP/textures/entity_texture.json`. The loader lists the folders. Save a new
+definition in the right folder, then rescan or reload to load it.
+Deleting a file removes that definition on the next successful reload, unless
+another active pack supplies the same ID.
 
-Blocks name PNG paths directly in `kurblanc:material_instances`. A
-`terrain_texture.json` key table is still read if a pack has one, but new art
-does not need it.
+Blocks name PNG paths directly in `kurblanc:material_instances`. The loader
+still reads a `terrain_texture.json` key table if a pack has one. New art does
+not need it.
 
 ## Where packs live
 
 - **Linked folder.** In Workshop, **Link a folder** points the game at a folder
-  on disk. Every pack in that folder is discovered and read directly. This is the
-  normal way to work on a pack.
+  on disk. The game discovers and reads every pack in that folder directly. This
+  is the normal way to work on a pack.
 - **Installed pack.** A `.kbpack` is one zipped pack. A `.kbaddon` zips related
-  LP and AP packs together. Installed packs are copied into the game's pack
+  LP and AP packs together. The game copies installed packs into its pack
   store.
 
 Folder names are not identity. The manifest UUID is.

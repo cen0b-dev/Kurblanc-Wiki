@@ -1,8 +1,13 @@
 # Entity rendering
 
-An entity's animation strips live in the `kurblanc:render` component inside
-`LP/entities/<id>.json`. There is no separate presentation file in the asset
-pack.
+Draw an entity's animations as PNG strips in the AP. Describe their frame sizes
+and playback speed in either of these places:
+
+- `kurblanc:render` inside `LP/entities/<name>.json`.
+- `AP/presentation/entities/<name>.json`, with an `entity` field naming the entity ID.
+
+The inline form takes priority if both exist. Here is the value to put inside
+`kurblanc:render`:
 
 ```json
 {
@@ -34,12 +39,12 @@ pack.
 
 | Field | Default | Notes |
 |---|---|---|
-| `entity` | required in AP files | `namespace:name`; not used in the inline form. |
+| `entity` | required in AP files | `namespace:name`. Not used in the inline form. |
 | `pixelScale` | 2 | Integer 1–4. |
-| `feet` | 0 | Integer 0–32; baseline offset in source pixels. |
+| `feet` | 0 | Integer 0–32. Baseline offset in source pixels. |
 | `alpha` | 1 | Number 0.05–1. |
 | `variantMode` | `none` | `none`, `tint` or `mask`. |
-| `sourceFacing` | `left` | `left` or `right`; the renderer mirrors for travel. |
+| `sourceFacing` | `left` | `left` or `right`. The renderer mirrors for travel. |
 | `strips` | required | One entry per animation action. |
 
 Action names are lower snake case, for example `idle`, `walk`, `jump` or
@@ -56,7 +61,7 @@ height = cell.height
 ```
 
 For a 4-frame 8×8 walk strip, the PNG is `35×8`. The loader checks the real image
-size, so a strip that does not fit is rejected rather than cropped.
+size. It rejects a strip that does not fit and does not crop it.
 
 | Limit | Value |
 |---|---|
@@ -67,7 +72,7 @@ size, so a strip that does not fit is rejected rather than cropped.
 
 ## Masks
 
-`variantMode: "mask"` recolours through a mask instead of a flat tint. Every
+`variantMode: "mask"` recolors through a mask instead of a flat tint. Every
 animation then needs a `mask` path:
 
 ```json
@@ -90,14 +95,16 @@ The mask must have the same geometry as its base strip.
 
 ## Texture paths
 
-Strip paths are pack-relative, end in `.png`, and are resolved through the active
-asset packs. No `..` and no leading slash. The art does not need a
-`terrain_texture.json` entry; naming the file is enough.
+Strip paths are pack-relative and end in `.png`. The loader resolves them through
+the active asset packs. Do not use `..` and do not use a leading slash. The art
+does not need a `terrain_texture.json` entry. Naming the file is enough.
 
 ## Player
 
-The player uses the same strip shape in `LP/player.json`, wrapped in
-`kurblanc:player`:
+The player uses the same strip fields. You can put them in `LP/player.json`,
+wrapped in `kurblanc:player`, as below. The loader also accepts
+`AP/presentation/player.json` without that wrapper. An LP player definition takes
+priority. If several LPs give one, the loader uses the first LP in resolved order.
 
 ```json
 {

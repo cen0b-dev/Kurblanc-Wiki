@@ -1,8 +1,11 @@
 # Items
 
-An item is one JSON file in `LP/items/`. The folder is the roster: add a file and
-the item exists. Item files do not use a `kurblanc:format` marker; they are plain
-objects.
+An item is one JSON file in `LP/items/`. Save the file directly in that folder,
+then reload the pack to add the item. Item files do not use a `kurblanc:format`
+marker. They are plain objects.
+
+Here is a tool item. Its icon image belongs at
+`AP/textures/items/stone_axe.png`:
 
 ```json
 {
@@ -48,12 +51,12 @@ A block does not become an item by itself. Give the item a `block` reference:
 }
 ```
 
-The placed block's label and art are not copied into the item; the item's own
-`label` and `icon` are displayed.
+The item does not copy the label and art of the placed block. The game shows the
+`label` and `icon` of the item.
 
 ## Tools
 
-The `tool` object is what makes an item mine faster or gate harvesting. It
+The `tool` object makes an item mine faster. It also restricts harvesting. It
 accepts exactly these fields:
 
 | Field | Type | Notes |
@@ -68,15 +71,15 @@ A tool must set `maxStack` to `1`. An unknown field rejects the item.
 
 ## Icons
 
-`icon.texture` is an AP-relative path under `textures/`, ending in `.png`, with no
-`..`. The bundled pack uses 16×16 item icons:
+`icon.texture` is an AP-relative path under `textures/`. The path ends in `.png`
+and has no `..`. The bundled pack uses 16×16 item icons:
 
 ```json
 { "icon": { "texture": "textures/items/stone_floor.png" } }
 ```
 
-`icon.block` renders a block preview instead and remains supported for legacy
-packs or object-shaped items without authored item art.
+`icon.block` shows a preview of the block. Use it to show the block appearance in
+the inventory icon. Then you do not draw a separate item icon.
 
 ## Drops
 
@@ -91,7 +94,7 @@ Blocks award items through `kurblanc:drops`:
 }
 ```
 
-`chance` is optional, from 0 to 1, and each entry rolls independently after a
+`chance` is optional, from 0 to 1. Each entry rolls independently after a
 successful break. The item must exist in the active stack. A block that uses
 `kurblanc:loot` cannot also use `kurblanc:drops`.
 
@@ -100,7 +103,7 @@ For weighted pools, tool conditions and nested tables, see
 
 ## Recipes
 
-Recipes live in `LP/recipes/`, one file per recipe. See
+Recipes are in `LP/recipes/`, one file per recipe. See
 [Recipes](/items/recipes).
 
 ## Validation
@@ -116,4 +119,4 @@ Common item errors:
 | `unknown tool field` | Remove the extra key. |
 | `icon needs a known block or AP textures/*.png path` | Fix `icon.block` or `icon.texture`. |
 | `unknown block` | The `block` reference does not exist. |
-| `duplicate item` | Two active packs define the same ID. |
+| `duplicate item` | Two files in one pack define the same ID. |

@@ -1,33 +1,36 @@
 ---
 layout: home
-
 hero:
   name: Kurblanc Creator Wiki
-  text: Make content for the game
-  tagline: Blocks and the packs that carry them — as data, not engine code.
+  text: Make your own blocks, items and creatures
+  tagline: Learn how to make a pack, load it into the game and share it.
   actions:
     - theme: brand
-      text: Your first block
+      text: Make your first block
       link: /guide/first-block
     - theme: alt
-      text: Pack anatomy
-      link: /guide/pack-anatomy
-
-features:
-  - title: One definition, one texture
-    details: A block is a JSON file and a texture path. Adding the file is how you add the block.
-  - title: Logic and art stay separate
-    details: A logic pack describes behaviour. An asset pack supplies the art it names.
-  - title: Edit from a linked folder
-    details: Link your add-on folder in Workshop and the game loads it straight from disk.
+      text: Browse the reference
+      link: /reference/
 ---
 
-## Start here
+## New to packs?
 
-1. [Pack anatomy](/guide/pack-anatomy): the `LP/` and `AP/` folders, manifests and IDs.
-2. [Load a pack](/guide/load-a-pack): link a dev folder in Workshop, or install a `.kbpack`.
-3. [Build your first block](/guide/first-block): a floor tile from empty folder to placed block.
-4. [Block components](/reference/components/blocks): every field a block accepts.
+[Your first block](/guide/first-block) takes you from an empty folder to a stone
+floor tile. You can place the tile in a creative world. The page gives you every
+JSON file you need and shows where the texture goes.
 
-The guides show a task in order. The reference states what the loader accepts. When
-the two disagree, the reference is the safer answer.
+Packs usually come in two parts. The **LP** defines the content. The **AP**
+supplies its images and sounds.
+
+[Pack anatomy](/guide/pack-anatomy) explains the folders, manifests and IDs.
+[Load a pack](/guide/load-a-pack) covers linked folders, imports, reloads and
+sharing.
+
+## Working on something else?
+
+- [Blocks](/blocks/): floors, walls, doors and objects.
+- [Items](/items/) and [recipes](/items/recipes): things to hold, place and craft.
+- [Drops and loot](/items/drops): rewards from mining and creatures.
+- [Entities](/entities/): creatures, behavior and animation.
+- [World generation](/worldgen/): terrain settings and biomes.
+- [Validation errors](/reference/validation-errors): help with a pack that will not load.

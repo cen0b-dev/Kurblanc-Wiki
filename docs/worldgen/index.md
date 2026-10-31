@@ -1,15 +1,23 @@
 # Worldgen settings
 
-World generation comes from one logic pack in the active stack:
+You do not need worldgen files to add a block or item. Keep the built-in logic
+pack enabled. Your add-on then uses its terrain.
+
+To replace terrain generation, add these files to your LP:
 
 ```
 LP/worldgen/settings.json
 LP/worldgen/biomes/<id>.json
 ```
 
-`settings.json` holds the shared scales and optional systems; each biome is one
-file in `biomes/`. A later logic pack in the stack with its own settings replaces
-the earlier one. A stack with no `worldgen/settings.json` cannot open a world.
+`settings.json` holds the shared scales and optional systems. Each biome is one
+file in `biomes/`. A later logic pack in the stack can have its own settings.
+That pack replaces the earlier settings and biome set as a whole. The game reads
+biomes from the same pack as the selected settings. A stack with no
+`worldgen/settings.json` cannot open a world.
+
+The example below shows the structure. Every `mypack:` block reference needs a
+matching definition. This example is not a standalone worldgen pack.
 
 ```json
 {
@@ -100,7 +108,7 @@ the earlier one. A stack with no `worldgen/settings.json` cannot open a world.
 ```
 
 `block` must be an object-layer block. `chance` is 0–1. `nearSpawnCount` is an
-integer 0–128 placed near the spawn.
+integer from 0 to 128. The generator places these blocks near the spawn.
 
 ### Caves
 
@@ -132,8 +140,8 @@ integer 0–128 placed near the spawn.
 | `cavernThreshold` | 0.3–0.95 |
 | `ambient` | integer 0–15 |
 
-An optional `terrain` object adds a fill layer: `fill` must be a terrain-fill
-floor block, `scale` is 16–512 and `amplitude` is an integer 0–8.
+An optional `terrain` object adds a fill layer. The `fill` field must be a
+terrain-fill floor block. `scale` is 16–512 and `amplitude` is an integer 0–8.
 
 ## Biomes
 
@@ -170,6 +178,6 @@ See [Biomes](/worldgen/biomes) for every field and the layer rules.
 | `invalid biome scale, warp, spawn radius…` | Check the required ranges. |
 | `spawnBiome must exist` | Use a loaded biome ID. |
 | `unknown block …` | Fix the block reference or load the pack that defines it. |
-| `block … has the wrong layer` | Floors, walls and objects must be used in the matching slot. |
+| `block … has the wrong layer` | Use floors, walls and objects in the matching slot. |
 | `caves.level must be an integer from 1 to 3` | Fix the cave level. |
 | `caves.terrain.fill must be a terrain fill block` | Use a block with the terrain fill role. |

@@ -1,6 +1,7 @@
 # Textures and tiling
 
-A block names its art by path:
+For a single tile, draw a 32×32 PNG and save it in your AP. Reference the PNG
+from the `components` object of the block:
 
 ```json
 {
@@ -10,14 +11,28 @@ A block names its art by path:
 }
 ```
 
-The path is relative to the asset pack, starts with `textures/`, ends in `.png`,
-and may not contain `..`. Two asset packs supplying the same path: the later pack
-wins. That is how a retexture works without touching the logic file.
+The path is relative to the asset pack. It starts with `textures/`, ends in
+`.png`, and cannot contain `..`. If two asset packs supply the same path, the
+later pack wins. Thus an AP can replace a texture with a PNG at the same path.
+
+You can also name a key from `AP/textures/terrain_texture.json`. For example,
+this catalog maps the key `stone_tile` to a file:
+
+```json
+{
+  "texture_data": {
+    "stone_tile": { "textures": "textures/blocks/stone_tile.png" }
+  }
+}
+```
+
+A block can then use `"texture": "stone_tile"`. A direct path is simpler for a
+small pack. A key lets several definitions share a named asset entry.
 
 ## Material instances
 
-`*` is the primary face. `up` is accepted as an alternative primary key. `front`
-is the wall face. A tile can crop one sprite out of a packed sheet:
+`*` is the primary face. The loader accepts `up` as an alternative primary key.
+`front` is the wall face. A tile can crop one sprite from a packed sheet:
 
 ```json
 {
@@ -35,7 +50,7 @@ bad crop fails with the component path.
 
 ## Tiling styles
 
-The renderer needs to know how to stitch the art. Pick one:
+The renderer needs to know how to join the art. Pick one:
 
 | Component | Tiling | Art |
 |---|---|---|
@@ -60,8 +75,9 @@ The renderer needs to know how to stitch the art. Pick one:
 }
 ```
 
-`group` connects variants of the same material. `biome_tint` recolours natural
-ground from the tile's biome. `substrate` names the floor block under the surface.
+`group` connects variants of the same material. The `biome_tint` field recolors
+natural ground from the biome of the tile. The `substrate` field names the floor
+block under the surface.
 
 ### Surface
 
@@ -69,8 +85,8 @@ ground from the tile's biome. `substrate` names the floor block under the surfac
 { "kurblanc:surface": { "group": "woodfloor" } }
 ```
 
-Surfaces use the 47-shape layout stored in the texture. The image must match that
-layout; the game does not slice an arbitrary picture.
+Surfaces use the 47-shape layout in the texture. The image must match that
+layout. The game does not slice an arbitrary picture.
 
 ### Walls
 
@@ -90,8 +106,8 @@ A wall uses two texture paths and a lift:
 ```
 
 `lift` is the top elevation in source pixels, from 0 to 32. A wall with no front
-texture draws top-only. Windows and fences use the same wall layer and the same
-top-plus-front pair.
+texture draws the top only. Windows and fences use the same wall layer and the
+same top-plus-front pair.
 
 ### Water
 
@@ -101,8 +117,8 @@ top-plus-front pair.
 }
 ```
 
-The bed is a floor block shown through the water. `opacity` is a tint strength
-between 0 and 1, separate from the 0–15 light opacity.
+The bed is a floor block that you see through the water. `opacity` is a tint
+strength between 0 and 1. It is separate from the 0 to 15 light opacity.
 
 ### Objects
 
@@ -119,22 +135,23 @@ between 0 and 1, separate from the 0–15 light opacity.
 
 - `rect` crops the sprite from its sheet.
 - `sprite_offset` moves it relative to the tile.
-- `height` is visual only; collision stays on the tile footprint.
+- `height` is visual only. Collision stays on the tile footprint.
 - `depth` and `vertical_depth` adjust draw order.
-- `vertical_rect`, `vertical_offset` and `vertical_masks` provide an alternate
+- `vertical_rect`, `vertical_offset` and `vertical_masks` give an alternate
   crop for vertical faces.
 - `random_flip` mirrors from a stable tile hash.
 - `sway` adds ambient movement for foliage.
 - `shadow: "sprite"` projects the sprite alpha instead of a box.
-- `contact_shadow` supplies a root-contact ellipse when the full silhouette is
+- `contact_shadow` gives a root-contact ellipse when the full silhouette is
   wrong.
 - `foliage` marks a canopy for ambient flutter.
 - `variant_weights` picks among strip frames.
 
 ### Doors
 
-A door is one block file with a `kurblanc:door` component. `closed` and `open`
-each name a texture, or an object with a texture plus art overrides:
+A door is one block file with a `kurblanc:door` component. The `closed` and
+`open` fields each name a texture. A field can also name an object with a
+texture plus art overrides:
 
 ```json
 {
@@ -151,7 +168,7 @@ each name a texture, or an object with a texture plus art overrides:
 ```
 
 The loader generates the open state. Both states can use different crops,
-offsets and height; the open state is always non-placeable, non-solid and
+offsets and height. The open state is always non-placeable, non-solid and
 opacity 0.
 
 ## Variant strips
@@ -171,16 +188,24 @@ Declare the cell on the material instance:
 ```
 
 The engine reads the image and counts the frames. Frame 0 is the base sprite. A
-block that uses the texture gets every frame; `variant_weights` can bias the
-choice.
+block that uses the texture gets every frame. `variant_weights` can bias the
+choice. For six 12×10 cells, the image must be 77×10 pixels. That is six cells
+plus five one-pixel gaps.
+
+Use the dimensions of the largest variant for every cell. Keep each sprite
+bottom-centered. Do not combine a variant strip with a crop rectangle.
+
+If you use a texture key instead of a direct PNG path, declare `cell` on the
+entry for that key. The entry is in `terrain_texture.json`. An AP that overrides
+the entry must include `cell` again.
 
 ## Reference
 
 See [`kurblanc:material_instances`](/reference/components/blocks#kurblanc-material-instances),
 [`kurblanc:ground`](/reference/components/blocks#kurblanc-ground),
-[`kurblanc:surface`](/reference/components/blocks#kurblanc-surface),
-[`kurblanc:wall`](/reference/components/blocks#kurblanc-wall),
-[`kurblanc:water`](/reference/components/blocks#kurblanc-water),
+[`kurblanc:surface`](/reference/components/blocks#kurblanc-surface) and
+[`kurblanc:wall`](/reference/components/blocks#kurblanc-wall) for the field tables.
+See also [`kurblanc:water`](/reference/components/blocks#kurblanc-water),
 [`kurblanc:object`](/reference/components/blocks#kurblanc-object),
 [`kurblanc:toggle`](/reference/components/blocks#kurblanc-toggle) and
-[`kurblanc:pair`](/reference/components/blocks#kurblanc-pair) for the field tables.
+[`kurblanc:pair`](/reference/components/blocks#kurblanc-pair).

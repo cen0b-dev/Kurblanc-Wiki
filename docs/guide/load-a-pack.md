@@ -1,89 +1,85 @@
 # Load a pack
 
-There are two ways to get a pack into the game: link the folder you are working
-in, or install a finished archive. Linking is what you want while editing.
+While making a pack, link its folder so Kurblanc can read your edits. To install
+someone else's pack, import a `.kbpack` or `.kbaddon` file.
 
-## Link a dev pack folder
+## Link your working folder
 
-Open **Workshop** from the main menu, find **Linked folders**, and choose
-**Link a folder**. Pick the dev pack folder that contains your add-on.
+1. Open **Workshop** from the main menu.
+2. Under **Linked folders**, choose **Link a folder**.
+3. Select the add-on folder containing `LP/` and `AP/`.
 
-A linked folder is a source, not a single pack. The game looks inside it and
-treats each pack it finds as its own pack. Both of these layouts work:
+For this layout, select `stone-tiles/`:
 
-```
-Kurblanc Packs/
-  my-addon/
-    LP/
-      manifest.json
-    AP/
-      manifest.json
+```text
+stone-tiles/
+  LP/manifest.json
+  AP/manifest.json
 ```
 
-```
-Kurblanc Packs/
-  stone-tiles/
-    LP/
-      manifest.json
-    AP/
-      manifest.json
-  another-pack/
-    LP/
-      manifest.json
-```
+The LP and AP appear as separate packs. You can also link a parent folder that
+holds several add-ons. The game finds pack folders directly inside the selected
+folder, one wrapper folder deeper, and inside pack archives.
 
-In the first layout, link `my-addon/` or `Kurblanc Packs/`. In the second, link
-`Kurblanc Packs/` once and both packs appear.
+Linking makes packs available. Open the world's pack list and add both your LP
+and AP. For an add-on, leave the built-in packs enabled and put your packs after
+them. Use a creative world for testing, so you can find your items immediately.
 
-After linking, the packs show up in Workshop as **Linked folder** packs. Changes
-on disk are picked up when you rescan the folder, enter a world, or run
-`/reload` inside a world.
+## See your edits
 
-If the game reports **Permission needed**, relink the folder to grant access. If
-it reports a missing folder, the folder was moved or removed; relink it. Unlinking
-never deletes or edits your files.
+Save your files, then use **Rescan linked folders**, enter the world again, or
+run `/reload` in the world's chat. An edit to a file alone does not reload the
+world.
 
-Some browsers do not expose a folder picker. When **Link a folder** is not
-available, use **Add pack** with an archive instead.
+If a reload fails, read the error and fix the named file. A linked source keeps
+its last valid snapshot when a new scan fails. The game does not apply the
+rejected edit.
 
-## Enable the pack
+If Workshop says **Permission needed**, grant access again. If you moved or
+deleted the folder, link its new location. Unlinking leaves your files on disk.
 
-Linking makes a pack available; it does not force it into every world. Open the
-world's pack list and enable the LP and AP you want. The order matters when two
-packs provide the same ID or texture path: the later pack wins.
+Browsers without a folder picker cannot use this workflow. Import a new archive
+after each round of edits instead.
 
-## Install a finished pack
+## Import an archive
 
-A shareable pack is a zip:
+In Workshop, choose **Add pack** and select the file, or drop it on the main menu.
 
-| File | Contains |
+| Extension | ZIP contents |
 |---|---|
-| `.kbpack` | One pack, with its `manifest.json` at the root or one folder deep |
-| `.kbaddon` | Related LP and AP packs kept together |
+| `.kbpack` | One pack, with `manifest.json` at the root or inside one wrapper folder |
+| `.kbaddon` | Several related packs, usually `LP/` and `AP/` |
 
-In Workshop, choose **Add pack** and pick the file. You can also drop a pack file
-on the main menu. Installed packs are copied into the game's pack store, so the
-original file can be moved afterwards.
+To share your add-on, zip its LP and AP folders together and give the archive a
+`.kbaddon` extension. To share only one pack, zip that pack's contents and use
+`.kbpack`. Renaming an ordinary folder does not create an archive.
 
-Installing a pack does not change a world. A world remembers the packs it was
-saved with, so a newer version does not silently replace the content inside an
-existing save. Missing content is reported by name instead of being replaced with
-air.
+Kurblanc copies imported files into the browser's pack store. Re-import an
+updated archive to update that stored copy. The game does not watch changes to
+the original ZIP.
 
-## Removing a pack
+## Pack order and existing worlds
 
-Deleting an installed pack asks for confirmation, and tells you which worlds use
-it. A linked folder can be unlinked at any time; the folder on disk is left
-alone.
+Each world has its own pack list. When two logic packs define the same block,
+item, recipe or loot-table ID, the later definition wins. Asset packs can replace
+the same texture path or texture key in the same way. The game loads dependencies
+before the packs that require them.
+
+A pack's header UUID identifies it. Changing its version does not create a
+separate identity or pin a world to the older files. Test changes in a spare
+world before you update a pack used by a world you care about.
+
+Removing a block definition from a saved world leaves a missing-content
+placeholder. The world keeps its palette slot rather than turning the block
+into air. Restoring the definition lets that slot resolve again.
 
 ## Multiplayer
 
-Both players need the same content. The host sends a content fingerprint, and a
-guest with different packs sees which ones differ. Asset packs can be downloaded
-from the host; logic is not transferred. A linked dev folder cannot be sent to
-another player, so share a `.kbpack` or `.kbaddon` instead.
+The host chooses the world's content. Guests receive the block and item data
+needed to display and interact with that world. They do not need to install the
+host's logic packs. The host offers asset packs for download, with consent. A
+cache means unchanged assets need no second download.
 
-## Next
-
-- [Pack anatomy](/guide/pack-anatomy)
-- [Build your first block](/guide/first-block)
+A host can reload content while players are connected. Guests synchronize with
+the new content revision. Linking a development folder does not share access to
+your disk. Guests receive the assets that the game offers.

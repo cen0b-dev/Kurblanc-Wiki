@@ -1,7 +1,7 @@
 # Biomes
 
-One file per biome in `LP/worldgen/biomes/`. The filename is the roster; the
-`id` is the identity used by `spawnBiome` and by cave inheritance.
+One file per biome in `LP/worldgen/biomes/`. The `id` inside the file identifies
+the biome. `spawnBiome` uses that ID.
 
 ```json
 {
@@ -34,7 +34,7 @@ One file per biome in `LP/worldgen/biomes/`. The filename is the roster; the
 | `moisture` | 0–1 | Climate axis. |
 | `floor` | floor block | The biome's ground. |
 | `minedFloor` | floor block | Optional ground left after mining a raised tile. |
-| `tint` | `#rrggbb` | Biome colour used by tinted art and maps. |
+| `tint` | `#rrggbb` | Biome color used by tinted art and maps. |
 | `detail` | floor block | Detail patch material. |
 | `detailThreshold` | 0–1 | How often detail patches appear. |
 | `hilliness` | 0–1 | Optional local relief strength. |
@@ -80,22 +80,22 @@ A wrong layer rejects the worldgen configuration by name.
 ## Climate
 
 `temperature` and `moisture` place the biome in a two-axis climate field. The
-generator blends neighbouring centres (`biomeBlend`) and warps the field
-(`warp`), so boundaries are not straight lines. `spawnBiome` chooses the biome
-around the starting area, and the spawn clearing stays free of trees.
+generator blends neighboring centers (`biomeBlend`) and warps the field
+(`warp`). As a result, boundaries are not straight lines. `spawnBiome` chooses
+the biome around the starting area. The spawn clearing stays free of trees.
 
 ## Caves
 
-Cave levels inherit the surface biome at the same coordinates. A biome can
-therefore carry its own cave palette through the blocks it names in
-`worldgen/settings.json`; see [Worldgen settings](/worldgen/).
+Cave levels inherit the surface biome at the same coordinates. The cave wall and
+floor blocks come from the shared cave settings. A biome does not have its own
+wall and floor palette. See [Worldgen settings](/worldgen/).
 
 ## Validation
 
 | Message | Fix |
 |---|---|
 | `biome IDs must be unique` | Rename one `id`. |
-| `biome … needs a climate centre from 0 to 1` | Fix temperature or moisture. |
+| `biome … needs a climate center from 0 to 1` | Fix temperature or moisture. |
 | `biome … needs a #rrggbb tint` | Fix the tint. |
 | `invalid probability in biome …` | Check detail, tree or water chance. |
 | `biome … cannot define both decoration and decorations` | Remove one form. |

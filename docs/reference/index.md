@@ -1,25 +1,21 @@
-# Reference
+# Format reference
 
-Kurblanc content is data. A block definition is a `kurblanc:block` object with a
-`description.identifier` and a `components` object; the fields in that object are
-the API this wiki documents.
+Use these pages to look up a field while you edit a pack. If you do not have a
+pack yet, start with [Your first block](/guide/first-block).
 
-The component tables are generated from `data/components.json` and checked against
-the game's parsers. The guides explain what to build; these pages say what the
-loader accepts.
-
-| Page | Covers |
+| File or task | Reference |
 |---|---|
-| [Block components](/reference/components/blocks) | Every `kurblanc:*` key accepted in `LP/blocks/<id>.json` |
-| [Items](/items/) | `LP/items/<id>.json` fields, tools, icons and placement |
-| [Recipes](/items/recipes) | `LP/recipes/<id>.json` ingredients and output |
-| [Drops & loot](/items/drops) | Block drops and `LP/loot_tables/` |
-| [Entities](/entities/) | `LP/entities/<id>.json` behaviour, combat and spawning |
-| [Entity rendering](/entities/rendering) | Animation strips and masks |
-| [Worldgen settings](/worldgen/) | `LP/worldgen/settings.json` |
-| [Biomes](/worldgen/biomes) | `LP/worldgen/biomes/<id>.json` |
-| [Validation errors](/reference/validation-errors) | The messages you will actually see |
-| [Limits](/reference/limits) | IDs, textures, light, layers and pack sizes |
+| Block components | [Blocks](/reference/components/blocks) |
+| Item fields, tools and icons | [Items](/items/) |
+| Crafting ingredients and output | [Recipes](/items/recipes) |
+| Mining and creature rewards | [Drops and loot tables](/items/drops) |
+| Creature movement, combat and spawning | [Entities](/entities/) |
+| Animation frames and masks | [Entity rendering](/entities/rendering) |
+| Terrain settings | [World generation](/worldgen/) |
+| Climate and biome materials | [Biomes](/worldgen/biomes) |
+| A file that will not load | [Validation errors](/reference/validation-errors) |
+| File sizes and other caps | [Limits](/reference/limits) |
 
-The parser is the source of truth. When a guide and this reference disagree, the
-reference is the safer answer.
+Small JSON examples on reference pages are usually fragments. Put a component
+fragment inside the `components` object of a block. Do not replace the whole
+block file with it. A complete file also holds its enclosing definition and ID.

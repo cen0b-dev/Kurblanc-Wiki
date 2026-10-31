@@ -1,8 +1,9 @@
 # Blocks overview
 
-A block is one JSON file in `LP/blocks/`. It defines what the tile *is*: which
-layer it occupies, whether it collides, how long it takes to mine, what it emits,
-and which texture file it uses. The art lives in an asset pack.
+A block is a thing you place in the world: ground, a wall, a door, a tree or a
+torch. Its JSON file goes in `LP/blocks/`. Its PNG goes in the AP.
+
+The simplest example is a floor tile. Save this as `LP/blocks/stone_tile.json`:
 
 ```json
 {
@@ -20,18 +21,18 @@ and which texture file it uses. The art lives in an asset pack.
 }
 ```
 
-The file needs `kurblanc:format`, `description.identifier` and `components`.
-Everything else has a default.
+The format marker identifies a Kurblanc block file. The identifier gives the
+block its ID. Components describe how the block looks and acts. This example
+sets its layer and color explicitly. An omitted field uses the loader default.
 
-## The block's three jobs
+To hold and place this tile, add an item that references it.
 
-1. **Gameplay:** layer, collision, mining, drops.
-2. **Light:** opacity and emission.
-3. **Rendering:** the tiling style (`ground`, `surface`, `wall`, `water` or
-   `object`) and the texture path binding.
+[Your first block](/guide/first-block) includes that item and both manifests.
 
-The [component reference](/reference/components/blocks) has every field. The
-concept pages explain the choices:
+## Choose what to change
+
+Use [the component reference](/reference/components/blocks) to look up a field.
+For examples and explanations, read:
 
 - [Layers and collision](/blocks/layers-and-collision)
 - [Textures and tiling](/blocks/textures-and-tiling)
@@ -39,10 +40,10 @@ concept pages explain the choices:
 
 ## Doors and gates
 
-A door is one block file with a `kurblanc:door` component. `closed` and `open`
-each name a texture, or an object with that texture plus art overrides. The
-loader generates `<id>_open`, links the two states, and makes the open state
-non-placeable, non-solid and opacity 0.
+A door is one block file with a `kurblanc:door` component. The `closed` and
+`open` fields each name a texture. A field can also name an object with that
+texture plus art overrides. The loader generates `<id>_open` and links the two
+states. The open state then becomes non-placeable, non-solid and opacity 0.
 
 ```json
 {
@@ -76,5 +77,5 @@ A double door adds `kurblanc:pair` with the same value on both leaves.
 - A block becomes holdable when you add `LP/items/<id>.json` with `block` set to
   the block ID.
 - A block names a PNG under `textures/` in an asset pack. A later asset pack can
-  replace the same path, which is how a retexture works without touching the logic
-  file.
+  replace the same path. That is how you retexture a block without a change to
+  the logic file.

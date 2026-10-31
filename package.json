@@ -12,7 +12,8 @@
     "check:snippets": "node scripts/check-snippets.mjs",
     "check:fixture": "node scripts/check-fixture.mjs",
     "check:drift": "node scripts/check-drift.mjs",
-    "check": "npm run check:snippets && npm run check:generated && npm run check:fixture"
+    "check": "npm run check:snippets && npm run check:generated && npm run check:fixture && npm run check:tutorial",
+    "check:tutorial": "node scripts/check-tutorial.mjs"
   },
   "devDependencies": {
     "vitepress": "1.6.4"
